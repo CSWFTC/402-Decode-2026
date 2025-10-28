@@ -18,21 +18,15 @@ public class Hardware {
 //    public DcMotor frontRight;
 //    public DcMotor rearLeft;
 //    public DcMotor rearRight;
-    public WebcamName camera;
-    public static Hardware get;
-
+    public static WebcamName camera;
     // initialization code
-    private Hardware(){}
     public static void init (HardwareMap map) {
-        if(get != null)
-            return;
-        get = new Hardware();
         Field[] fields = Hardware.class.getDeclaredFields();
         for(Field field: fields){
-            if(Modifier.isPublic(field.getModifiers())){
+            if(Modifier.isPublic(field.getModifiers()) && Modifier.isStatic(field.getModifiers())){
                 field.setAccessible(true);
                 try {
-                    field.set(get, map.get(field.getType(), field.getName()));
+                    field.set(null, map.get(field.getType(), field.getName()));
                 }
                 catch (IllegalAccessException ignored){
                     // maybe add something here
