@@ -51,14 +51,20 @@ public class AprilTagTest extends LinearOpMode {
         AprilTagConfig atconf = new AprilTagConfig();
         waitForStart();
         if (opModeIsActive()) {
-            while (opModeIsActive()) {
                 telemetry.addLine("Searching...");
                 telemetry.update();
                 Optional<BallOrder> order;
-                while(!(order = atconf.Check()).isPresent())
+                while(!(order = atconf.Check()).isPresent()) {
                     sleep(20);
+                    if(!opModeIsActive()) {
+                        atconf.Close();
+                        return;
+                    }
+                }
                 telemetry.addLine(String.format("Found Ball Order %s", order.get()));
-            }
+                telemetry.update();
+                while(opModeIsActive())
+                    sleep(20);
         }
 
         // Save more CPU resources when camera is no longer needed.
