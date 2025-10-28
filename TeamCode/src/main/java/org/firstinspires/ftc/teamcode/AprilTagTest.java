@@ -54,10 +54,7 @@ public class AprilTagTest extends LinearOpMode {
             while (opModeIsActive()) {
                 telemetry.addLine("Searching...");
                 telemetry.update();
-                Optional<BallOrder> order;
-                while(!(order = atconf.Check()).isPresent())
-                    sleep(20);
-                telemetry.addLine(String.format("Found Ball Order %s", order.get()));
+                telemetry.addLine(String.format("Found Ball Order %s", atconf.WaitUntilOrderFound()));
             }
         }
 

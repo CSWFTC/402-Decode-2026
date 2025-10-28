@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.helpers;
 
+import static java.lang.Thread.sleep;
+
 import org.firstinspires.ftc.teamcode.Hardware;
 import org.firstinspires.ftc.vision.VisionPortal;
 import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
@@ -26,6 +28,16 @@ public class AprilTagConfig {
             }
         }
         return Optional.empty();
+    }
+    public BallOrder WaitUntilOrderFound(){ // not the best name, but makes the blocking nature clear
+        Optional<BallOrder> order;
+        while(!(order = Check()).isPresent()) {
+            try {
+                sleep(20);
+            }
+            catch(InterruptedException ignored){}
+        }
+        return order.get();
     }
     public void Close(){
         visionPortal.close();
