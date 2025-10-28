@@ -32,41 +32,37 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
+import org.firstinspires.ftc.teamcode.helpers.AprilTagConfig;
+import org.firstinspires.ftc.teamcode.helpers.BallOrder;
 import org.firstinspires.ftc.vision.VisionPortal;
 import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
 import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
 
 import java.util.List;
+import java.util.Optional;
+
 // stolen from the ftc samples
 @TeleOp(name = "AprilTag Test")
 public class AprilTagTest extends LinearOpMode {
 
-    private AprilTagProcessor aprilTag;
     @Override
     public void runOpMode() {
         Hardware.init(hardwareMap);
-        aprilTag = AprilTagProcessor.easyCreateWithDefaults();
-        VisionPortal visionPortal = VisionPortal.easyCreateWithDefaults(Hardware.camera, aprilTag);
+        AprilTagConfig atconf = new AprilTagConfig();
         waitForStart();
-
         if (opModeIsActive()) {
             while (opModeIsActive()) {
-
-                List<AprilTagDetection> currentDetections = aprilTag.getDetections();
-                telemetry.addData("# AprilTags Detected", currentDetections.size());
-                // Step through the list of detections and display info for each one.
-                for (AprilTagDetection detection : currentDetections) {
-                    telemetry.addLine(String.format("%d", detection.id));
-                }   // end for() loop
-
+                telemetry.addLine("Searching...");
                 telemetry.update();
-                // Share the CPU.
-                sleep(20);
+                Optional<BallOrder> order;
+                while(!(order = atconf.Check()).isPresent())
+                    sleep(20);
+                telemetry.addLine(String.format("Found Ball Order %s", order.get()));
             }
         }
 
         // Save more CPU resources when camera is no longer needed.
-        visionPortal.close();
+        atconf.Close();
 
     }
 
