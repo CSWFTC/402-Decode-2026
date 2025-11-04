@@ -31,6 +31,8 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 import org.firstinspires.ftc.teamcode.Helper.Hardware;
 import org.firstinspires.ftc.vision.VisionPortal;
@@ -38,37 +40,36 @@ import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
 import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
 
 import java.util.List;
-// stolen from the ftc samples
-@TeleOp(name = "AprilTag Test")
-public class AprilTagTest extends LinearOpMode {
 
-    private AprilTagProcessor aprilTag;
+// stolen from the ftc samples
+@TeleOp(name = "Motor Test")
+public class MotorTest extends LinearOpMode {
+
     @Override
     public void runOpMode() {
         Hardware.init(hardwareMap);
-        aprilTag = AprilTagProcessor.easyCreateWithDefaults();
-        VisionPortal visionPortal = VisionPortal.easyCreateWithDefaults(Hardware.camera, aprilTag);
+        Hardware.intake.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        Hardware.intake.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        Hardware.intake.setDirection(DcMotorSimple.Direction.FORWARD);
+        Hardware.outtakeTop.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        Hardware.outtakeTop.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        Hardware.outtakeTop.setDirection(DcMotorSimple.Direction.FORWARD);
+        Hardware.outtakeBottom.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        Hardware.outtakeBottom.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        Hardware.outtakeBottom.setDirection(DcMotorSimple.Direction.FORWARD);
         waitForStart();
-
-        if (opModeIsActive()) {
-            while (opModeIsActive()) {
-
-                List<AprilTagDetection> currentDetections = aprilTag.getDetections();
-                telemetry.addData("# AprilTags Detected", currentDetections.size());
-                // Step through the list of detections and display info for each one.
-                for (AprilTagDetection detection : currentDetections) {
-                    telemetry.addLine(String.format("%d", detection.id));
-                }   // end for() loop
-
-                telemetry.update();
-                // Share the CPU.
-                sleep(20);
-            }
+        while (opModeIsActive()) {
+            Hardware.intake.setPower(gamepad1.a ? 1.0 : 0.0);
+            Hardware.outtakeBottom.setPower(gamepad1.b ? 1.0 : 0.0);
+            Hardware.outtakeTop.setPower(gamepad1.y ? 1.0 : 0.0);
+            telemetry.addLine();
+            telemetry.addData("Intake", gamepad1.a);
+            telemetry.addLine();
+            telemetry.addData("Outtake Bottom", gamepad1.b);
+            telemetry.addLine();
+            telemetry.addData("Outtake Top", gamepad1.y);
+            telemetry.update();
         }
-
-        // Save more CPU resources when camera is no longer needed.
-        visionPortal.close();
-
     }
 
 }   // end class
