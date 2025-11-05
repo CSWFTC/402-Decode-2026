@@ -47,7 +47,7 @@ public class AprilTagTest extends LinearOpMode {
     public void runOpMode() {
         Hardware.init(hardwareMap);
         aprilTag = AprilTagProcessor.easyCreateWithDefaults();
-        VisionPortal visionPortal = VisionPortal.easyCreateWithDefaults(Hardware.camera, aprilTag);
+        //VisionPortal visionPortal = VisionPortal.easyCreateWithDefaults(Hardware.camera, aprilTag);
         waitForStart();
 
         if (opModeIsActive()) {
@@ -67,7 +67,7 @@ public class AprilTagTest extends LinearOpMode {
         }
 
         // Save more CPU resources when camera is no longer needed.
-        visionPortal.close();
+        //visionPortal.close();
 
     }
 

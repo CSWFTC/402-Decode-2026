@@ -18,7 +18,7 @@ public class Hardware {
 //    public DcMotor frontRight;
 //    public DcMotor rearLeft;
 //    public DcMotor rearRight;
-    public static WebcamName camera;
+    //public static WebcamName camera;
     public static DcMotor intake;
     public static DcMotor outtakeTop;
     public static DcMotor outtakeBottom;

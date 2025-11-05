@@ -59,15 +59,24 @@ public class MotorTest extends LinearOpMode {
         Hardware.outtakeBottom.setDirection(DcMotorSimple.Direction.FORWARD);
         waitForStart();
         while (opModeIsActive()) {
+
+            double powerTop = 1.0;
+            double powerBottom = 1.0;
+
             Hardware.intake.setPower(gamepad1.a ? 1.0 : 0.0);
-            Hardware.outtakeBottom.setPower(gamepad1.b ? 1.0 : 0.0);
-            Hardware.outtakeTop.setPower(gamepad1.y ? 1.0 : 0.0);
+            Hardware.outtakeBottom.setPower(gamepad1.b ? powerBottom : 0.0);
+            Hardware.outtakeTop.setPower(gamepad1.y ? powerTop : 0.0);
+
             telemetry.addLine();
             telemetry.addData("Intake", gamepad1.a);
             telemetry.addLine();
             telemetry.addData("Outtake Bottom", gamepad1.b);
             telemetry.addLine();
+            telemetry.addData("Outtake Bottom Power", powerBottom);
+            telemetry.addLine();
             telemetry.addData("Outtake Top", gamepad1.y);
+            telemetry.addLine();
+            telemetry.addData("Outtake Top Power", powerTop);
             telemetry.update();
         }
     }
