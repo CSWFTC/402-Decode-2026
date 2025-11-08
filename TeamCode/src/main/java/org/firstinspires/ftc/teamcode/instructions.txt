@@ -1,0 +1,21 @@
+Go to settings in the top right and search "SDK"
+
+Copy the path of your local SDK
+
+In your terminal, type cd and then paste in your path: cd path
+
+Then, cd platform-tools
+
+Then, ./adb connect 192.168.43.1
+
+If it says connected, you can run the code using the play button at the top of Android Studio
+
+If it doesn't work, type the following commands in order
+./adb disconnect
+./adb kill-server
+./adb start-server
+./adb connect 192.168.43.1
+
+If it still doesn't work, try turning off the robot and turning it back on
+
+If it still doesn't work, contact Arnav Choubey
