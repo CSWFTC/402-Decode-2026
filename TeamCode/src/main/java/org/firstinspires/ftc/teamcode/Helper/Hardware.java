@@ -14,10 +14,10 @@ public class Hardware {
     // just declare a new field
     // the field name should match the name in the robot config
     // that's it!
-//    public DcMotor frontLeft;
-//    public DcMotor frontRight;
-//    public DcMotor rearLeft;
-//    public DcMotor rearRight;
+    public static DcMotor frontLeft;
+    public static DcMotor frontRight;
+    public static DcMotor rearLeft;
+    public static DcMotor rearRight;
     //public static WebcamName camera;
     public static DcMotor intake;
     public static DcMotor outtakeTop;
