@@ -3,19 +3,23 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.Gamepad;
 
 import org.firstinspires.ftc.teamcode.Helper.Hardware;
+import org.firstinspires.ftc.teamcode.Helper.Shooter;
 
 @TeleOp(name = "Driver Control")
 public class DriverControl extends LinearOpMode {
     @Override
     public void runOpMode(){
         Hardware.init(hardwareMap);
+        Shooter shooter = new Shooter();
         Hardware.frontLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         Hardware.frontRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         Hardware.rearLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         Hardware.rearRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         waitForStart();
+        Gamepad old = new Gamepad();
         while(opModeIsActive()){
             double forward = gamepad1.left_stick_y;
             double strafe = gamepad1.left_stick_x;
@@ -25,6 +29,9 @@ public class DriverControl extends LinearOpMode {
             Hardware.frontRight.setPower((forward - strafe - rotate) / scale);
             Hardware.rearLeft.setPower((forward - strafe + rotate) / scale);
             Hardware.rearRight.setPower((forward + strafe - rotate) / scale);
+            if(gamepad1.a && !old.a)
+                shooter.Toggle();
+            gamepad1.copy(old);
         }
     }
 }
