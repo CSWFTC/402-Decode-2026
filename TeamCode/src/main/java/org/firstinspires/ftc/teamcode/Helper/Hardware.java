@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.Helper;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -18,7 +18,10 @@ public class Hardware {
 //    public DcMotor frontRight;
 //    public DcMotor rearLeft;
 //    public DcMotor rearRight;
-    public static WebcamName camera;
+    //public static WebcamName camera;
+    public static DcMotor intake;
+    public static DcMotor outtakeTop;
+    public static DcMotor outtakeBottom;
     // initialization code
     public static void init (HardwareMap map) {
         Field[] fields = Hardware.class.getDeclaredFields();
