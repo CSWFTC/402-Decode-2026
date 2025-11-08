@@ -60,25 +60,21 @@ public class MotorTest extends LinearOpMode {
         waitForStart();
         while (opModeIsActive()) {
 
-            double powerTop = 1.0;
-            double powerBottom = 1.0;
+            Hardware.intake.setPower(gamepad1.a || gamepad1.x  ? 1.0 : 0.0);
+            Hardware.outtakeBottom.setPower(gamepad1.b || gamepad1.x  ? 1.0 : 0.0);
+            Hardware.outtakeTop.setPower(gamepad1.y || gamepad1.x  ? 1.0 : 0.0);
 
-            Hardware.intake.setPower(gamepad1.a ? 1.0 : 0.0);
-            Hardware.outtakeBottom.setPower(gamepad1.b ? powerBottom : 0.0);
-            Hardware.outtakeTop.setPower(gamepad1.y ? powerTop : 0.0);
-
+            telemetry.addData("Controls", "A for intake, B for bottom, Y for top, X for all");
             telemetry.addLine();
-            telemetry.addData("Intake", gamepad1.a);
+            telemetry.addData("Intake", gamepad1.a || gamepad1.x);
             telemetry.addLine();
-            telemetry.addData("Outtake Bottom", gamepad1.b);
+            telemetry.addData("Outtake Bottom", gamepad1.b || gamepad1.x);
             telemetry.addLine();
-            telemetry.addData("Outtake Bottom Power", powerBottom);
             telemetry.addLine();
-            telemetry.addData("Outtake Top", gamepad1.y);
+            telemetry.addData("Outtake Top", gamepad1.y || gamepad1.x);
             telemetry.addLine();
-            telemetry.addData("Outtake Top Power", powerTop);
             telemetry.update();
         }
     }
 
-}   // end class
+}
