@@ -14,10 +14,6 @@ public class DriverControl extends LinearOpMode {
     public void runOpMode(){
         Hardware.init(hardwareMap);
         Shooter shooter = new Shooter();
-        Hardware.frontLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        Hardware.frontRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        Hardware.rearLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        Hardware.rearRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         waitForStart();
         Gamepad old = new Gamepad();
         while(opModeIsActive()){

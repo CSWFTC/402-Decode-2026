@@ -1,10 +1,15 @@
 package org.firstinspires.ftc.teamcode.Helper;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 
@@ -30,6 +35,14 @@ public class Hardware {
                 field.setAccessible(true);
                 try {
                     field.set(null, map.get(field.getType(), field.getName()));
+                    if(field.getType() == DcMotor.class){
+                         Reverse r = field.getAnnotation(Reverse.class);
+                         if(r != null){
+                             DcMotor m = (DcMotor) field.get(null);
+                             assert m != null;
+                             m.setDirection(DcMotorSimple.Direction.REVERSE);
+                         }
+                    }
                 }
                 catch (IllegalAccessException ignored){
                     // maybe add something here
@@ -38,3 +51,6 @@ public class Hardware {
         }
     }
 }
+@Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.FIELD)
+@interface Reverse{};
