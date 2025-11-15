@@ -3,7 +3,7 @@ package org.firstinspires.ftc.teamcode.Helper;
 public class Shooter {
     public boolean on;
     public Shooter(){
-        SetStatus(true);
+        SetStatus(false);
     }
     public void Toggle(){
         SetStatus(!on);
