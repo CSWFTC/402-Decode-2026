@@ -1,47 +1,86 @@
 package org.firstinspires.ftc.teamcode;
 
+
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.Gamepad;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
-import org.firstinspires.ftc.teamcode.Helper.Hardware;
-import org.firstinspires.ftc.teamcode.Helper.Shooter;
+import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.teamcode.Helper.GamePad;
+import org.firstinspires.ftc.teamcode.Helper.DriveTrainV2;
 
-@TeleOp(name = "Driver Control")
+import java.util.List;
+import java.util.Locale;
+
+@TeleOp(name = "Driver Control", group = "Competition!!")
 public class DriverControl extends LinearOpMode {
-    @Override
-    public void runOpMode(){
-        Hardware.init(hardwareMap);
-        Shooter shooter = new Shooter();
-        waitForStart();
-        Gamepad old = new Gamepad();
-        double strafe = 0, forward = 0, rotate = 0;
-        long lastJoystickTime = 0;
-        while(opModeIsActive()){
-            if(System.currentTimeMillis() > lastJoystickTime + 20){
-                boolean newPosition = (gamepad1.left_stick_x != strafe) ||
-                        (gamepad1.left_stick_y != forward) ||
-                        (gamepad1.right_stick_x != rotate);
+    private static final String version = "1.1";
+    private boolean setReversed = false;
+    private GamePad gpIn1;
+    private DriveTrainV2 drvTrain;
+    private DcMotor hangMotor;
 
-                // Check for Joystick at Rest
-                boolean atRest = (gamepad1.left_stick_x == 0f) && (gamepad1.left_stick_y == 0f) &&
-                        (gamepad1.right_stick_x == 0f);
-                if (newPosition || !atRest) {
-                    lastJoystickTime = System.currentTimeMillis();
-                    strafe = gamepad1.left_stick_x;
-                    forward = gamepad1.left_stick_y;
-                    rotate = gamepad1.right_stick_x;
-                }
-            }
-            double scale = Math.max(Math.abs(forward) + Math.abs(strafe) + Math.abs(rotate), 1);
-            Hardware.frontLeft.setPower((forward + strafe + rotate) / scale);
-            Hardware.frontRight.setPower((forward - strafe - rotate) / scale);
-            Hardware.rearLeft.setPower((forward - strafe + rotate) / scale);
-            Hardware.rearRight.setPower((forward + strafe - rotate) / scale);
-            if(gamepad1.a && !old.a)
-                shooter.Toggle();
-            gamepad1.copy(old);
+    @Override
+    public void runOpMode() {
+        // Load Introduction and Wait for Start
+        telemetry.setDisplayFormat(Telemetry.DisplayFormat.MONOSPACE);
+        telemetry.addLine("Driver Control");
+        telemetry.addData("Version Number", version);
+        telemetry.addLine();
+        telemetry.addData(">", "Press Start to Launch");
+        telemetry.update();
+
+        gpIn1 = new GamePad(gamepad1);
+        drvTrain = new DriveTrainV2(hardwareMap);
+
+        waitForStart();
+        if (isStopRequested()) {
+            return;
         }
+
+        telemetry.clear();
+
+        double speedMultiplier = 0.3;
+
+        while (opModeIsActive()) {
+            update_telemetry();
+
+            GamePad.GameplayInputType inpType1 = gpIn1.WaitForGamepadInput(30);
+            switch (inpType1) {
+                case BUTTON_BACK:
+                    setReversed = !setReversed;
+                    break;
+                case DPAD_DOWN:
+                    speedMultiplier = 0.25;
+                    break;
+                case DPAD_LEFT:
+                    speedMultiplier = 0.75;
+                    break;
+                case DPAD_RIGHT:
+                    speedMultiplier = 0.5;
+                    break;
+                case DPAD_UP:
+                    speedMultiplier = 1;
+                    break;
+
+                case JOYSTICK:
+                    drvTrain.setDriveVectorFromJoystick(gamepad1.left_stick_x * (float) speedMultiplier,
+                            gamepad1.right_stick_x * (float) speedMultiplier,
+                            gamepad1.left_stick_y * (float) speedMultiplier, setReversed);
+                    break;
+            }
+        }
+    }
+
+
+    private void update_telemetry() {
+        telemetry.addLine("Gamepad #1");
+
+        String inpTime1 = new java.text.SimpleDateFormat("yyyy.MM.dd HH:mm:ss.SSS", Locale.US).format(gpIn1.getTelemetry_InputLastTimestamp());
+        telemetry.addLine().addData("GP1 Time", inpTime1);
+        telemetry.addLine().addData("GP1 Cnt", gpIn1.getTelemetry_InputCount());
+        telemetry.addLine().addData("GP1 Input", gpIn1.getTelemetry_InputLastType().toString());
+        telemetry.addLine();
     }
 }
