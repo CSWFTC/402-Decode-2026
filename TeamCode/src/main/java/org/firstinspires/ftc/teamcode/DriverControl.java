@@ -3,14 +3,12 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.Helper.GamePad;
 import org.firstinspires.ftc.teamcode.Helper.DriveTrainV2;
+import org.firstinspires.ftc.teamcode.Helper.Shooter;
 
-import java.util.List;
 import java.util.Locale;
 
 @TeleOp(name = "Driver Control", group = "Competition!!")
@@ -19,7 +17,6 @@ public class DriverControl extends LinearOpMode {
     private boolean setReversed = false;
     private GamePad gpIn1;
     private DriveTrainV2 drvTrain;
-    private DcMotor hangMotor;
 
     @Override
     public void runOpMode() {
@@ -32,7 +29,8 @@ public class DriverControl extends LinearOpMode {
         telemetry.update();
 
         gpIn1 = new GamePad(gamepad1);
-        drvTrain = new DriveTrainV2(hardwareMap);
+        Shooter shooter = new Shooter();
+        drvTrain = new DriveTrainV2();
 
         waitForStart();
         if (isStopRequested()) {
@@ -63,7 +61,8 @@ public class DriverControl extends LinearOpMode {
                 case DPAD_UP:
                     speedMultiplier = 1;
                     break;
-
+                case BUTTON_A:
+                    shooter.Toggle();
                 case JOYSTICK:
                     drvTrain.setDriveVectorFromJoystick(gamepad1.left_stick_x * (float) speedMultiplier,
                             gamepad1.right_stick_x * (float) speedMultiplier,

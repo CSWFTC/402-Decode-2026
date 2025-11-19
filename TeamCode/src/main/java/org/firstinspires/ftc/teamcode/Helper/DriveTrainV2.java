@@ -11,30 +11,13 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 public class DriveTrainV2 {
     public static Params PARAMS = new Params();
-
-
-    private final DcMotor drvMotorFrontLeft;
-    private final DcMotor drvMotorBackLeft;
-    private final DcMotor drvMotorFrontRight;
-    private final DcMotor drvMotorBackRight;
     protected volatile boolean brakingOn = false;
 
-    public DriveTrainV2(@NonNull HardwareMap hdwMap) {
-        drvMotorFrontLeft = hdwMap.dcMotor.get("frontLeft");
-        drvMotorBackLeft = hdwMap.dcMotor.get("rearLeft");
-        drvMotorFrontRight = hdwMap.dcMotor.get("frontRight");
-        drvMotorBackRight = hdwMap.dcMotor.get("rearRight");
-
-        // Account for motor mounting direction in our robot design
-        drvMotorFrontLeft.setDirection(DcMotorSimple.Direction.REVERSE);
-        drvMotorBackLeft.setDirection(DcMotorSimple.Direction.REVERSE);
-        drvMotorFrontRight.setDirection(DcMotorSimple.Direction.REVERSE);
-        drvMotorBackRight.setDirection(DcMotorSimple.Direction.REVERSE);
-
-        drvMotorFrontLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        drvMotorBackLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        drvMotorFrontRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        drvMotorBackRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+    public DriveTrainV2() {
+        Hardware.frontLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        Hardware.rearLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        Hardware.frontRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        Hardware.rearRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
     }
 
     public void setDriveVector(double forward, double strafe, double rotate) {
@@ -42,23 +25,23 @@ public class DriveTrainV2 {
 
         double denominator = Math.max(Math.abs(forward) + Math.abs(strafe) + Math.abs(rotate), 1);
 
-        double pwrFrontLeft = (forward + strafe + rotate) / denominator;
-        double pwrBackLeft = (forward - strafe + rotate) / denominator;
-        double pwrFrontRight = (forward - strafe - rotate) / denominator;
-        double pwrBackRight = (forward + strafe - rotate) / denominator;
+        double pwrfrontLeft = (forward + strafe + rotate) / denominator;
+        double pwrrearLeft = (forward - strafe + rotate) / denominator;
+        double pwrfrontRight = (forward - strafe - rotate) / denominator;
+        double pwrrearRight = (forward + strafe - rotate) / denominator;
 
-        drvMotorFrontLeft.setPower(pwrFrontLeft);
-        drvMotorBackLeft.setPower(pwrBackLeft);
-        drvMotorFrontRight.setPower(pwrFrontRight);
-        drvMotorBackRight.setPower(pwrBackRight);
+        Hardware.frontLeft.setPower(pwrfrontLeft);
+        Hardware.rearLeft.setPower(pwrrearLeft);
+        Hardware.frontRight.setPower(pwrfrontRight);
+        Hardware.rearRight.setPower(pwrrearRight);
     }
 
     /// ONLY USE FOR TESTING
     public void setMotorsManually(boolean frontLeft, boolean frontRight, boolean backLeft, boolean backRight) {
-        drvMotorBackLeft.setPower(backLeft ? 1.0 : 0.0);
-        drvMotorBackRight.setPower(backRight ? 1.0 : 0.0);
-        drvMotorFrontLeft.setPower(frontLeft ? 1.0 : 0.0);
-        drvMotorFrontRight.setPower(frontRight ? 1.0 : 0.0);
+        Hardware.rearLeft.setPower(backLeft ? 1.0 : 0.0);
+        Hardware.rearRight.setPower(backRight ? 1.0 : 0.0);
+        Hardware.frontLeft.setPower(frontLeft ? 1.0 : 0.0);
+        Hardware.frontRight.setPower(frontRight ? 1.0 : 0.0);
     }
 
     public void setDriveVectorFromJoystick(float stickLeftX, float stickRightX, float stickLeftY, boolean setReversed) {
@@ -85,10 +68,10 @@ public class DriveTrainV2 {
 
 
             while (!allStop && !timerExpired) {
-                boolean flStop = coasterBrakeMotor(drvMotorFrontLeft);
-                boolean blStop = coasterBrakeMotor(drvMotorBackLeft);
-                boolean frStop = coasterBrakeMotor(drvMotorFrontRight);
-                boolean brStop = coasterBrakeMotor(drvMotorBackRight);
+                boolean flStop = coasterBrakeMotor(Hardware.frontLeft);
+                boolean blStop = coasterBrakeMotor(Hardware.rearLeft);
+                boolean frStop = coasterBrakeMotor(Hardware.frontRight);
+                boolean brStop = coasterBrakeMotor(Hardware.rearRight);
 
 
                 allStop = flStop && blStop && frStop && brStop;
