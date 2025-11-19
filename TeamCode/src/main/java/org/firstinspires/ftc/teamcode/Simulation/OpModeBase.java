@@ -17,6 +17,10 @@ public abstract class OpModeBase extends LinearOpMode {
     }
     public abstract void Run(Follower follower);
     public static void main(String[] args){
-        Init().Run(new Follower(new FollowerConstants(), new SimLocalizer(), new SimDrivetrain()));
+            OpModeBase op = Init();
+            if(op != null)
+                op.Run(new Follower(new FollowerConstants(), new SimLocalizer(), new SimDrivetrain()));
+            else
+                System.err.println("You may have forgotten to override the Init method");
     }
 }
