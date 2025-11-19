@@ -4,6 +4,7 @@ import com.pedropathing.Drivetrain;
 import com.pedropathing.math.Vector;
 
 public class SimDrivetrain extends Drivetrain {
+    double xVel = 0, yVel = 0;
     @Override
     public double[] calculateDrive(Vector correctivePower, Vector headingPower, Vector pathingPower, double robotHeading) {
         return new double[0];
@@ -11,7 +12,7 @@ public class SimDrivetrain extends Drivetrain {
 
     @Override
     public void updateConstants() {
-
+        // unused
     }
 
     @Override
@@ -26,41 +27,41 @@ public class SimDrivetrain extends Drivetrain {
 
     @Override
     public void startTeleopDrive() {
-
+        System.out.println("Starting");
     }
 
     @Override
     public void startTeleopDrive(boolean brakeMode) {
-
+        startTeleopDrive();
     }
 
     @Override
     public double xVelocity() {
-        return 0;
+        return xVel;
     }
 
     @Override
     public double yVelocity() {
-        return 0;
+        return yVel;
     }
 
     @Override
     public void setXVelocity(double xMovement) {
-
+        xVel = xMovement;
     }
 
     @Override
     public void setYVelocity(double yMovement) {
-
+        yVel = yMovement;
     }
 
     @Override
     public double getVoltage() {
-        return 0;
+        return 6.7; // unused
     }
 
     @Override
     public String debugString() {
-        return "";
+        return "nothing to see here"; // unused
     }
 }
