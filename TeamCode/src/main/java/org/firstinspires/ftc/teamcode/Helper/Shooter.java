@@ -12,7 +12,7 @@ public class Shooter {
         on = newStatus;
         double power = on ? 1 : 0;
         Hardware.outtakeBottom.setPower(power);
-        Hardware.outtakeTop.setPower(power);
+        //Hardware.outtakeTop.setPower(power);
         Hardware.intake.setPower(power);
     }
 }
