@@ -2,9 +2,8 @@
   <configuration default="false" name="Simulation" type="Application" factoryName="Application">
     <option name="ALTERNATIVE_JRE_PATH" value="jbr-21" />
     <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
-    <option name="MAIN_CLASS_NAME" value="org.firstinspires.ftc.teamcode.Simulation.SimRunner" />
+    <option name="MAIN_CLASS_NAME" value="org.firstinspires.ftc.teamcode.StraightLineTest" />
     <module name="402-Decode-2026.TeamCode.main" />
-    <option name="PROGRAM_PARAMETERS" value="org.firstinspires.ftc.teamcode.StraightLineTest" />
     <method v="2">
       <option name="Make" enabled="true" />
     </method>
