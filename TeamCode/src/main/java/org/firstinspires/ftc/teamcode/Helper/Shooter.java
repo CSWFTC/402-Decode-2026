@@ -4,9 +4,11 @@ public class Shooter {
     public boolean on;
     public boolean intakeOn;
     public boolean outtakeOn;
+    public boolean slowOuttake;
     public Shooter(){
         SetStatus(false);
         SetStatusIntake(false);
+        slowOuttake = false;
     }
     public void Toggle(){
         SetStatus(!on);
@@ -17,11 +19,22 @@ public class Shooter {
     public void ToggleOuttake() {
         SetStatusOuttake(!outtakeOn);
     }
+    public void setSlowOuttake() {
+        slowOuttake = !slowOuttake;
+    }
     public void SetStatus(boolean newStatus){
         on = newStatus;
         double power = on ? 1 : 0;
-        Hardware.outtakeBottom.setPower(power);
-        Hardware.outtakeTop.setPower(power);
+        double outtakePower = 1.0;
+        if (power == 1) {
+            if (slowOuttake) {
+                outtakePower = 0.5;
+            }
+        } else {
+            outtakePower = 0;
+        }
+        Hardware.outtakeBottom.setPower(outtakePower);
+        Hardware.outtakeTop.setPower(outtakePower);
         Hardware.intake.setPower(power);
     }
 
@@ -34,7 +47,15 @@ public class Shooter {
     public void SetStatusOuttake (boolean newStatus) {
         outtakeOn = newStatus;
         double power = on ? 1 : 0;
-        Hardware.outtakeBottom.setPower(power);
-        Hardware.outtakeTop.setPower(power);
+        double outtakePower = 1.0;
+        if (power == 1) {
+            if (slowOuttake) {
+                outtakePower = 0.5;
+            }
+        } else {
+            outtakePower = 0;
+        }
+        Hardware.outtakeBottom.setPower(outtakePower);
+        Hardware.outtakeTop.setPower(outtakePower);
     }
 }
