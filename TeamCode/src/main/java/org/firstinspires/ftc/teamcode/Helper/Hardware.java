@@ -25,7 +25,7 @@ public class Hardware {
     public static DcMotor rearRight;
     //public static WebcamName camera;
     public static DcMotor intake;
-    //public static DcMotor outtakeTop;
+    public static DcMotor outtakeTop;
     public static DcMotor outtakeBottom;
     // initialization code
     public static void init (HardwareMap map) {
