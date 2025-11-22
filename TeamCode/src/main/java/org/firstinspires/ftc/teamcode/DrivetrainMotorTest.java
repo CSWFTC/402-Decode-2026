@@ -16,6 +16,9 @@ public class DrivetrainMotorTest extends LinearOpMode {
         Hardware.frontRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         Hardware.rearLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         Hardware.rearRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        Hardware.outtakeBottom.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        Hardware.outtakeMiddle.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        Hardware.outtakeTop.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         waitForStart();
         Gamepad old = new Gamepad();
         boolean fl = false, fr = false, rl = false, rr = false;
@@ -33,6 +36,10 @@ public class DrivetrainMotorTest extends LinearOpMode {
             Hardware.frontRight.setPower(fr ? 1 : 0);
             Hardware.rearLeft.setPower(rl ? 1 : 0);
             Hardware.rearRight.setPower(rr ? 1 : 0);
+            Hardware.outtakeTop.setPower(fl ? 1 : 0);
+            Hardware.outtakeMiddle.setPower(fr ? 1 : 0);
+            Hardware.outtakeBottom.setPower(rl ? 1 : 0);
+            Hardware.intake.setPower(rr ? 1 : 0);
             telemetry.addData("Rear Left (A)", rl);
             telemetry.addLine();
             telemetry.addData("Rear Right (B)", rr);

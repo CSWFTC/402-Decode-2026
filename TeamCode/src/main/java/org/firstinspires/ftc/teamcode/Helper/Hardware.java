@@ -20,13 +20,17 @@ public class Hardware {
     // the field name should match the name in the robot config
     // that's it!
     public static DcMotor frontLeft;
+    @Reverse
     public static DcMotor frontRight;
+    @Reverse
     public static DcMotor rearLeft;
     public static DcMotor rearRight;
     //public static WebcamName camera;
+    @Reverse
     public static DcMotor intake;
     public static DcMotor outtakeTop;
     public static DcMotor outtakeBottom;
+    public static DcMotor outtakeMiddle;
     // initialization code
     public static void init (HardwareMap map) {
         Field[] fields = Hardware.class.getDeclaredFields();

@@ -31,10 +31,13 @@ public class Shooter {
                 outtakePower = 0.5;
             }
         } else {
-            outtakePower = 0;
+            outtakePower = 0.0;
         }
-        Hardware.outtakeBottom.setPower(outtakePower);
-        Hardware.outtakeTop.setPower(outtakePower);
+        //Hardware.outtakeBottom.setPower(outtakePower);
+        //Hardware.outtakeTop.setPower(outtakePower);
+        Hardware.outtakeBottom.setPower(power);
+        Hardware.outtakeMiddle.setPower(power);
+        Hardware.outtakeTop.setPower(power);
         Hardware.intake.setPower(power);
     }
 
