@@ -33,11 +33,9 @@ public class Shooter {
         } else {
             outtakePower = 0.0;
         }
-        //Hardware.outtakeBottom.setPower(outtakePower);
-        //Hardware.outtakeTop.setPower(outtakePower);
-        Hardware.outtakeBottom.setPower(power);
-        Hardware.outtakeMiddle.setPower(power);
-        Hardware.outtakeTop.setPower(power);
+        Hardware.outtakeBottom.setPower(outtakePower);
+        Hardware.outtakeTop.setPower(outtakePower);
+        Hardware.outtakeMiddle.setPower(outtakePower);
         Hardware.intake.setPower(power);
     }
 
@@ -58,6 +56,7 @@ public class Shooter {
         } else {
             outtakePower = 0;
         }
+        Hardware.outtakeMiddle.setPower(outtakePower);
         Hardware.outtakeBottom.setPower(outtakePower);
         Hardware.outtakeTop.setPower(outtakePower);
     }
