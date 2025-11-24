@@ -10,22 +10,27 @@ import java.util.Optional;
 public class AprilTagConfig {
     private final AprilTagProcessor aprilTag;
     private final VisionPortal visionPortal;
+    public Optional<BallOrder> order = Optional.empty();
     public AprilTagConfig(){
         aprilTag = AprilTagProcessor.easyCreateWithDefaults();
         visionPortal = VisionPortal.easyCreateWithDefaults(Hardware.camera, aprilTag);
     }
-    public Optional<BallOrder> Check(){
-        for(AprilTagDetection d: aprilTag.getDetections()){
-            switch (d.id){
-                case 21:
-                    return Optional.of(BallOrder.GPP);
-                case 22:
-                    return Optional.of(BallOrder.PGP);
-                case 23:
-                    return Optional.of(BallOrder.PPG);
+    public void Update(){
+        if(!order.isPresent()) {
+            for (AprilTagDetection d : aprilTag.getDetections()) {
+                switch (d.id) {
+                    case 21:
+                        order = Optional.of(BallOrder.GPP);
+                        break;
+                    case 22:
+                        order =  Optional.of(BallOrder.PGP);
+                        break;
+                    case 23:
+                        order =  Optional.of(BallOrder.PPG);
+                        break;
+                }
             }
         }
-        return Optional.empty();
     }
     public void Close(){
         visionPortal.close();
