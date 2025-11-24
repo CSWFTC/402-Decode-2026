@@ -1,63 +1,27 @@
 package org.firstinspires.ftc.teamcode.Helper;
 
 public class Shooter {
-    public boolean on;
     public boolean intakeOn;
     public boolean outtakeOn;
-    public boolean slowOuttake;
     public Shooter(){
-        SetStatus(false);
-        SetStatusIntake(false);
-        slowOuttake = false;
+        SetIntake(false);
+        SetOuttake(false);
     }
-    public void Toggle(){
-        SetStatus(!on);
+
+    private void SetIntake(boolean status) {
+        intakeOn = status;
+        Hardware.intake.setPower(status ? 1.0 : 0.0);
     }
+    private void SetOuttake(boolean status) {
+        outtakeOn = status;
+        Hardware.outtakeBottom.setPower(status ? 1.0 : 0.0);
+        Hardware.outtakeTop.setPower(status ? 1.0 : 0.0);
+    }
+
     public void ToggleIntake() {
-        SetStatusIntake(!intakeOn);
+        SetIntake(!intakeOn);
     }
     public void ToggleOuttake() {
-        SetStatusOuttake(!outtakeOn);
-    }
-    public void setSlowOuttake() {
-        slowOuttake = !slowOuttake;
-    }
-    public void SetStatus(boolean newStatus){
-        on = newStatus;
-        double power = on ? 1 : 0;
-        double outtakePower = 1.0;
-        if (power == 1) {
-            if (slowOuttake) {
-                outtakePower = 0.5;
-            }
-        } else {
-            outtakePower = 0.0;
-        }
-        Hardware.outtakeBottom.setPower(outtakePower);
-        Hardware.outtakeTop.setPower(outtakePower);
-        Hardware.outtakeMiddle.setPower(outtakePower);
-        Hardware.intake.setPower(power);
-    }
-
-    public void SetStatusIntake(boolean newStatus){
-        intakeOn = newStatus;
-        double power = on ? 1 : 0;
-        Hardware.intake.setPower(power);
-    }
-
-    public void SetStatusOuttake (boolean newStatus) {
-        outtakeOn = newStatus;
-        double power = on ? 1 : 0;
-        double outtakePower = 1.0;
-        if (power == 1) {
-            if (slowOuttake) {
-                outtakePower = 0.5;
-            }
-        } else {
-            outtakePower = 0;
-        }
-        Hardware.outtakeMiddle.setPower(outtakePower);
-        Hardware.outtakeBottom.setPower(outtakePower);
-        Hardware.outtakeTop.setPower(outtakePower);
+        SetOuttake(!outtakeOn);
     }
 }

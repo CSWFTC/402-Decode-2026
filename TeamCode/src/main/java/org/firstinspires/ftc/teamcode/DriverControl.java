@@ -46,7 +46,7 @@ public class DriverControl extends LinearOpMode {
         double speedMultiplier = 0.5;
 
         while (opModeIsActive()) {
-            update_telemetry(speedMultiplier, shooter.slowOuttake);
+            update_telemetry(speedMultiplier);
 
             GamePad.GameplayInputType inpType1 = gpIn1.WaitForGamepadInput(30);
             switch (inpType1) {
@@ -65,9 +65,6 @@ public class DriverControl extends LinearOpMode {
                 case DPAD_UP:
                     speedMultiplier = 1;
                     break;
-                case BUTTON_A:
-                    shooter.Toggle();
-                    break;
                 case JOYSTICK:
                     drvTrain.setDriveVectorFromJoystick(gamepad1.left_stick_x * (float) speedMultiplier,
                             gamepad1.right_stick_x * (float) speedMultiplier,
@@ -78,23 +75,17 @@ public class DriverControl extends LinearOpMode {
             GamePad.GameplayInputType inpType2 = gpIn2.WaitForGamepadInput(30);
             switch (inpType2) {
                 case BUTTON_A:
-                    shooter.Toggle();
-                    break;
-                case BUTTON_B:
                     shooter.ToggleIntake();
                     break;
-                case BUTTON_X:
-                    shooter.ToggleOuttake();
-                    break;
                 case BUTTON_Y:
-                    shooter.setSlowOuttake();
+                    shooter.ToggleOuttake();
                     break;
             }
         }
     }
 
 
-    private void update_telemetry(double speed, boolean slowOuttake) {
+    private void update_telemetry(double speed) {
         telemetry.addLine("Gamepad #1");
 
         String inpTime1 = new java.text.SimpleDateFormat("yyyy.MM.dd HH:mm:ss.SSS", Locale.US).format(gpIn1.getTelemetry_InputLastTimestamp());
@@ -104,11 +95,6 @@ public class DriverControl extends LinearOpMode {
         telemetry.addLine().addData("GP1 Cnt", gpIn1.getTelemetry_InputCount());
         telemetry.addLine().addData("GP1 Input", gpIn1.getTelemetry_InputLastType().toString());
         telemetry.addLine();
-
-        double outtakePower = 1.0;
-        if (slowOuttake) {
-            outtakePower = 0.5;
-        }
-        telemetry.addLine().addData("Current Outtake Power", outtakePower);
+        telemetry.update();
     }
 }
