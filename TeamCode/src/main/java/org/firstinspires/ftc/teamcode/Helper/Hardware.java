@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.Helper;
 
+import com.pedropathing.ftc.drivetrains.MecanumConstants;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -20,10 +21,8 @@ public class Hardware {
     // the field name should match the name in the robot config
     // that's it!
     public static DcMotor frontLeft;
-
     @Reverse
     public static DcMotor frontRight;
-
     @Reverse
     public static DcMotor rearLeft;
     public static DcMotor rearRight;
@@ -58,6 +57,29 @@ public class Hardware {
                 }
             }
         }
+    }
+    public static MecanumConstants setMotorDirections(MecanumConstants consts){
+        Field[] fields = Hardware.class.getDeclaredFields();
+        for(Field field: fields){
+            if(field.getType() == DcMotor.class){
+                DcMotorSimple.Direction dir = field.getAnnotation(Reverse.class) == null ? DcMotorSimple.Direction.FORWARD : DcMotorSimple.Direction.REVERSE;
+                switch (field.getName()){
+                    case "frontLeft":
+                        consts = consts.leftFrontMotorDirection(dir);
+                        break;
+                    case "frontRight":
+                        consts = consts.rightFrontMotorDirection(dir);
+                        break;
+                    case "rearLeft":
+                        consts = consts.leftRearMotorDirection(dir);
+                        break;
+                    case "rearRight":
+                        consts = consts.rightRearMotorDirection(dir);
+                        break;
+                }
+            }
+        }
+        return consts;
     }
 }
 @Retention(RetentionPolicy.RUNTIME)

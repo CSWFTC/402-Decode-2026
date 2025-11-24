@@ -10,22 +10,20 @@ import com.pedropathing.ftc.drivetrains.MecanumConstants;
 import com.pedropathing.ftc.localization.constants.ThreeWheelConstants;
 import com.pedropathing.ftc.localization.Encoder;
 
+import org.firstinspires.ftc.teamcode.Helper.Hardware;
+
 public class Constants {
     public static FollowerConstants followerConstants = new FollowerConstants()
             .mass(5);
 
     public static PathConstraints pathConstraints = new PathConstraints(0.99, 100, 1, 1);
 
-    public static MecanumConstants driveConstants = new MecanumConstants()
+    public static MecanumConstants driveConstants = Hardware.setMotorDirections(new MecanumConstants()
             .maxPower(1)
             .rightFrontMotorName("frontRight")
             .rightRearMotorName("rearRight")
             .leftRearMotorName("rearLeft")
-            .leftFrontMotorName("frontLeft")
-            .leftFrontMotorDirection(DcMotorSimple.Direction.REVERSE)
-            .leftRearMotorDirection(DcMotorSimple.Direction.REVERSE)
-            .rightFrontMotorDirection(DcMotorSimple.Direction.FORWARD)
-            .rightRearMotorDirection(DcMotorSimple.Direction.FORWARD);
+            .leftFrontMotorName("frontLeft"));
 
     public static Follower createFollower(HardwareMap hardwareMap) {
         return new FollowerBuilder(followerConstants, hardwareMap)
