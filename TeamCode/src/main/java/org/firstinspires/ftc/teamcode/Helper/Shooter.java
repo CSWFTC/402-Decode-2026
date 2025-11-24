@@ -15,6 +15,7 @@ public class Shooter {
     private void SetOuttake(boolean status) {
         outtakeOn = status;
         Hardware.outtakeBottom.setPower(status ? 1.0 : 0.0);
+        Hardware.outtakeMiddle.setPower(status ? 1.0 : 0.0);
         Hardware.outtakeTop.setPower(status ? 1.0 : 0.0);
     }
 
