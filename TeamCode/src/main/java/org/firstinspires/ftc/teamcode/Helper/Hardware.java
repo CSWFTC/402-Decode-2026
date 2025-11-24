@@ -28,7 +28,7 @@ public class Hardware {
     public static DcMotor rearLeft;
     public static DcMotor rearRight;
 
-    //public static WebcamName camera;
+    public static WebcamName camera;
 
     @Reverse
     public static DcMotor intake;

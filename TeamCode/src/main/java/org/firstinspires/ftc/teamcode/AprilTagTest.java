@@ -32,13 +32,9 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
+import org.firstinspires.ftc.teamcode.Helper.Hardware;
 import org.firstinspires.ftc.teamcode.helpers.AprilTagConfig;
 import org.firstinspires.ftc.teamcode.helpers.BallOrder;
-import org.firstinspires.ftc.vision.VisionPortal;
-import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
-import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
-
-import java.util.List;
 import java.util.Optional;
 
 // stolen from the ftc samples
