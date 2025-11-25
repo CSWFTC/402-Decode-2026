@@ -3,12 +3,12 @@ package org.firstinspires.ftc.teamcode
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 import org.firstinspires.ftc.robotcore.external.Telemetry
-import org.firstinspires.ftc.teamcode.Helper.AprilTagConfig
-import org.firstinspires.ftc.teamcode.Helper.DriveTrainV2
-import org.firstinspires.ftc.teamcode.Helper.GamePad
-import org.firstinspires.ftc.teamcode.Helper.GamePad.GameplayInputType
-import org.firstinspires.ftc.teamcode.Helper.Hardware
-import org.firstinspires.ftc.teamcode.Helper.Shooter
+import org.firstinspires.ftc.teamcode.helper.AprilTagConfig
+import org.firstinspires.ftc.teamcode.helper.DriveTrainV2
+import org.firstinspires.ftc.teamcode.helper.GamePad
+import org.firstinspires.ftc.teamcode.helper.GamePad.GameplayInputType
+import org.firstinspires.ftc.teamcode.helper.Hardware
+import org.firstinspires.ftc.teamcode.helper.Shooter
 import java.text.SimpleDateFormat
 import java.util.Locale
 

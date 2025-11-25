@@ -30,8 +30,8 @@ package org.firstinspires.ftc.teamcode
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
-import org.firstinspires.ftc.teamcode.Helper.AprilTagConfig
-import org.firstinspires.ftc.teamcode.Helper.Hardware
+import org.firstinspires.ftc.teamcode.helper.AprilTagConfig
+import org.firstinspires.ftc.teamcode.helper.Hardware
 
 // stolen from the ftc samples
 @TeleOp(name = "AprilTag Test")

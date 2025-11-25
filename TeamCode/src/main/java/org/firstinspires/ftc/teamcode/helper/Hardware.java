@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Helper;
+package org.firstinspires.ftc.teamcode.helper;
 
 import com.pedropathing.ftc.drivetrains.MecanumConstants;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -13,6 +13,11 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
+
+@Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.FIELD)
+@interface Reverse {
+}
 
 // singleton for easy access to hardware peripherals
 public class Hardware {
@@ -36,34 +41,34 @@ public class Hardware {
     public static DcMotor outtakeMiddle;
 
     // initialization code
-    public static void init (HardwareMap map) {
+    public static void init(HardwareMap map) {
         Field[] fields = Hardware.class.getDeclaredFields();
-        for(Field field: fields){
-            if(Modifier.isPublic(field.getModifiers()) && Modifier.isStatic(field.getModifiers())){
+        for (Field field : fields) {
+            if (Modifier.isPublic(field.getModifiers()) && Modifier.isStatic(field.getModifiers())) {
                 field.setAccessible(true);
                 try {
                     field.set(null, map.get(field.getType(), field.getName()));
-                    if(field.getType() == DcMotor.class){
-                         Reverse r = field.getAnnotation(Reverse.class);
-                         if(r != null){
-                             DcMotor m = (DcMotor) field.get(null);
-                             assert m != null;
-                             m.setDirection(DcMotorSimple.Direction.REVERSE);
-                         }
+                    if (field.getType() == DcMotor.class) {
+                        Reverse r = field.getAnnotation(Reverse.class);
+                        if (r != null) {
+                            DcMotor m = (DcMotor) field.get(null);
+                            assert m != null;
+                            m.setDirection(DcMotorSimple.Direction.REVERSE);
+                        }
                     }
-                }
-                catch (IllegalAccessException ignored){
+                } catch (IllegalAccessException ignored) {
                     // maybe add something here
                 }
             }
         }
     }
-    public static MecanumConstants setMotorDirections(MecanumConstants consts){
+
+    public static MecanumConstants setMotorDirections(MecanumConstants consts) {
         Field[] fields = Hardware.class.getDeclaredFields();
-        for(Field field: fields){
-            if(field.getType() == DcMotor.class){
+        for (Field field : fields) {
+            if (field.getType() == DcMotor.class) {
                 DcMotorSimple.Direction dir = field.getAnnotation(Reverse.class) == null ? DcMotorSimple.Direction.FORWARD : DcMotorSimple.Direction.REVERSE;
-                switch (field.getName()){
+                switch (field.getName()) {
                     case "frontLeft":
                         consts = consts.leftFrontMotorDirection(dir);
                         break;
@@ -82,6 +87,3 @@ public class Hardware {
         return consts;
     }
 }
-@Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.FIELD)
-@interface Reverse{};

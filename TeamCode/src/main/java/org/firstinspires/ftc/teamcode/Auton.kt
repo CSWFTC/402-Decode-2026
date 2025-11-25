@@ -6,10 +6,10 @@ import com.pedropathing.geometry.BezierLine
 import com.pedropathing.geometry.Pose
 import com.pedropathing.paths.PathChain
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
-import org.firstinspires.ftc.teamcode.Helper.AprilTagConfig
-import org.firstinspires.ftc.teamcode.Helper.BallOrder
-import org.firstinspires.ftc.teamcode.Helper.Hardware
-import org.firstinspires.ftc.teamcode.Helper.Shooter
+import org.firstinspires.ftc.teamcode.helper.AprilTagConfig
+import org.firstinspires.ftc.teamcode.helper.BallOrder
+import org.firstinspires.ftc.teamcode.helper.Hardware
+import org.firstinspires.ftc.teamcode.helper.Shooter
 import org.firstinspires.ftc.teamcode.pedroPathing.Constants
 
 internal enum class State {
