@@ -8,11 +8,11 @@ public class Shooter {
         SetOuttake(false);
     }
 
-    private void SetIntake(boolean status) {
+    public void SetIntake(boolean status) {
         intakeOn = status;
         Hardware.intake.setPower(status ? 1.0 : 0.0);
     }
-    private void SetOuttake(boolean status) {
+    public void SetOuttake(boolean status) {
         outtakeOn = status;
         Hardware.outtakeBottom.setPower(status ? 1.0 : 0.0);
         Hardware.outtakeMiddle.setPower(status ? 1.0 : 0.0);
