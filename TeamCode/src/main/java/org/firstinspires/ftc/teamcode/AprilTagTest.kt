@@ -26,44 +26,38 @@
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+package org.firstinspires.ftc.teamcode
 
-package org.firstinspires.ftc.teamcode;
-
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-
-import org.firstinspires.ftc.teamcode.Helper.AprilTagConfig;
-import org.firstinspires.ftc.teamcode.Helper.Hardware;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp
+import org.firstinspires.ftc.teamcode.Helper.AprilTagConfig
+import org.firstinspires.ftc.teamcode.Helper.Hardware
 
 // stolen from the ftc samples
 @TeleOp(name = "AprilTag Test")
-public class AprilTagTest extends LinearOpMode {
-
-    @Override
-    public void runOpMode() {
-        Hardware.init(hardwareMap);
-        AprilTagConfig atconf = new AprilTagConfig();
-        waitForStart();
+class AprilTagTest : LinearOpMode() {
+    override fun runOpMode() {
+        Hardware.init(hardwareMap)
+        val atconf = AprilTagConfig()
+        waitForStart()
         if (opModeIsActive()) {
-            telemetry.addLine("Searching...");
-            telemetry.update();
-            while (!atconf.order.isPresent()) {
-                atconf.Update();
-                sleep(20);
+            telemetry.addLine("Searching...")
+            telemetry.update()
+            while (atconf.order == null) {
+                atconf.Update()
+                sleep(20)
                 if (!opModeIsActive()) {
-                    atconf.Close();
-                    return;
+                    atconf.Close()
+                    return
                 }
             }
-            telemetry.addLine(String.format("Found Ball Order %s", atconf.order.get()));
-            telemetry.update();
-            while (opModeIsActive())
-                sleep(20);
+            telemetry.addLine(String.format("Found Ball Order %s", atconf.order))
+            telemetry.update()
+            while (opModeIsActive()) sleep(20)
         }
 
         // Save more CPU resources when camera is no longer needed.
-        atconf.Close();
-
+        atconf.Close()
     }
+} // end class
 
-}   // end class
