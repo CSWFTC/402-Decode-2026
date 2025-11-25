@@ -5,11 +5,11 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.teamcode.Helper.GamePad;
+import org.firstinspires.ftc.teamcode.Helper.AprilTagConfig;
 import org.firstinspires.ftc.teamcode.Helper.DriveTrainV2;
+import org.firstinspires.ftc.teamcode.Helper.GamePad;
 import org.firstinspires.ftc.teamcode.Helper.Hardware;
 import org.firstinspires.ftc.teamcode.Helper.Shooter;
-import org.firstinspires.ftc.teamcode.helpers.AprilTagConfig;
 
 import java.util.Locale;
 
@@ -21,6 +21,7 @@ public class DriverControl extends LinearOpMode {
     private GamePad gpIn2;
     private DriveTrainV2 drvTrain;
     private AprilTagConfig atConf;
+
     @Override
     public void runOpMode() {
         Hardware.init(hardwareMap);
