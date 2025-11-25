@@ -14,6 +14,7 @@
 // Include common definitions from above.
 apply from: '../build.common.gradle'
 apply from: '../build.dependencies.gradle'
+apply plugin: 'org.jetbrains.kotlin.android'
 
 android {
     namespace = 'org.firstinspires.ftc.teamcode'
@@ -24,10 +25,14 @@ android {
         }
         jniLibs.useLegacyPackaging true
     }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
 }
 
 dependencies {
     implementation project(':FtcRobotController')
+    implementation 'androidx.core:core-ktx:1.17.0'
     annotationProcessor 'com.squareup:javapoet:1.13.0'
     annotationProcessor 'com.google.auto.service:auto-service:1.1.1'
     annotationProcessor 'javax.annotation:javax.annotation-api:1.3.2'
