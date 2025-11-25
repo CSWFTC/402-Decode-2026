@@ -1,127 +1,113 @@
-package org.firstinspires.ftc.teamcode.Helper
+package org.firstinspires.ftc.teamcode.Helper;
 
-import com.qualcomm.robotcore.hardware.DcMotor
-import kotlin.concurrent.Volatile
-import kotlin.math.abs
-import kotlin.math.ceil
-import kotlin.math.max
-import kotlin.math.sign
+import static java.lang.Thread.sleep;
 
-class DriveTrainV2 {
-    @Volatile
-    protected var brakingOn: Boolean = false
+import androidx.annotation.NonNull;
 
-    init {
-        Hardware.frontLeft.zeroPowerBehavior = DcMotor.ZeroPowerBehavior.BRAKE
-        Hardware.rearLeft.zeroPowerBehavior = DcMotor.ZeroPowerBehavior.BRAKE
-        Hardware.frontRight.zeroPowerBehavior = DcMotor.ZeroPowerBehavior.BRAKE
-        Hardware.rearRight.zeroPowerBehavior = DcMotor.ZeroPowerBehavior.BRAKE
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.HardwareMap;
+
+
+public class DriveTrainV2 {
+    public static Params PARAMS = new Params();
+    protected volatile boolean brakingOn = false;
+
+    public DriveTrainV2() {
+        Hardware.frontLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        Hardware.rearLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        Hardware.frontRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        Hardware.rearRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
     }
 
-    fun setDriveVector(forward: Double, strafe: Double, rotate: Double) {
-        if (brakingOn) return
+    public void setDriveVector(double forward, double strafe, double rotate) {
+        if (brakingOn) return;
 
-        val denominator = max(abs(forward) + abs(strafe) + abs(rotate), 1.0)
+        double denominator = Math.max(Math.abs(forward) + Math.abs(strafe) + Math.abs(rotate), 1);
 
-        val pwrfrontLeft = (forward + strafe + rotate) / denominator
-        val pwrrearLeft = (forward - strafe + rotate) / denominator
-        val pwrfrontRight = (forward - strafe - rotate) / denominator
-        val pwrrearRight = (forward + strafe - rotate) / denominator
+        double pwrfrontLeft = (forward + strafe + rotate) / denominator;
+        double pwrrearLeft = (forward - strafe + rotate) / denominator;
+        double pwrfrontRight = (forward - strafe - rotate) / denominator;
+        double pwrrearRight = (forward + strafe - rotate) / denominator;
 
-        Hardware.frontLeft.power = pwrfrontLeft
-        Hardware.rearLeft.power = pwrrearLeft
-        Hardware.frontRight.power = pwrfrontRight
-        Hardware.rearRight.power = pwrrearRight
+        Hardware.frontLeft.setPower(pwrfrontLeft);
+        Hardware.rearLeft.setPower(pwrrearLeft);
+        Hardware.frontRight.setPower(pwrfrontRight);
+        Hardware.rearRight.setPower(pwrrearRight);
     }
 
-    /** ONLY USE FOR TESTING */
-    fun setMotorsManually(
-        frontLeft: Boolean,
-        frontRight: Boolean,
-        backLeft: Boolean,
-        backRight: Boolean
-    ) {
-        Hardware.rearLeft.power = if (backLeft) 1.0 else 0.0
-        Hardware.rearRight.power = if (backRight) 1.0 else 0.0
-        Hardware.frontLeft.power = if (frontLeft) 1.0 else 0.0
-        Hardware.frontRight.power = if (frontRight) 1.0 else 0.0
+    /// ONLY USE FOR TESTING
+    public void setMotorsManually(boolean frontLeft, boolean frontRight, boolean backLeft, boolean backRight) {
+        Hardware.rearLeft.setPower(backLeft ? 1.0 : 0.0);
+        Hardware.rearRight.setPower(backRight ? 1.0 : 0.0);
+        Hardware.frontLeft.setPower(frontLeft ? 1.0 : 0.0);
+        Hardware.frontRight.setPower(frontRight ? 1.0 : 0.0);
     }
 
-    fun setDriveVectorFromJoystick(
-        stickLeftX: Float,
-        stickRightX: Float,
-        stickLeftY: Float,
-        setReversed: Boolean
-    ) {
-        if (brakingOn) return
+    public void setDriveVectorFromJoystick(float stickLeftX, float stickRightX, float stickLeftY, boolean setReversed) {
+        if (brakingOn) return;
 
-        val rotate = stickRightX.toDouble()
-        var forward: Double = stickLeftY * PARAMS.joystickYInputAdjustment
-        var strafe: Double = stickLeftX * PARAMS.strafingAdjustment
+        double rotate = stickRightX;
+        double forward = stickLeftY * PARAMS.joystickYInputAdjustment;
+        double strafe = stickLeftX * PARAMS.strafingAdjustment;
 
         if (setReversed) {
-            forward = stickLeftY * PARAMS.joystickYInputAdjustment * -1
-            strafe = stickLeftX * PARAMS.strafingAdjustment * -1
+            forward = stickLeftY * PARAMS.joystickYInputAdjustment * -1;
+            strafe = stickLeftX * PARAMS.strafingAdjustment * -1;
         }
 
-        setDriveVector(forward, strafe, rotate)
+        setDriveVector(forward, strafe, rotate);
     }
 
-    fun setBrakeStatus(braking: Boolean) {
-        brakingOn = braking
+    public void setBrakeStatus(boolean braking) {
+        brakingOn = braking;
         if (braking) {
-            var allStop = false
-            var timerExpired = false
-            val brakeStart = System.currentTimeMillis()
+            boolean allStop = false;
+            boolean timerExpired = false;
+            long brakeStart = System.currentTimeMillis();
 
 
             while (!allStop && !timerExpired) {
-                val flStop = coasterBrakeMotor(Hardware.frontLeft)
-                val blStop = coasterBrakeMotor(Hardware.rearLeft)
-                val frStop = coasterBrakeMotor(Hardware.frontRight)
-                val brStop = coasterBrakeMotor(Hardware.rearRight)
+                boolean flStop = coasterBrakeMotor(Hardware.frontLeft);
+                boolean blStop = coasterBrakeMotor(Hardware.rearLeft);
+                boolean frStop = coasterBrakeMotor(Hardware.frontRight);
+                boolean brStop = coasterBrakeMotor(Hardware.rearRight);
 
 
-                allStop = flStop && blStop && frStop && brStop
-                timerExpired =
-                    (System.currentTimeMillis() >= (brakeStart + PARAMS.brakingMaximumTime))
+                allStop = flStop && blStop && frStop && brStop;
+                timerExpired = (System.currentTimeMillis() >= (brakeStart + PARAMS.brakingMaximumTime));
 
 
                 if (!allStop && !timerExpired) {
                     try {
-                        Thread.sleep(PARAMS.brakingInterval)
-                    } catch (e: InterruptedException) {
-                        throw RuntimeException(e)
+                        sleep(PARAMS.brakingInterval);
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
                     }
                 }
             }
         }
     }
 
-    private fun coasterBrakeMotor(motor: DcMotor): Boolean {
-        val curPower = motor.power
-        val stopped = (curPower == 0.0)
+    private boolean coasterBrakeMotor(DcMotor motor) {
+        double curPower = motor.getPower();
+        boolean stopped = (curPower == 0);
 
         if (!stopped) {
-            var newPower: Double = curPower - (sign(curPower) * PARAMS.brakingInterval)
-            if (abs(newPower) < PARAMS.brakingStopThreshold) newPower = 0.0
-            motor.power = newPower
+            double newPower = curPower - (Math.signum(curPower) * PARAMS.brakingInterval);
+            if (Math.abs(newPower) < PARAMS.brakingStopThreshold) newPower = 0;
+            motor.setPower(newPower);
         }
 
-        return stopped
+        return stopped;
     }
 
-    class Params {
-        var strafingAdjustment: Double = 1.08
-        var joystickYInputAdjustment: Double = -1.0
-        var brakingStopThreshold: Double = 0.25
-        var brakingGain: Double = 0.15
-        var brakingInterval: Long = 100
-        var brakingMaximumTime: Double =
-            (ceil(1 / brakingGain).toLong() * brakingInterval).toDouble()
-    }
-
-    companion object {
-        var PARAMS: Params = Params()
+    public static class Params {
+        public double strafingAdjustment = 1.08;
+        public double joystickYInputAdjustment = -1;
+        public double brakingStopThreshold = 0.25;
+        public double brakingGain = 0.15;
+        public long brakingInterval = 100;
+        public double brakingMaximumTime = (long) Math.ceil(1 / brakingGain) * brakingInterval;
     }
 }

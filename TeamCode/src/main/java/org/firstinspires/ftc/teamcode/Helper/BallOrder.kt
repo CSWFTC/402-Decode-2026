@@ -1,6 +1,6 @@
-package org.firstinspires.ftc.teamcode.Helper
+package org.firstinspires.ftc.teamcode.Helper;
 
-enum class BallOrder {
+public enum BallOrder {
     GPP,
     PGP,
     PPG

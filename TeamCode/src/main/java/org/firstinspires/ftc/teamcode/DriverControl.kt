@@ -1,102 +1,105 @@
-package org.firstinspires.ftc.teamcode
+package org.firstinspires.ftc.teamcode;
 
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp
-import org.firstinspires.ftc.robotcore.external.Telemetry
-import org.firstinspires.ftc.teamcode.Helper.AprilTagConfig
-import org.firstinspires.ftc.teamcode.Helper.DriveTrainV2
-import org.firstinspires.ftc.teamcode.Helper.GamePad
-import org.firstinspires.ftc.teamcode.Helper.GamePad.GameplayInputType
-import org.firstinspires.ftc.teamcode.Helper.Hardware
-import org.firstinspires.ftc.teamcode.Helper.Shooter
-import java.text.SimpleDateFormat
-import java.util.Locale
 
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+
+import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.teamcode.Helper.AprilTagConfig;
+import org.firstinspires.ftc.teamcode.Helper.DriveTrainV2;
+import org.firstinspires.ftc.teamcode.Helper.GamePad;
+import org.firstinspires.ftc.teamcode.Helper.Hardware;
+import org.firstinspires.ftc.teamcode.Helper.Shooter;
+
+import java.util.Locale;
 
 @TeleOp(name = "Driver Control", group = "Competition!!")
-class DriverControl : LinearOpMode() {
-    private var setReversed = false
-    private var gpIn1: GamePad? = null
-    private var gpIn2: GamePad? = null
-    private var drvTrain: DriveTrainV2? = null
-    private var atConf: AprilTagConfig? = null
+public class DriverControl extends LinearOpMode {
+    private static final String version = "1.1";
+    private boolean setReversed = false;
+    private GamePad gpIn1;
+    private GamePad gpIn2;
+    private DriveTrainV2 drvTrain;
+    private AprilTagConfig atConf;
 
-    override fun runOpMode() {
-        Hardware.init(hardwareMap)
+    @Override
+    public void runOpMode() {
+        Hardware.init(hardwareMap);
         // Load Introduction and Wait for Start
-        telemetry.setDisplayFormat(Telemetry.DisplayFormat.MONOSPACE)
-        telemetry.addLine("Driver Control")
-        telemetry.addData("Version Number", version)
-        telemetry.addLine()
-        telemetry.addData(">", "Press Start to Launch")
-        telemetry.update()
+        telemetry.setDisplayFormat(Telemetry.DisplayFormat.MONOSPACE);
+        telemetry.addLine("Driver Control");
+        telemetry.addData("Version Number", version);
+        telemetry.addLine();
+        telemetry.addData(">", "Press Start to Launch");
+        telemetry.update();
 
-        gpIn1 = GamePad(gamepad1)
-        gpIn2 = GamePad(gamepad2)
-        val shooter = Shooter()
-        drvTrain = DriveTrainV2()
-        atConf = AprilTagConfig()
+        gpIn1 = new GamePad(gamepad1);
+        gpIn2 = new GamePad(gamepad2);
+        Shooter shooter = new Shooter();
+        drvTrain = new DriveTrainV2();
+        atConf = new AprilTagConfig();
 
-        waitForStart()
-        if (isStopRequested) {
-            return
+        waitForStart();
+        if (isStopRequested()) {
+            return;
         }
 
-        telemetry.clear()
+        telemetry.clear();
 
-        var speedMultiplier = 0.5
+        double speedMultiplier = 0.5;
 
         while (opModeIsActive()) {
-            atConf!!.Update()
-            update_telemetry(speedMultiplier)
+            atConf.Update();
+            update_telemetry(speedMultiplier);
 
-            val inpType1 = gpIn1!!.WaitForGamepadInput(30)
-            when (inpType1) {
-                GameplayInputType.BUTTON_BACK -> setReversed = !setReversed
-                GameplayInputType.DPAD_DOWN -> speedMultiplier = 0.25
-                GameplayInputType.DPAD_LEFT -> speedMultiplier = 0.75
-                GameplayInputType.DPAD_RIGHT -> speedMultiplier = 0.5
-                GameplayInputType.DPAD_UP -> speedMultiplier = 1.0
-                GameplayInputType.JOYSTICK -> drvTrain!!.setDriveVectorFromJoystick(
-                    gamepad1.left_stick_x * speedMultiplier.toFloat(),
-                    gamepad1.right_stick_x * speedMultiplier.toFloat(),
-                    gamepad1.left_stick_y * speedMultiplier.toFloat(), setReversed
-                )
-
-                else -> {}
+            GamePad.GameplayInputType inpType1 = gpIn1.WaitForGamepadInput(30);
+            switch (inpType1) {
+                case BUTTON_BACK:
+                    setReversed = !setReversed;
+                    break;
+                case DPAD_DOWN:
+                    speedMultiplier = 0.25;
+                    break;
+                case DPAD_LEFT:
+                    speedMultiplier = 0.75;
+                    break;
+                case DPAD_RIGHT:
+                    speedMultiplier = 0.5;
+                    break;
+                case DPAD_UP:
+                    speedMultiplier = 1;
+                    break;
+                case JOYSTICK:
+                    drvTrain.setDriveVectorFromJoystick(gamepad1.left_stick_x * (float) speedMultiplier,
+                            gamepad1.right_stick_x * (float) speedMultiplier,
+                            gamepad1.left_stick_y * (float) speedMultiplier, setReversed);
+                    break;
             }
 
-            val inpType2 = gpIn2!!.WaitForGamepadInput(30)
-            when (inpType2) {
-                GameplayInputType.BUTTON_A -> shooter.ToggleIntake()
-                GameplayInputType.BUTTON_Y -> shooter.ToggleOuttake()
-                else -> {}
+            GamePad.GameplayInputType inpType2 = gpIn2.WaitForGamepadInput(30);
+            switch (inpType2) {
+                case BUTTON_A:
+                    shooter.ToggleIntake();
+                    break;
+                case BUTTON_Y:
+                    shooter.ToggleOuttake();
+                    break;
             }
         }
     }
 
 
-    private fun update_telemetry(speed: Double) {
-        telemetry.addLine("Gamepad #1")
+    private void update_telemetry(double speed) {
+        telemetry.addLine("Gamepad #1");
 
-        val inpTime1 = SimpleDateFormat(
-            "yyyy.MM.dd HH:mm:ss.SSS",
-            Locale.US
-        ).format(gpIn1!!.telemetry_InputLastTimestamp)
-        telemetry.addLine().addData("Current Speed Multiplier", speed)
-        telemetry.addLine()
-        telemetry.addLine().addData("GP1 Time", inpTime1)
-        telemetry.addLine().addData("GP1 Cnt", gpIn1!!.telemetry_InputCount)
-        telemetry.addLine().addData("GP1 Input", gpIn1!!.telemetry_InputLastType.toString())
-        telemetry.addLine().addData(
-            "Apriltag Status:",
-            if (atConf!!.order == null) atConf!!.order.toString() else "Not found yet"
-        )
-        telemetry.addLine()
-        telemetry.update()
-    }
-
-    companion object {
-        private const val version = "1.1"
+        String inpTime1 = new java.text.SimpleDateFormat("yyyy.MM.dd HH:mm:ss.SSS", Locale.US).format(gpIn1.getTelemetry_InputLastTimestamp());
+        telemetry.addLine().addData("Current Speed Multiplier", speed);
+        telemetry.addLine();
+        telemetry.addLine().addData("GP1 Time", inpTime1);
+        telemetry.addLine().addData("GP1 Cnt", gpIn1.getTelemetry_InputCount());
+        telemetry.addLine().addData("GP1 Input", gpIn1.getTelemetry_InputLastType().toString());
+        telemetry.addLine().addData("Apriltag Status:", atConf.order.map(Enum::toString).orElse("Not Found Yet"));
+        telemetry.addLine();
+        telemetry.update();
     }
 }
