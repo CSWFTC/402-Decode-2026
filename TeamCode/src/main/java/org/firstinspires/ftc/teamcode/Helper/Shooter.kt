@@ -1,35 +1,48 @@
-package org.firstinspires.ftc.teamcode.Helper;
+package org.firstinspires.ftc.teamcode.Helper
 
-import com.bylazar.configurables.annotations.Configurable;
+import com.bylazar.configurables.annotations.Configurable
 
 @Configurable
-public class Shooter {
-    public static double intakePower = 1;
-    public static double outtakeTopPower = 0.5;
-    public static double outtakeMiddlePower = 1;
-    public static double outtakeBottomPower = 1;
-    public boolean intakeOn;
-    public boolean outtakeOn;
-    public Shooter(){
-        SetIntake(false);
-        SetOuttake(false);
+class Shooter {
+    var intakeOn: Boolean = false
+    var outtakeOn: Boolean = false
+
+    init {
+        SetIntake(false)
+        SetOuttake(false)
     }
 
-    public void SetIntake(boolean status) {
-        intakeOn = status;
-        Hardware.intake.setPower(status ? intakePower : 0.0);
-    }
-    public void SetOuttake(boolean status) {
-        outtakeOn = status;
-        Hardware.outtakeBottom.setPower(status ? outtakeBottomPower : 0.0);
-        Hardware.outtakeMiddle.setPower(status ? outtakeMiddlePower : 0.0);
-        Hardware.outtakeTop.setPower(status ? outtakeTopPower : 0.0);
+    fun SetIntake(status: Boolean) {
+        intakeOn = status
+        Hardware.intake.power = if (status) intakePower else 0.0
     }
 
-    public void ToggleIntake() {
-        SetIntake(!intakeOn);
+    fun SetOuttake(status: Boolean) {
+        outtakeOn = status
+        Hardware.outtakeBottom.power = if (status) outtakeBottomPower else 0.0
+        Hardware.outtakeMiddle.power = if (status) outtakeMiddlePower else 0.0
+        Hardware.outtakeTop.power = if (status) outtakeTopPower else 0.0
     }
-    public void ToggleOuttake() {
-        SetOuttake(!outtakeOn);
+
+    fun ToggleIntake() {
+        SetIntake(!intakeOn)
+    }
+
+    fun ToggleOuttake() {
+        SetOuttake(!outtakeOn)
+    }
+
+    companion object {
+        @JvmField // allows the dashboard to configure these variables
+        var intakePower: Double = 1.0
+
+        @JvmField
+        var outtakeTopPower: Double = 0.5
+
+        @JvmField
+        var outtakeMiddlePower: Double = 1.0
+
+        @JvmField
+        var outtakeBottomPower: Double = 1.0
     }
 }
