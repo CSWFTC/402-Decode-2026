@@ -9,6 +9,7 @@ import org.firstinspires.ftc.teamcode.Helper.GamePad;
 import org.firstinspires.ftc.teamcode.Helper.DriveTrainV2;
 import org.firstinspires.ftc.teamcode.Helper.Hardware;
 import org.firstinspires.ftc.teamcode.Helper.Shooter;
+import org.firstinspires.ftc.teamcode.helpers.AprilTagConfig;
 
 import java.util.Locale;
 
@@ -19,7 +20,7 @@ public class DriverControl extends LinearOpMode {
     private GamePad gpIn1;
     private GamePad gpIn2;
     private DriveTrainV2 drvTrain;
-
+    private AprilTagConfig atConf;
     @Override
     public void runOpMode() {
         Hardware.init(hardwareMap);
@@ -35,6 +36,7 @@ public class DriverControl extends LinearOpMode {
         gpIn2 = new GamePad(gamepad2);
         Shooter shooter = new Shooter();
         drvTrain = new DriveTrainV2();
+        atConf = new AprilTagConfig();
 
         waitForStart();
         if (isStopRequested()) {
@@ -46,6 +48,7 @@ public class DriverControl extends LinearOpMode {
         double speedMultiplier = 0.5;
 
         while (opModeIsActive()) {
+            atConf.Update();
             update_telemetry(speedMultiplier);
 
             GamePad.GameplayInputType inpType1 = gpIn1.WaitForGamepadInput(30);
@@ -94,6 +97,7 @@ public class DriverControl extends LinearOpMode {
         telemetry.addLine().addData("GP1 Time", inpTime1);
         telemetry.addLine().addData("GP1 Cnt", gpIn1.getTelemetry_InputCount());
         telemetry.addLine().addData("GP1 Input", gpIn1.getTelemetry_InputLastType().toString());
+        telemetry.addLine().addData("Apriltag Status:", atConf.order.map(Enum::toString).orElse("Not Found Yet"));
         telemetry.addLine();
         telemetry.update();
     }
