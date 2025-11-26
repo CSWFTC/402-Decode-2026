@@ -1,6 +1,5 @@
 package org.firstinspires.ftc.teamcode
 
-import com.bylazar.configurables.annotations.Configurable
 import com.pedropathing.follower.Follower
 import com.pedropathing.geometry.BezierLine
 import com.pedropathing.geometry.Pose
@@ -20,7 +19,6 @@ internal enum class State {
     DONE
 }
 
-@Configurable
 abstract class Auton : LinearOpMode() {
     abstract fun getWaypoints(): Waypoints
     override fun runOpMode() {

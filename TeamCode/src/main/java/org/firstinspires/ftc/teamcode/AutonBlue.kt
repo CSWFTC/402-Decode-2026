@@ -1,9 +1,11 @@
 package org.firstinspires.ftc.teamcode
 
+import com.bylazar.configurables.annotations.Configurable
 import com.pedropathing.geometry.Pose
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous
 
 @Autonomous(name = "BLUE Auton")
+@Configurable
 class AutonBlue : Auton() {
     override fun getWaypoints(): Waypoints {
         return w
