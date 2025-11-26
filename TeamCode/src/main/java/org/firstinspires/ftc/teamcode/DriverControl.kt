@@ -62,8 +62,8 @@ class DriverControl : LinearOpMode() {
 
             val inpType2 = gpIn2.WaitForGamepadInput(30)
             when (inpType2) {
-                GameplayInputType.BUTTON_A -> shooter.ToggleIntake()
-                GameplayInputType.BUTTON_Y -> shooter.ToggleOuttake()
+                GameplayInputType.BUTTON_A -> shooter.toggleIntake()
+                GameplayInputType.BUTTON_Y -> shooter.toggleOuttake()
                 else -> {}
             }
             telemetry.addLine("Gamepad #1")

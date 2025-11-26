@@ -4,15 +4,11 @@ import org.firstinspires.ftc.vision.VisionPortal
 import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor
 
 class AprilTagConfig {
-    private val aprilTag: AprilTagProcessor
-    private val visionPortal: VisionPortal
+    private val aprilTag: AprilTagProcessor = AprilTagProcessor.easyCreateWithDefaults()
+    private val visionPortal: VisionPortal =
+        VisionPortal.easyCreateWithDefaults(Hardware.camera, aprilTag)
 
     var order: BallOrder? = null
-
-    init {
-        aprilTag = AprilTagProcessor.easyCreateWithDefaults()
-        visionPortal = VisionPortal.easyCreateWithDefaults(Hardware.camera, aprilTag)
-    }
 
     fun Update() {
         if (order == null) {

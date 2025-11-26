@@ -4,32 +4,23 @@ import com.bylazar.configurables.annotations.Configurable
 
 @Configurable
 class Shooter {
-    var intakeOn: Boolean = false
-    var outtakeOn: Boolean = false
+    var intake: Boolean = false
+        set(value) {
+            Hardware.intake.power = if (value) intakePower else 0.0
+        }
+    var outtake: Boolean = false
+        set(value) {
+            Hardware.outtakeBottom.power = if (value) outtakeBottomPower else 0.0
+            Hardware.outtakeMiddle.power = if (value) outtakeMiddlePower else 0.0
+            Hardware.outtakeTop.power = if (value) outtakeTopPower else 0.0
+        }
 
-    init {
-        SetIntake(false)
-        SetOuttake(false)
+    fun toggleIntake() {
+        intake = !intake
     }
 
-    fun SetIntake(status: Boolean) {
-        intakeOn = status
-        Hardware.intake.power = if (status) intakePower else 0.0
-    }
-
-    fun SetOuttake(status: Boolean) {
-        outtakeOn = status
-        Hardware.outtakeBottom.power = if (status) outtakeBottomPower else 0.0
-        Hardware.outtakeMiddle.power = if (status) outtakeMiddlePower else 0.0
-        Hardware.outtakeTop.power = if (status) outtakeTopPower else 0.0
-    }
-
-    fun ToggleIntake() {
-        SetIntake(!intakeOn)
-    }
-
-    fun ToggleOuttake() {
-        SetOuttake(!outtakeOn)
+    fun toggleOuttake() {
+        outtake = !outtake
     }
 
     companion object {
