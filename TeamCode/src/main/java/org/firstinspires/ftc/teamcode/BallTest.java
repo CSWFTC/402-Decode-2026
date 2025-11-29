@@ -45,13 +45,13 @@ import org.firstinspires.ftc.teamcode.Helper.Hardware;
                 Hardware.outtakeMiddle.setPower(fr ? 1 : 0);
                 Hardware.outtakeBottom.setPower(rl ? 1 : 0);
                 Hardware.intake.setPower(rr ? 1 : 0);
-                telemetry.addData("Rear Left (A)", rl);
+                telemetry.addData("Outtake Bottom (A)", rl);
                 telemetry.addLine();
-                telemetry.addData("Rear Right (B)", rr);
+                telemetry.addData("Intake (B)", rr);
                 telemetry.addLine();
-                telemetry.addData("Front Left (X)", fl);
+                telemetry.addData("Outtake Top (X)", fl);
                 telemetry.addLine();
-                telemetry.addData("Front Right (Y)", fr);
+                telemetry.addData("Outtake Middle (Y)", fr);
                 telemetry.addLine();
                 telemetry.update();
             }
