@@ -5,10 +5,10 @@ import com.bylazar.configurables.annotations.Configurable;
 @Configurable
 public class Shooter {
     public static double intakePower = 1;
-    public static double outtakeTopPower = 0.75;
+    public static double outtakeTopPower = 1;
     public static double outtakeMiddlePower = 1;
     public static double outtakeBottomPower = 1;
-    public double outtakePowerMultiplier = 1;
+    public double outtakeTopPowerMultiplier = 1;
     public double intakePowerMultiplier = 1;
     public boolean intakeOn;
     public boolean outtakeOn;
@@ -23,9 +23,9 @@ public class Shooter {
     }
     private void SetOuttake(boolean status) {
         outtakeOn = status;
-        Hardware.outtakeBottom.setPower(status ? outtakeBottomPower * outtakePowerMultiplier : 0.0);
-        Hardware.outtakeMiddle.setPower(status ? outtakeMiddlePower * outtakePowerMultiplier : 0.0);
-        Hardware.outtakeTop.setPower(status ? outtakeTopPower * outtakePowerMultiplier : 0.0);
+        Hardware.outtakeBottom.setPower(status ? outtakeBottomPower : 0.0);
+        Hardware.outtakeMiddle.setPower(status ? outtakeMiddlePower : 0.0);
+        Hardware.outtakeTop.setPower(status ? outtakeTopPower * outtakeTopPowerMultiplier : 0.0);
     }
 
     public void increaseIntakePower(double power) {
@@ -44,27 +44,28 @@ public class Shooter {
         SetIntake(intakeOn);
     }
 
-    public void setOuttakePowerMultiplier(double power) {
-        outtakePowerMultiplier = power;
-        if (outtakePowerMultiplier > 1) {
-            outtakePowerMultiplier = 1;
-        } else if (outtakePowerMultiplier < 0.05) {
-            outtakePowerMultiplier = 0.05;
-        }
-    }
-
-    public void increaseOuttakePower(double power) {
-        outtakePowerMultiplier = outtakePowerMultiplier + power;
-        if (outtakePowerMultiplier > 1) {
-            outtakePowerMultiplier = 1;
+    public void setOuttakeTopPowerMultiplier(double power) {
+        outtakeTopPowerMultiplier = power;
+        if (outtakeTopPowerMultiplier > 1) {
+            outtakeTopPowerMultiplier = 1;
+        } else if (outtakeTopPowerMultiplier < 0.05) {
+            outtakeTopPowerMultiplier = 0.05;
         }
         SetOuttake(outtakeOn);
     }
 
-    public void decreaseOuttakePower(double power) {
-        outtakePowerMultiplier = outtakePowerMultiplier - power;
-        if (outtakePowerMultiplier < 0.05) {
-            outtakePowerMultiplier = 0.05;
+    public void increaseTopOuttakePower(double power) {
+        outtakeTopPowerMultiplier = outtakeTopPowerMultiplier + power;
+        if (outtakeTopPowerMultiplier > 1) {
+            outtakeTopPowerMultiplier = 1;
+        }
+        SetOuttake(outtakeOn);
+    }
+
+    public void decreaseTopOuttakePower(double power) {
+        outtakeTopPowerMultiplier = outtakeTopPowerMultiplier - power;
+        if (outtakeTopPowerMultiplier < 0.05) {
+            outtakeTopPowerMultiplier = 0.05;
         }
         SetOuttake(outtakeOn);
     }
