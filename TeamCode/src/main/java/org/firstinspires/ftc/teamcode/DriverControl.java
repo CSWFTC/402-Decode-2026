@@ -49,7 +49,7 @@ public class DriverControl extends LinearOpMode {
 
         while (opModeIsActive()) {
             atConf.Update();
-            update_telemetry(speedMultiplier);
+            update_telemetry(speedMultiplier, shooter.outtakeTopPowerMultiplier);
 
             GamePad.GameplayInputType inpType1 = gpIn1.WaitForGamepadInput(30);
             switch (inpType1) {
@@ -83,12 +83,30 @@ public class DriverControl extends LinearOpMode {
                 case BUTTON_Y:
                     shooter.ToggleOuttake();
                     break;
+                case BUTTON_R_BUMPER:
+                    shooter.increaseTopOuttakePower(0.05);
+                    break;
+                case BUTTON_L_BUMPER:
+                    shooter.decreaseTopOuttakePower(0.05);
+                    break;
+                case DPAD_UP:
+                    shooter.setOuttakeTopPowerMultiplier(1.00);
+                    break;
+                case DPAD_DOWN:
+                    shooter.setOuttakeTopPowerMultiplier(0.25);
+                    break;
+                case DPAD_RIGHT:
+                    shooter.setOuttakeTopPowerMultiplier(0.75);
+                    break;
+                case DPAD_LEFT:
+                    shooter.setOuttakeTopPowerMultiplier(0.50);
+                    break;
             }
         }
     }
 
 
-    private void update_telemetry(double speed) {
+    private void update_telemetry(double speed, double outtakePower) {
         telemetry.addLine("Gamepad #1");
 
         String inpTime1 = new java.text.SimpleDateFormat("yyyy.MM.dd HH:mm:ss.SSS", Locale.US).format(gpIn1.getTelemetry_InputLastTimestamp());
@@ -98,6 +116,8 @@ public class DriverControl extends LinearOpMode {
         telemetry.addLine().addData("GP1 Cnt", gpIn1.getTelemetry_InputCount());
         telemetry.addLine().addData("GP1 Input", gpIn1.getTelemetry_InputLastType().toString());
         telemetry.addLine().addData("Apriltag Status:", atConf.order.map(Enum::toString).orElse("Not Found Yet"));
+        telemetry.addLine();
+        telemetry.addLine().addData("Current Top Outtake Power Multiplier", outtakePower);
         telemetry.addLine();
         telemetry.update();
     }
