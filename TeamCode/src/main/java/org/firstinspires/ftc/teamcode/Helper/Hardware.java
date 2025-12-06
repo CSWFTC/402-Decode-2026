@@ -54,6 +54,13 @@ public class Hardware {
                              assert m != null;
                              m.setDirection(DcMotorSimple.Direction.REVERSE);
                          }
+                    } else if (field.getType() == CRServo.class) {
+                        Reverse r = field.getAnnotation(Reverse.class);
+                        if(r != null){
+                            CRServo m = (CRServo) field.get(null);
+                            assert m != null;
+                            m.setDirection(DcMotorSimple.Direction.REVERSE);
+                        }
                     }
                 }
                 catch (IllegalAccessException ignored){
