@@ -12,6 +12,9 @@ public class Shooter {
     public double intakePowerMultiplier = 1;
     public boolean intakeOn;
     public boolean outtakeOn;
+
+    public boolean servoOn = false;
+
     public Shooter(){
         SetIntake(false);
         SetOuttake(false);
@@ -26,6 +29,11 @@ public class Shooter {
         Hardware.outtakeBottom.setPower(status ? outtakeBottomPower : 0.0);
         Hardware.outtakeMiddle.setPower(status ? outtakeMiddlePower : 0.0);
         Hardware.outtakeTop.setPower(status ? outtakeTopPower * outtakeTopPowerMultiplier : 0.0);
+    }
+
+    public void toggleServo() {
+        servoOn = !servoOn;
+        Hardware.servo.setPower(servoOn ? 1.0 : 0.0);
     }
 
     public void increaseIntakePower(double power) {

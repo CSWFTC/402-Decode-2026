@@ -101,6 +101,9 @@ public class DriverControl extends LinearOpMode {
                 case DPAD_LEFT:
                     shooter.setOuttakeTopPowerMultiplier(0.50);
                     break;
+                case BUTTON_X:
+                    shooter.toggleServo();
+                    break;
             }
         }
     }

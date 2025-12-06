@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.Helper;
 
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -35,6 +36,8 @@ public class Hardware {
     public static DcMotor outtakeTop;
     public static DcMotor outtakeBottom;
     public static DcMotor outtakeMiddle;
+
+    public static CRServo servo;
 
     // initialization code
     public static void init (HardwareMap map) {
