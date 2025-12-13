@@ -36,6 +36,8 @@ public class Hardware {
     public static DcMotor outtakeBottom;
     public static DcMotor outtakeMiddle;
 
+    public static DcMotor sorter;
+
     // initialization code
     public static void init (HardwareMap map) {
         Field[] fields = Hardware.class.getDeclaredFields();
