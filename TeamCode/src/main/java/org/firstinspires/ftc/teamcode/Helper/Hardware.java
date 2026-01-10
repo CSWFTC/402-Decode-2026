@@ -36,6 +36,11 @@ public class Hardware {
     public static DcMotor outtakeBottom;
     public static DcMotor outtakeMiddle;
 
+    public static DcMotor outtakeLeft;
+
+    @Reverse
+    public static DcMotor outtakeRight;
+
     // initialization code
     public static void init (HardwareMap map) {
         Field[] fields = Hardware.class.getDeclaredFields();
@@ -54,7 +59,7 @@ public class Hardware {
                     }
                 }
                 catch (IllegalAccessException ignored){
-                    // maybe add something here
+
                 }
             }
         }
