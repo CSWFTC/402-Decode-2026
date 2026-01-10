@@ -41,6 +41,8 @@ public class Hardware {
     @Reverse
     public static DcMotor outtakeRight;
 
+    public static DcMotor TurretMotor;
+
     // initialization code
     public static void init (HardwareMap map) {
         Field[] fields = Hardware.class.getDeclaredFields();
