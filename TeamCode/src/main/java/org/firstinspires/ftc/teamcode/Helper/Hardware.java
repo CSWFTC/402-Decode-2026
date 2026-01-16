@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.Helper;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 
@@ -31,28 +32,40 @@ public class Hardware {
     // just declare a new field
     // the field name should match the name in the robot config
     // that's it!
+    @DoNotInitialize
     public static DcMotor frontLeft;
 
     @Reverse
+    @DoNotInitialize
     public static DcMotor frontRight;
 
     @Reverse
+    @DoNotInitialize
     public static DcMotor rearLeft;
+    @DoNotInitialize
     public static DcMotor rearRight;
 
     @DoNotInitialize
     public static WebcamName camera;
 
     @Reverse
+    @DoNotInitialize
     public static DcMotor intake;
+    @DoNotInitialize
     public static DcMotor outtakeTop;
+    @DoNotInitialize
     public static DcMotor outtakeBottom;
+    @DoNotInitialize
     public static DcMotor outtakeMiddle;
 
+    @DoNotInitialize
     public static DcMotor outtakeLeft;
 
     @Reverse
+    @DoNotInitialize
     public static DcMotor outtakeRight;
+
+    public static Servo flapServo;
 
     // initialization code
     public static void init(HardwareMap map) {
