@@ -5,8 +5,8 @@ import com.bylazar.configurables.annotations.Configurable;
 @Configurable
 public class Shooter {
     public static double intakePower = 1;
-    public static double outtakeTopPower = 0.85;
-    public static double outtakeMiddlePower = 0.5;
+    public static double outtakeTopPower = 0.75;
+    public static double outtakeMiddlePower = 1;
     public static double outtakeBottomPower = 1;
     public boolean intakeOn;
     public boolean outtakeOn;
@@ -16,12 +16,12 @@ public class Shooter {
         SetOuttake(false);
     }
 
-    private void SetIntake(boolean status) {
+    public void SetIntake(boolean status) {
         intakeOn = status;
         Hardware.intake.setPower(status ? intakePower : 0.0);
     }
 
-    private void SetOuttake(boolean status) {
+    public void SetOuttake(boolean status) {
         outtakeOn = status;
         Hardware.outtakeBottom.setPower(status ? outtakeBottomPower : 0.0);
         Hardware.outtakeMiddle.setPower(status ? outtakeMiddlePower : 0.0);
