@@ -32,10 +32,8 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
+import org.firstinspires.ftc.teamcode.Helper.AprilTagConfig;
 import org.firstinspires.ftc.teamcode.Helper.Hardware;
-import org.firstinspires.ftc.teamcode.helpers.AprilTagConfig;
-import org.firstinspires.ftc.teamcode.helpers.BallOrder;
-import java.util.Optional;
 
 // stolen from the ftc samples
 @TeleOp(name = "AprilTag Test")
@@ -47,20 +45,20 @@ public class AprilTagTest extends LinearOpMode {
         AprilTagConfig atconf = new AprilTagConfig();
         waitForStart();
         if (opModeIsActive()) {
-                telemetry.addLine("Searching...");
-                telemetry.update();
-                while(!atconf.order.isPresent()) {
-                    atconf.Update();
-                    sleep(20);
-                    if(!opModeIsActive()) {
-                        atconf.Close();
-                        return;
-                    }
+            telemetry.addLine("Searching...");
+            telemetry.update();
+            while (!atconf.order.isPresent()) {
+                atconf.Update();
+                sleep(20);
+                if (!opModeIsActive()) {
+                    atconf.Close();
+                    return;
                 }
-                telemetry.addLine(String.format("Found Ball Order %s", atconf.order.get()));
-                telemetry.update();
-                while(opModeIsActive())
-                    sleep(20);
+            }
+            telemetry.addLine(String.format("Found Ball Order %s", atconf.order.get()));
+            telemetry.update();
+            while (opModeIsActive())
+                sleep(20);
         }
 
         // Save more CPU resources when camera is no longer needed.

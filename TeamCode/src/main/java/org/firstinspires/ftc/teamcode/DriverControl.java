@@ -1,10 +1,12 @@
 package org.firstinspires.ftc.teamcode;
 
 
+import com.bylazar.gamepad.PanelsGamepad;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.teamcode.Helper.BallTransfer;
 import org.firstinspires.ftc.teamcode.Helper.DriveTrainV2;
 import org.firstinspires.ftc.teamcode.Helper.GamePad;
 import org.firstinspires.ftc.teamcode.Helper.Hardware;
@@ -32,10 +34,11 @@ public class DriverControl extends LinearOpMode {
         telemetry.addData(">", "Press Start to Launch");
         telemetry.update();
 
-        gpIn1 = new GamePad(gamepad1);
-        gpIn2 = new GamePad(gamepad2);
+        gpIn1 = new GamePad(PanelsGamepad.INSTANCE.getFirstManager().asCombinedFTCGamepad(gamepad1));
+        gpIn2 = new GamePad(PanelsGamepad.INSTANCE.getSecondManager().asCombinedFTCGamepad(gamepad2));
         Shooter shooter = new Shooter();
         drvTrain = new DriveTrainV2();
+        BallTransfer bt = new BallTransfer();
 //        atConf = new AprilTagConfig();
 
         waitForStart();
@@ -82,6 +85,9 @@ public class DriverControl extends LinearOpMode {
                     break;
                 case BUTTON_Y:
                     shooter.ToggleOuttake();
+                    break;
+                case BUTTON_B:
+                    bt.ToggleLaunch();
                     break;
                 case BUTTON_R_BUMPER:
                     shooter.increaseTopOuttakePower(0.05);
