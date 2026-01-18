@@ -55,6 +55,7 @@ public class SingleOuttakeMotorTest extends LinearOpMode {
             telemetry.addLine().addData("Controls", "A for Forward (Correct), B for Reverse (Incorrect)");
             telemetry.addLine().addData("Currently Forward", gamepad1.a);
             telemetry.addLine().addData("Currently Reverse", gamepad1.b);
+            telemetry.addLine().addData("Current Power", Hardware.outtake.getPower());
             telemetry.update();
         }
     }
