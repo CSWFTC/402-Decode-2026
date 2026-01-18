@@ -5,6 +5,8 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 
+import org.firstinspires.ftc.teamcode.Helper.Hardware;
+
 @TeleOp(name="Spindex Test")
 public class SpindexTest extends LinearOpMode {
 
@@ -17,7 +19,7 @@ public class SpindexTest extends LinearOpMode {
     @Override
     public void runOpMode() {
 
-        DcMotorEx spindex = hardwareMap.get(DcMotorEx.class, "spindex");
+        DcMotor spindex = Hardware.spindexMotor;
 
         spindex.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
