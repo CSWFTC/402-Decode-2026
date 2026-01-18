@@ -67,6 +67,8 @@ public class Hardware {
 
     public static Servo flapServo;
 
+    public static DcMotor spindexMotor;
+
     // initialization code
     public static void init(HardwareMap map) {
         Field[] fields = Hardware.class.getDeclaredFields();
