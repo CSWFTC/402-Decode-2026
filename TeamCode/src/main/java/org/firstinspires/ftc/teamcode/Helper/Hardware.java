@@ -65,8 +65,13 @@ public class Hardware {
     @DoNotInitialize
     public static DcMotor outtakeRight;
 
+    @Reverse
+    public static DcMotor outtake;
+
+    @DoNotInitialize
     public static Servo flapServo;
 
+    @DoNotInitialize
     public static DcMotor spindexMotor;
 
     // initialization code
