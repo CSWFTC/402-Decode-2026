@@ -23,7 +23,7 @@ public class SpindexSlowSpinCalibrate extends LinearOpMode {
 
         double motorTicksPerRev = spindex.getMotorType().getTicksPerRev();
         double ticksPerSpindexRev = motorTicksPerRev * GEAR_RATIO;
-        double ticksPerPocket = ticksPerSpindexRev / 3.0;
+        int ticksPerPocket = (int)(ticksPerSpindexRev / 3.0);
 
         telemetry.addData("motorTicksPerRev", motorTicksPerRev);
         telemetry.addData("GEAR_RATIO", GEAR_RATIO);
@@ -36,24 +36,26 @@ public class SpindexSlowSpinCalibrate extends LinearOpMode {
         if (isStopRequested()) return;
 
         spindex.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        spindex.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        spindex.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
         spindex.setPower(SPIN_POWER);
+        spindex.setTargetPosition(ticksPerPocket);
 
         int last = 0;
         int turns = 0;
 
         while (opModeIsActive()) {
 
-            int current = spindex.getCurrentPosition();
-
-            if (current < last) turns++;
-            last = current;
-
-            telemetry.addData("SpinPower", SPIN_POWER);
-            telemetry.addData("CurrentTicks", current);
-            telemetry.addData("ApproxTurns", turns);
-            telemetry.update();
+//            int current = spindex.getCurrentPosition();
+//
+//            if (current < last) turns++;
+//            last = current;
+//
+//            telemetry.addData("SpinPower", SPIN_POWER);
+//            telemetry.addData("CurrentTicks", current);
+//            telemetry.addData("ApproxTurns", turns);
+//            telemetry.update();
+            sleep(30);
         }
 
         spindex.setPower(0);
