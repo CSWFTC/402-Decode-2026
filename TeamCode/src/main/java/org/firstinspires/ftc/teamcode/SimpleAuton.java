@@ -15,7 +15,7 @@ public class SimpleAuton extends LinearOpMode {
 
     @Override
     public void runOpMode() {
-        double old = Shooter.outtakeTopPower;
+        double old = Shooter.outtakePower;
         Hardware.init(hardwareMap);
         Shooter s = new Shooter();
         waitForStart();
