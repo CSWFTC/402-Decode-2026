@@ -51,6 +51,8 @@ public class Hardware {
     @Reverse
     public static DcMotor spindex;
 
+    public static Servo turretServo;
+
     // initialization code
     public static void init(HardwareMap map) {
         Field[] fields = Hardware.class.getDeclaredFields();
