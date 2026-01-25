@@ -18,7 +18,7 @@ public class FlapTest extends LinearOpMode {
         Gamepad gpIn2 = PanelsGamepad.INSTANCE.getFirstManager().asCombinedFTCGamepad(gamepad2);
         BallTransfer bt = new BallTransfer();
 
-        double position = 0.71;
+        double position = 0.2;
 
         //final position = 0.40;
         //starting position = 0.71;
@@ -36,8 +36,10 @@ public class FlapTest extends LinearOpMode {
             /*bt.SetLaunching(gpIn2.circle);
             telemetry.addData("On", gpIn2.circle);
             telemetry.update();*/
-            position = 0.40;
+            //position = 0.40;
+            position += 0.01;
             Hardware.flapServo.setPosition(position);
+            sleep(500);
             telemetry.addLine().addData("Position", position);
             telemetry.update();
         }

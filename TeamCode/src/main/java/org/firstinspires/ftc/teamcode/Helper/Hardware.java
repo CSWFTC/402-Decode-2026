@@ -49,6 +49,7 @@ public class Hardware {
     public static WebcamName camera;
 
     @Reverse
+    @DoNotInitialize
     public static DcMotor intake;
     @DoNotInitialize
     public static DcMotor outtakeTop;
@@ -67,8 +68,7 @@ public class Hardware {
     @DoNotInitialize
     @Reverse
     public static DcMotor outtake;
-
-    @DoNotInitialize
+    
     public static Servo flapServo;
 
     @DoNotInitialize
