@@ -1,47 +1,44 @@
 package org.firstinspires.ftc.teamcode;
 
-
-import com.bylazar.gamepad.PanelsGamepad;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.Gamepad;
 
 import org.firstinspires.ftc.teamcode.Helper.BallTransfer;
+import org.firstinspires.ftc.teamcode.Helper.GamePad;
 import org.firstinspires.ftc.teamcode.Helper.Hardware;
 
 @TeleOp(name = "Flap Test")
 public class FlapTest extends LinearOpMode {
-
     @Override
     public void runOpMode() {
         Hardware.init(hardwareMap);
-        Gamepad gpIn2 = PanelsGamepad.INSTANCE.getFirstManager().asCombinedFTCGamepad(gamepad2);
+        GamePad gpIn1 = new GamePad(gamepad1);
         BallTransfer bt = new BallTransfer();
 
-        double position = 0.2;
-
+        double position = 0.50;
         //final position = 0.40;
         //starting position = 0.71;
-        Hardware.flapServo.setPosition(position);
 
-        waitForStart();
-        if (isStopRequested()) {
-            return;
-        }
-
-        telemetry.clear();
-
-
-        while (opModeIsActive()) {
-            /*bt.SetLaunching(gpIn2.circle);
-            telemetry.addData("On", gpIn2.circle);
-            telemetry.update();*/
-            //position = 0.40;
-            position += 0.01;
-            Hardware.flapServo.setPosition(position);
-            sleep(500);
-            telemetry.addLine().addData("Position", position);
+            GamePad.GameplayInputType inpType1 = gpIn1.WaitForGamepadInput(30);
+            switch (inpType1) {
+                case DPAD_UP:
+                    position += 0.01;
+                    break;
+                case DPAD_RIGHT:
+                    position += 0.05;
+                    break;
+                case DPAD_DOWN:
+                    position -= 0.01;
+                    break;
+                case DPAD_LEFT:
+                    position -= 0.05;
+                    break;
+                case BUTTON_A:
+                    Hardware.flapServo.setPosition(position);
+                    break;
+            }
+            telemetry.addLine().addData("Servo Current Position", Hardware.flapServo.getPosition());
+            telemetry.addLine().addData("Position To Go To", position);
             telemetry.update();
         }
     }
-}
