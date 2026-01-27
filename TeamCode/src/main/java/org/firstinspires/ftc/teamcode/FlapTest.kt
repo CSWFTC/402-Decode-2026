@@ -13,10 +13,10 @@ class FlapTest : LinearOpMode() {
         val gpIn1 = GamePad(gamepad1)
         BallTransfer()
 
-        var position = 0.50
+        var position = 0.73
 
-        //final position = 0.40;
-        //starting position = 0.71;
+        //final position = 0.73;
+        //starting position = <1.0;
         val inpType1 = gpIn1.WaitForGamepadInput(30)
         when (inpType1) {
             GamePad.GameplayInputType.DPAD_UP -> position += 0.01
