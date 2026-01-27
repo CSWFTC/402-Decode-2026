@@ -8,21 +8,21 @@ class Spindexer {
     var position: Int = 0
 
     init {
-        Hardware.spindex.zeroPowerBehavior = DcMotor.ZeroPowerBehavior.BRAKE
-        Hardware.spindex.mode = DcMotor.RunMode.STOP_AND_RESET_ENCODER
-        Hardware.spindex.targetPosition = 0
-        Hardware.spindex.mode = DcMotor.RunMode.RUN_TO_POSITION
-        Hardware.spindex.power = power
+        Hardware.spindexMotor.zeroPowerBehavior = DcMotor.ZeroPowerBehavior.BRAKE
+        Hardware.spindexMotor.mode = DcMotor.RunMode.STOP_AND_RESET_ENCODER
+        Hardware.spindexMotor.targetPosition = 0
+        Hardware.spindexMotor.mode = DcMotor.RunMode.RUN_TO_POSITION
+        Hardware.spindexMotor.power = power
     }
 
     fun launchNextBall() {
         position += 2 * nextBallOffset - (position % nextBallOffset)
-        Hardware.spindex.targetPosition = position
+        Hardware.spindexMotor.targetPosition = position
     }
 
     fun pickupNextBall() {
         position += pickupOffset + nextBallOffset - (position % nextBallOffset)
-        Hardware.spindex.targetPosition = position
+        Hardware.spindexMotor.targetPosition = position
     }
 
     companion object {

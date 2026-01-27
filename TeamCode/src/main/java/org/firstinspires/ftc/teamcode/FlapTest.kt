@@ -1,32 +1,33 @@
 package org.firstinspires.ftc.teamcode
 
-import com.bylazar.gamepad.PanelsGamepad.firstManager
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 import org.firstinspires.ftc.teamcode.helper.BallTransfer
+import org.firstinspires.ftc.teamcode.helper.GamePad
 import org.firstinspires.ftc.teamcode.helper.Hardware
-
 
 @TeleOp(name = "Flap Test")
 class FlapTest : LinearOpMode() {
     override fun runOpMode() {
         Hardware.init(hardwareMap)
-        val gpIn2 = firstManager.asCombinedFTCGamepad(gamepad2)
-        val bt = BallTransfer()
+        val gpIn1 = GamePad(gamepad1)
+        BallTransfer()
 
-        waitForStart()
-        if (isStopRequested) {
-            return
+        var position = 0.50
+
+        //final position = 0.40;
+        //starting position = 0.71;
+        val inpType1 = gpIn1.WaitForGamepadInput(30)
+        when (inpType1) {
+            GamePad.GameplayInputType.DPAD_UP -> position += 0.01
+            GamePad.GameplayInputType.DPAD_RIGHT -> position += 0.05
+            GamePad.GameplayInputType.DPAD_DOWN -> position -= 0.01
+            GamePad.GameplayInputType.DPAD_LEFT -> position -= 0.05
+            GamePad.GameplayInputType.BUTTON_A -> Hardware.flapServo.position = position
+            else -> {}
         }
-
-        telemetry.clear()
-
-
-        while (opModeIsActive()) {
-            bt.isLaunching = gpIn2.circle
-            telemetry.addData("On", gpIn2.circle)
-            telemetry.update()
-            sleep(30)
-        }
+        telemetry.addLine().addData("Servo Current Position", Hardware.flapServo.position)
+        telemetry.addLine().addData("Position To Go To", position)
+        telemetry.update()
     }
 }
