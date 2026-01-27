@@ -1,76 +1,68 @@
-package org.firstinspires.ftc.teamcode.Helper;
+package org.firstinspires.ftc.teamcode.Helper
 
-import com.bylazar.configurables.annotations.Configurable;
+import com.bylazar.configurables.annotations.Configurable
 
 @Configurable
-public class Shooter {
-    public static double intakePower = 1;
-    public static double outtakePower = 1;
-    public boolean intakeOn;
-    public boolean outtakeOn;
-
-    public Shooter() {
-        SetIntake(false);
-        SetOuttake(false);
-    }
-
-    public void SetIntake(boolean status) {
-        intakeOn = status;
-        Hardware.intake.setPower(status ? intakePower : 0.0);
-    }
-
-    public void SetOuttake(boolean status) {
-        outtakeOn = status;
-        Hardware.outtake.setPower(status ? outtakePower : 0.0);
-    }
-
-    public void increaseIntakePower(double power) {
-        intakePower = intakePower + power;
-        if (intakePower > 1) {
-            intakePower = 1;
+class Shooter {
+    var intake: Boolean
+        get() {
+            return Hardware.intake.power > 0.0
         }
-        SetIntake(intakeOn);
-    }
-
-    public void decreaseIntakePowerMultiplier(double power) {
-        intakePower = intakePower - power;
-        if (intakePower < 0.05) {
-            intakePower = 0.05;
+        set(value) {
+            Hardware.intake.power = if (value) intakePower else 0.0
         }
-        SetIntake(intakeOn);
+    var outtake: Boolean
+        get() {
+            return Hardware.outtake.power > 0.0
+        }
+        set(value) {
+            Hardware.outtake.power = if (value) outtakePower else 0.0
+        }
+
+    init {
+        intake = false
+        outtake = false
     }
 
-    public void setOuttakeTopPowerMultiplier(double power) {
-        outtakePower = power;
+    fun setOuttakeTopPowerMultiplier(power: Double) {
+        outtakePower = power
         if (outtakePower > 1) {
-            outtakePower = 1;
+            outtakePower = 1.0
         } else if (outtakePower < 0.05) {
-            outtakePower = 0.05;
+            outtakePower = 0.05
         }
-        SetOuttake(outtakeOn);
+        outtake = outtake
     }
 
-    public void increaseTopOuttakePower(double power) {
-        outtakePower = outtakePower + power;
+    fun increaseTopOuttakePower(power: Double) {
+        outtakePower = outtakePower + power
         if (outtakePower > 1) {
-            outtakePower = 1;
+            outtakePower = 1.0
         }
-        SetOuttake(outtakeOn);
+        outtake = outtake
     }
 
-    public void decreaseTopOuttakePower(double power) {
-        outtakePower = outtakePower - power;
+    fun decreaseTopOuttakePower(power: Double) {
+        outtakePower = outtakePower - power
         if (outtakePower < 0.05) {
-            outtakePower = 0.05;
+            outtakePower = 0.05
         }
-        SetOuttake(outtakeOn);
+        outtake = outtake
     }
 
-    public void ToggleIntake() {
-        SetIntake(!intakeOn);
+    fun ToggleIntake() {
+        intake = !intake
     }
 
-    public void ToggleOuttake() {
-        SetOuttake(!outtakeOn);
+    fun ToggleOuttake() {
+        outtake = !outtake
+    }
+
+    companion object {
+        @JvmField
+        var intakePower: Double = 1.0
+
+        @JvmField
+        var outtakePower: Double = 1.0
     }
 }

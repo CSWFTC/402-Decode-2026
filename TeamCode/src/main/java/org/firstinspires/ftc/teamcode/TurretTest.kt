@@ -26,62 +26,46 @@
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+package org.firstinspires.ftc.teamcode
 
-package org.firstinspires.ftc.teamcode;
-
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
-import com.qualcomm.robotcore.hardware.Servo;
-
-import org.firstinspires.ftc.teamcode.Helper.GamePad;
-import org.firstinspires.ftc.teamcode.Helper.Hardware;
-
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp
+import com.qualcomm.robotcore.hardware.Servo
+import org.firstinspires.ftc.teamcode.Helper.GamePad
+import org.firstinspires.ftc.teamcode.Helper.GamePad.GameplayInputType
+import org.firstinspires.ftc.teamcode.Helper.Hardware
 
 @TeleOp(name = "Turret Test")
-public class TurretTest extends LinearOpMode {
+class TurretTest : LinearOpMode() {
+    override fun runOpMode() {
+        Hardware.init(hardwareMap)
 
-    @Override
-    public void runOpMode() {
-        Hardware.init(hardwareMap);
+        waitForStart()
 
-        waitForStart();
+        val gpIn1 = GamePad(gamepad1)
 
-        GamePad gpIn1 = new GamePad(gamepad1);
-
-        double position = 0.5;
-        Hardware.turretServo.setPosition(position);
-        Hardware.turretServo.setDirection(Servo.Direction.FORWARD);
+        var position = 0.5
+        Hardware.turretServo.position = position
+        Hardware.turretServo.direction = Servo.Direction.FORWARD
 
         while (opModeIsActive()) {
-            GamePad.GameplayInputType inpType1 = gpIn1.WaitForGamepadInput(30);
-            switch (inpType1) {
-                case DPAD_UP:
-                    position += 0.05;
-                    break;
-                case DPAD_RIGHT:
-                    position += 0.01;
-                    break;
-                case DPAD_DOWN:
-                    position -= 0.05;
-                    break;
-                case DPAD_LEFT:
-                    position -= 0.01;
-                    break;
-                case BUTTON_A:
-                    Hardware.turretServo.setPosition(position);
-                    break;
-                case BUTTON_L_BUMPER:
-                    Hardware.turretServo.setDirection(Servo.Direction.REVERSE);
-                    break;
-                case BUTTON_R_BUMPER:
-                    Hardware.turretServo.setDirection(Servo.Direction.REVERSE);
-                    break;
+            val inpType1 = gpIn1.WaitForGamepadInput(30)
+            when (inpType1) {
+                GameplayInputType.DPAD_UP -> position += 0.05
+                GameplayInputType.DPAD_RIGHT -> position += 0.01
+                GameplayInputType.DPAD_DOWN -> position -= 0.05
+                GameplayInputType.DPAD_LEFT -> position -= 0.01
+                GameplayInputType.BUTTON_A -> Hardware.turretServo.position = position
+                GameplayInputType.BUTTON_L_BUMPER -> Hardware.turretServo.direction =
+                    Servo.Direction.REVERSE
+
+                GameplayInputType.BUTTON_R_BUMPER -> Hardware.turretServo.direction =
+                    Servo.Direction.REVERSE
+
+                else -> {}
             }
-            telemetry.addLine().addData("Position", position);
-            telemetry.update();
+            telemetry.addLine().addData("Position", position)
+            telemetry.update()
         }
     }
-
 }

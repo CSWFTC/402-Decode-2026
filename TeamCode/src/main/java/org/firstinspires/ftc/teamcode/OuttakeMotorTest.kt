@@ -26,35 +26,28 @@
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+package org.firstinspires.ftc.teamcode
 
-package org.firstinspires.ftc.teamcode;
-
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotor;
-
-import org.firstinspires.ftc.teamcode.Helper.Hardware;
-
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp
+import com.qualcomm.robotcore.hardware.DcMotor
+import org.firstinspires.ftc.teamcode.Helper.Hardware
 
 @TeleOp(name = "Outtake Motor Test")
-public class OuttakeMotorTest extends LinearOpMode {
-
-    @Override
-    public void runOpMode() {
-        Hardware.init(hardwareMap);
-        Hardware.outtake.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        Hardware.outtake.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        waitForStart();
+class OuttakeMotorTest : LinearOpMode() {
+    override fun runOpMode() {
+        Hardware.init(hardwareMap)
+        Hardware.outtake.mode = DcMotor.RunMode.RUN_WITHOUT_ENCODER
+        Hardware.outtake.zeroPowerBehavior = DcMotor.ZeroPowerBehavior.BRAKE
+        waitForStart()
 
         while (opModeIsActive()) {
+            Hardware.outtake.power = if (gamepad1.a || gamepad1.x) 1.0 else 0.0
 
-            Hardware.outtake.setPower(gamepad1.a || gamepad1.x ? 1.0 : 0.0);
-
-            telemetry.addLine().addData("Controls", "A for Outtake, B for OuttakeRight, X for BOTH");
-            telemetry.addLine().addData("Outtake", gamepad1.a || gamepad1.x);
-            telemetry.addLine().addData("OuttakeRight", gamepad1.b || gamepad1.x);
-            telemetry.update();
+            telemetry.addLine().addData("Controls", "A for Outtake, B for OuttakeRight, X for BOTH")
+            telemetry.addLine().addData("Outtake", gamepad1.a || gamepad1.x)
+            telemetry.addLine().addData("OuttakeRight", gamepad1.b || gamepad1.x)
+            telemetry.update()
         }
     }
-
 }

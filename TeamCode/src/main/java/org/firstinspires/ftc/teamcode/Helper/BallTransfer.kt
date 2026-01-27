@@ -1,24 +1,30 @@
-package org.firstinspires.ftc.teamcode.Helper;
+package org.firstinspires.ftc.teamcode.Helper
 
-import com.bylazar.configurables.annotations.Configurable;
+import com.bylazar.configurables.annotations.Configurable
 
 @Configurable
-public class BallTransfer {
-    public static double waiting = 1;
-    public static double launch = 0;
-    boolean isLaunching = false;
+class BallTransfer {
+    var isLaunching: Boolean
+        get() {
+            return Hardware.flapServo.position == launch
+        }
+        set(value) {
+            Hardware.flapServo.position = if (value) launch else waiting
+        }
 
-    public BallTransfer() {
-        SetLaunching(false);
+    init {
+        isLaunching = false
     }
 
-    public void SetLaunching(boolean toLaunch) {
-        isLaunching = toLaunch;
-        Hardware.flapServo.setPosition(toLaunch ? launch : waiting);
+    fun ToggleLaunch() {
+        isLaunching = !isLaunching
     }
 
-    public void ToggleLaunch() {
-        SetLaunching(!isLaunching);
-    }
+    companion object {
+        @JvmField
+        var waiting: Double = 1.0
 
+        @JvmField
+        var launch: Double = 0.0
+    }
 }
