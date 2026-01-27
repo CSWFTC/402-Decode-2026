@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Helper;
+package org.firstinspires.ftc.teamcode.helper;
 
 /* Copyright (c) 2023 FIRST Tech Challenge - Team #404 “=ma” (https://...)
  *
@@ -17,9 +17,12 @@ package org.firstinspires.ftc.teamcode.Helper;
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-import com.qualcomm.robotcore.hardware.Gamepad;
 import static android.os.SystemClock.sleep;
+
 import androidx.annotation.NonNull;
+
+import com.qualcomm.robotcore.hardware.Gamepad;
+
 import java.util.Date;
 
 
@@ -50,56 +53,18 @@ ElbowHangPos = .52
 GrappleHangPos = .455
 Push Update
  */
-public class GamePad{
+public class GamePad {
 
-    public static class  Params {
-        public int waitLoopSleepInterval = 20;
-        public int buttonLockoutInterval = 1000;
-        public int dpadLockoutInterval = 1000;
-        public int triggerLockoutInterval = 50;
-        public int joystickButtonLockoutInterval = 300;
-        public int joystickLockoutInterval = 20;  // should be Small
-    }
+    public static Params PARAMS = new Params();
 
     /*
     Accessible HapticsController inside of GamePad class
     Based on GamepadHaptics class
      */
-
-    public static Params PARAMS = new Params();
-
-    public enum GameplayInputType {
-        NONE("No Input"),
-        BUTTON_A("A Button"),
-        BUTTON_B("B Button"),
-        BUTTON_X("X Button"),
-        BUTTON_Y("Y Button"),
-        BUTTON_L_BUMPER("L Bumper"),
-        BUTTON_R_BUMPER("R Bumper"),
-        BUTTON_BACK( "Back Button"),
-        LEFT_TRIGGER("L Trigger"),
-        RIGHT_TRIGGER("R Trigger"),
-        DPAD_UP("DPad: UP"),
-        DPAD_DOWN("DPad: DOWN"),
-        DPAD_LEFT("DPad: LEFT"),
-        DPAD_RIGHT("DPad: RIGHT"),
-        JOYSTICK("Joystick"),
-        LEFT_STICK_BUTTON_ON("Left Joystick Button On"),
-        LEFT_STICK_BUTTON_OFF("Left Joystick Button Off"),
-        RIGHT_STICK_BUTTON_ON("Right Joystick Button On"),
-        RIGHT_STICK_BUTTON_OFF("Right Joystick Button Off");
-
-        private final String description;
-
-        GameplayInputType(String description) {
-            this.description = description;
-        }
-
-        @Override
-        public @NonNull String toString() {
-            return description;
-        }
-    }
+    // Internal Variables - Gamepad, Lockout Counters, and Previous State Variables
+    private final Gamepad inputGPad;
+    // Telemetry Data
+    private int tlm_WaitLoopCount = 0;
 
 
     //--------------------------------------------------------------
@@ -109,51 +74,39 @@ public class GamePad{
     // TODO: Move these constants to FTC @Config parameters
 
     // Timeouts Needed to Debounce Gamepad Inputs (Milliseconds)
-
-    // Telemetry Data
-    private int tlm_WaitLoopCount = 0;
     private Date tlm_WaitLoopLastTimestamp = new Date();
     private int tlm_InputCount = 0;
     private GameplayInputType tlm_InputLastType = GameplayInputType.NONE;
     private Date tlm_InputLastTimestamp = new Date();
-
-
-    // Internal Variables - Gamepad, Lockout Counters, and Previous State Variables
-    private final Gamepad inputGPad;
     private long LastButtonInputTime = 0;
     private GameplayInputType LastButtonInput = GameplayInputType.NONE;
-
     private float LeftTriggerLast = 0f;
     private float RightTriggerLast = 0f;
     private long LastTriggerInputTime = 0;
-
     private long LastDPadInputTime = 0;
     private GameplayInputType LastDPadInput = GameplayInputType.NONE;
-
     private long LastJoystickInputTime = 0;
     private float LastLeftJoystickX = 0f;
     private float LastLeftJoystickY = 0f;
     private float LastRightJoystickX = 0f;
     private float LastRightJoystickY = 0f;
-
     private boolean LeftJoystickButtonOn = false;
     private boolean RightJoystickButtonOn = false;
-
-
-    //--------------------------------------------------------------
-    //                External Class Interface
-    // -------------------------------------------------------------
 
     // Class Constructor
     public GamePad(@NonNull Gamepad gp) {
         this.inputGPad = gp;
     }
 
-
     // Telemetry Data Getters
     public int getTelemetry_WaitLoopCount() {
         return (tlm_WaitLoopCount);
     }
+
+
+    //--------------------------------------------------------------
+    //                External Class Interface
+    // -------------------------------------------------------------
 
     public Date getTelemetry_WaitLoopLastTimestamp() {
         return (tlm_WaitLoopLastTimestamp);
@@ -170,7 +123,6 @@ public class GamePad{
     public Date getTelemetry_InputLastTimestamp() {
         return (tlm_InputLastTimestamp);
     }
-
 
     /*
      * WaitForGamepadInput:  Repeatedly checks for Gamepad Inputs until Timeout expires.
@@ -200,11 +152,6 @@ public class GamePad{
         return newInput;
     }
 
-
-    //--------------------------------------------------------------
-    //                Internal Helper Functions
-    // -------------------------------------------------------------
-
     /*
      * GetInput:  Checks for Gamepad Inputs in Order of Importance (most to least)
      */
@@ -231,7 +178,6 @@ public class GamePad{
         return (intype);
     }
 
-
     /*
      * GetButton: Check for Gamepad Button Inputs and Disregards Duplicates During Lockout Period.
      *            Buttons are checked in Order of Importance (most to least).
@@ -247,7 +193,7 @@ public class GamePad{
         if (inputGPad.y) intype = GameplayInputType.BUTTON_Y;
         if (inputGPad.left_bumper) intype = GameplayInputType.BUTTON_L_BUMPER;
         if (inputGPad.right_bumper) intype = GameplayInputType.BUTTON_R_BUMPER;
-        if (inputGPad.back) intype= GameplayInputType.BUTTON_BACK;
+        if (inputGPad.back) intype = GameplayInputType.BUTTON_BACK;
 
         // Check For Duplicate Button Input and Disregard Same Button During Lockout Period
         boolean lockedOut = ((LastButtonInputTime + PARAMS.buttonLockoutInterval) - System.currentTimeMillis()) > 0;
@@ -261,6 +207,10 @@ public class GamePad{
         return (intype);
     }
 
+
+    //--------------------------------------------------------------
+    //                Internal Helper Functions
+    // -------------------------------------------------------------
 
     /*
      * Get DPad: Checks for Gamepad DPad (Upper Left) Input Changes and Disregards Changes During
@@ -288,7 +238,6 @@ public class GamePad{
         return (intype);
     }
 
-
     /*
      * Get Joystick Button : Checks for Gamepad Joystick Button Input Changes and Disregard Changes During the
      *              Lockout Period.  It captures transitions and generates an ON/OFF Input
@@ -301,15 +250,15 @@ public class GamePad{
             if (inputGPad.left_stick_button && !LeftJoystickButtonOn) {
                 LeftJoystickButtonOn = true;
                 return (GameplayInputType.LEFT_STICK_BUTTON_ON);
-            } else if (!inputGPad.left_stick_button && LeftJoystickButtonOn){
+            } else if (!inputGPad.left_stick_button && LeftJoystickButtonOn) {
                 LeftJoystickButtonOn = false;
                 return (GameplayInputType.LEFT_STICK_BUTTON_OFF);
             }
 
-            if(inputGPad.right_stick_button && !RightJoystickButtonOn){
+            if (inputGPad.right_stick_button && !RightJoystickButtonOn) {
                 RightJoystickButtonOn = true;
                 return (GameplayInputType.RIGHT_STICK_BUTTON_ON);
-            } else if (!inputGPad.right_stick_button && RightJoystickButtonOn){
+            } else if (!inputGPad.right_stick_button && RightJoystickButtonOn) {
                 RightJoystickButtonOn = false;
                 return (GameplayInputType.RIGHT_STICK_BUTTON_OFF);
             }
@@ -352,7 +301,6 @@ public class GamePad{
         return (GameplayInputType.NONE);  // Catch all for No Joystick Input
     }
 
-
     /*
      * Get Joystick: Checks for Change in Joystick Input Changes and Disregards Changes During
      *               the Lockout Period.
@@ -385,6 +333,48 @@ public class GamePad{
         }
 
         return (GameplayInputType.NONE);  // Catch all for No Joystick Input
+    }
+
+    public enum GameplayInputType {
+        NONE("No Input"),
+        BUTTON_A("A Button"),
+        BUTTON_B("B Button"),
+        BUTTON_X("X Button"),
+        BUTTON_Y("Y Button"),
+        BUTTON_L_BUMPER("L Bumper"),
+        BUTTON_R_BUMPER("R Bumper"),
+        BUTTON_BACK("Back Button"),
+        LEFT_TRIGGER("L Trigger"),
+        RIGHT_TRIGGER("R Trigger"),
+        DPAD_UP("DPad: UP"),
+        DPAD_DOWN("DPad: DOWN"),
+        DPAD_LEFT("DPad: LEFT"),
+        DPAD_RIGHT("DPad: RIGHT"),
+        JOYSTICK("Joystick"),
+        LEFT_STICK_BUTTON_ON("Left Joystick Button On"),
+        LEFT_STICK_BUTTON_OFF("Left Joystick Button Off"),
+        RIGHT_STICK_BUTTON_ON("Right Joystick Button On"),
+        RIGHT_STICK_BUTTON_OFF("Right Joystick Button Off");
+
+        private final String description;
+
+        GameplayInputType(String description) {
+            this.description = description;
+        }
+
+        @Override
+        public @NonNull String toString() {
+            return description;
+        }
+    }
+
+    public static class Params {
+        public int waitLoopSleepInterval = 20;
+        public int buttonLockoutInterval = 1000;
+        public int dpadLockoutInterval = 1000;
+        public int triggerLockoutInterval = 50;
+        public int joystickButtonLockoutInterval = 300;
+        public int joystickLockoutInterval = 20;  // should be Small
     }
 
 }

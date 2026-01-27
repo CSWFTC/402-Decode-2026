@@ -3,8 +3,8 @@ package org.firstinspires.ftc.teamcode
 import com.bylazar.configurables.annotations.Configurable
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
-import org.firstinspires.ftc.teamcode.Helper.Hardware
-import org.firstinspires.ftc.teamcode.Helper.Shooter
+import org.firstinspires.ftc.teamcode.helper.Hardware
+import org.firstinspires.ftc.teamcode.helper.Shooter
 
 @Autonomous(name = "AUTON (very bad)")
 @Configurable

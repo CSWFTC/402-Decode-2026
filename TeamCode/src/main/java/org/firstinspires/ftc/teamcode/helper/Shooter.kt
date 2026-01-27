@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Helper
+package org.firstinspires.ftc.teamcode.helper
 
 import com.bylazar.configurables.annotations.Configurable
 
@@ -50,11 +50,11 @@ class Shooter {
         outtake = outtake
     }
 
-    fun ToggleIntake() {
+    fun toggleIntake() {
         intake = !intake
     }
 
-    fun ToggleOuttake() {
+    fun toggleOuttake() {
         outtake = !outtake
     }
 

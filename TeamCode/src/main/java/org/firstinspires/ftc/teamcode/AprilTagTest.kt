@@ -30,8 +30,8 @@ package org.firstinspires.ftc.teamcode
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
-import org.firstinspires.ftc.teamcode.Helper.AprilTagConfig
-import org.firstinspires.ftc.teamcode.Helper.Hardware
+import org.firstinspires.ftc.teamcode.helper.AprilTagConfig
+import org.firstinspires.ftc.teamcode.helper.Hardware
 
 // stolen from the ftc samples
 @TeleOp(name = "AprilTag Test")
@@ -44,10 +44,10 @@ class AprilTagTest : LinearOpMode() {
             telemetry.addLine("Searching...")
             telemetry.update()
             while (atconf.order == null) {
-                atconf.Update()
+                atconf.update()
                 sleep(20)
                 if (!opModeIsActive()) {
-                    atconf.Close()
+                    atconf.close()
                     return
                 }
             }
@@ -57,7 +57,7 @@ class AprilTagTest : LinearOpMode() {
         }
 
         // Save more CPU resources when camera is no longer needed.
-        atconf.Close()
+        atconf.close()
     }
 } // end class
 

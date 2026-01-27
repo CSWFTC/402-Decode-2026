@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Helper
+package org.firstinspires.ftc.teamcode.helper
 
 import com.bylazar.configurables.annotations.Configurable
 
@@ -16,7 +16,7 @@ class BallTransfer {
         isLaunching = false
     }
 
-    fun ToggleLaunch() {
+    fun toggleLaunch() {
         isLaunching = !isLaunching
     }
 

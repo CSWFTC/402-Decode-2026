@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Helper
+package org.firstinspires.ftc.teamcode.helper
 
 import org.firstinspires.ftc.vision.VisionPortal
 import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor
@@ -10,7 +10,7 @@ class AprilTagConfig {
         VisionPortal.easyCreateWithDefaults(Hardware.camera, aprilTag)
     var order: BallOrder? = null
 
-    fun Update() {
+    fun update() {
         if (order == null) {
             for (d in aprilTag.detections) {
                 order = when (d.id) {
@@ -23,7 +23,7 @@ class AprilTagConfig {
         }
     }
 
-    fun Close() {
+    fun close() {
         visionPortal.close()
     }
 }

@@ -31,9 +31,9 @@ package org.firstinspires.ftc.teamcode
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 import com.qualcomm.robotcore.hardware.Servo
-import org.firstinspires.ftc.teamcode.Helper.GamePad
-import org.firstinspires.ftc.teamcode.Helper.GamePad.GameplayInputType
-import org.firstinspires.ftc.teamcode.Helper.Hardware
+import org.firstinspires.ftc.teamcode.helper.GamePad
+import org.firstinspires.ftc.teamcode.helper.GamePad.GameplayInputType
+import org.firstinspires.ftc.teamcode.helper.Hardware
 
 @TeleOp(name = "Turret Test")
 class TurretTest : LinearOpMode() {

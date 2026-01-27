@@ -5,12 +5,12 @@ import com.bylazar.gamepad.PanelsGamepad.secondManager
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 import org.firstinspires.ftc.robotcore.external.Telemetry
-import org.firstinspires.ftc.teamcode.Helper.BallTransfer
-import org.firstinspires.ftc.teamcode.Helper.DriveTrainV2
-import org.firstinspires.ftc.teamcode.Helper.GamePad
-import org.firstinspires.ftc.teamcode.Helper.GamePad.GameplayInputType
-import org.firstinspires.ftc.teamcode.Helper.Hardware
-import org.firstinspires.ftc.teamcode.Helper.Shooter
+import org.firstinspires.ftc.teamcode.helper.BallTransfer
+import org.firstinspires.ftc.teamcode.helper.DriveTrainV2
+import org.firstinspires.ftc.teamcode.helper.GamePad
+import org.firstinspires.ftc.teamcode.helper.GamePad.GameplayInputType
+import org.firstinspires.ftc.teamcode.helper.Hardware
+import org.firstinspires.ftc.teamcode.helper.Shooter
 import java.text.SimpleDateFormat
 import java.util.Locale
 
@@ -83,9 +83,9 @@ class DriverControl : LinearOpMode() {
 
             val inpType2 = gpIn2.WaitForGamepadInput(30)
             when (inpType2) {
-                GameplayInputType.BUTTON_A -> shooter.ToggleIntake()
-                GameplayInputType.BUTTON_Y -> shooter.ToggleOuttake()
-                GameplayInputType.BUTTON_B -> bt.ToggleLaunch()
+                GameplayInputType.BUTTON_A -> shooter.toggleIntake()
+                GameplayInputType.BUTTON_Y -> shooter.toggleOuttake()
+                GameplayInputType.BUTTON_B -> bt.toggleLaunch()
                 GameplayInputType.BUTTON_R_BUMPER -> shooter.increaseTopOuttakePower(0.05)
                 GameplayInputType.BUTTON_L_BUMPER -> shooter.decreaseTopOuttakePower(0.05)
                 GameplayInputType.DPAD_UP -> shooter.setOuttakeTopPowerMultiplier(1.00)

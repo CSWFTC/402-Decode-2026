@@ -3,10 +3,10 @@ package org.firstinspires.ftc.teamcode
 import com.bylazar.gamepad.PanelsGamepad.firstManager
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
-import org.firstinspires.ftc.teamcode.Helper.GamePad
-import org.firstinspires.ftc.teamcode.Helper.GamePad.GameplayInputType
-import org.firstinspires.ftc.teamcode.Helper.Hardware
-import org.firstinspires.ftc.teamcode.Helper.Spindexer
+import org.firstinspires.ftc.teamcode.helper.GamePad
+import org.firstinspires.ftc.teamcode.helper.GamePad.GameplayInputType
+import org.firstinspires.ftc.teamcode.helper.Hardware
+import org.firstinspires.ftc.teamcode.helper.Spindexer
 
 
 @TeleOp(name = "Spindexer Test")
@@ -18,8 +18,8 @@ class SpindexerTest : LinearOpMode() {
         waitForStart()
         while (opModeIsActive()) {
             when (gpIn1.WaitForGamepadInput(30)) {
-                GameplayInputType.BUTTON_A -> s.PickupNextBall()
-                GameplayInputType.BUTTON_Y -> s.LaunchNextBall()
+                GameplayInputType.BUTTON_A -> s.pickupNextBall()
+                GameplayInputType.BUTTON_Y -> s.launchNextBall()
                 else -> {}
             }
         }

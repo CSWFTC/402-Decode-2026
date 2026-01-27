@@ -4,7 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 import com.qualcomm.robotcore.hardware.DcMotor
 import com.qualcomm.robotcore.hardware.Gamepad
-import org.firstinspires.ftc.teamcode.Helper.Hardware
+import org.firstinspires.ftc.teamcode.helper.Hardware
 
 @TeleOp(name = "BallTest")
 class BallTest : LinearOpMode() {

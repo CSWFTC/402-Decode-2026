@@ -31,7 +31,7 @@ package org.firstinspires.ftc.teamcode
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 import com.qualcomm.robotcore.hardware.DcMotor
-import org.firstinspires.ftc.teamcode.Helper.Hardware
+import org.firstinspires.ftc.teamcode.helper.Hardware
 
 @TeleOp(name = "Outtake Motor Test")
 class OuttakeMotorTest : LinearOpMode() {

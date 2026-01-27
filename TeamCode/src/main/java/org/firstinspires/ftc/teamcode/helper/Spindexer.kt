@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Helper
+package org.firstinspires.ftc.teamcode.helper
 
 import com.bylazar.configurables.annotations.Configurable
 import com.qualcomm.robotcore.hardware.DcMotor
@@ -15,12 +15,12 @@ class Spindexer {
         Hardware.spindex.power = power
     }
 
-    fun LaunchNextBall() {
+    fun launchNextBall() {
         position += 2 * nextBallOffset - (position % nextBallOffset)
         Hardware.spindex.targetPosition = position
     }
 
-    fun PickupNextBall() {
+    fun pickupNextBall() {
         position += pickupOffset + nextBallOffset - (position % nextBallOffset)
         Hardware.spindex.targetPosition = position
     }
