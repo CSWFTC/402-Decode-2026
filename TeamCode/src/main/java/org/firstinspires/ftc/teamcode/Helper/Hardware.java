@@ -64,7 +64,6 @@ public class Hardware {
     @Reverse
     public static DcMotor outtake;
 
-    @DoNotInitialize
     public static Servo flapServo;
 
     public static DcMotor spindexMotor;
