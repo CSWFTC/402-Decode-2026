@@ -32,14 +32,13 @@ public class Hardware {
     // just declare a new field
     // the field name should match the name in the robot config
     // that's it!
-    @Reverse
     public static DcMotor frontLeft;
 
+    @Reverse
     public static DcMotor frontRight;
 
     @Reverse
     public static DcMotor rearLeft;
-
     public static DcMotor rearRight;
 
     @DoNotInitialize
@@ -47,25 +46,12 @@ public class Hardware {
 
     @Reverse
     public static DcMotor intake;
-    @DoNotInitialize
-    public static DcMotor outtakeTop;
-    @DoNotInitialize
-    public static DcMotor outtakeBottom;
-    @DoNotInitialize
-    public static DcMotor outtakeMiddle;
-
-    @DoNotInitialize
-    public static DcMotor outtakeLeft;
-
-    @Reverse
-    @DoNotInitialize
-    public static DcMotor outtakeRight;
-
-    @Reverse
     public static DcMotor outtake;
-
-    @DoNotInitialize
     public static Servo flapServo;
+    @Reverse
+    public static DcMotor spindex;
+
+    public static Servo turretServo;
 
     public static DcMotor spindexMotor;
 

@@ -35,11 +35,6 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 import org.firstinspires.ftc.teamcode.Helper.Hardware;
-import org.firstinspires.ftc.vision.VisionPortal;
-import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
-import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
-
-import java.util.List;
 
 // stolen from the ftc samples
 @TeleOp(name = "Motor Test")
@@ -56,21 +51,21 @@ public class MotorTest extends LinearOpMode {
         Hardware.outtakeTop.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         Hardware.outtakeTop.setDirection(DcMotorSimple.Direction.FORWARD);
          */
-        Hardware.outtakeBottom.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        Hardware.outtakeBottom.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        Hardware.outtakeBottom.setDirection(DcMotorSimple.Direction.FORWARD);
+        Hardware.outtake.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        Hardware.outtake.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        Hardware.outtake.setDirection(DcMotorSimple.Direction.FORWARD);
         waitForStart();
         while (opModeIsActive()) {
 
-            Hardware.intake.setPower(gamepad1.a || gamepad1.x  ? 1.0 : 0.0);
-            Hardware.outtakeBottom.setPower(gamepad1.b || gamepad1.x  ? 1.0 : 0.0);
+            Hardware.intake.setPower(gamepad1.a || gamepad1.x ? 1.0 : 0.0);
+            Hardware.outtake.setPower(gamepad1.b || gamepad1.x ? 1.0 : 0.0);
             //Hardware.outtakeTop.setPower(gamepad1.y || gamepad1.x  ? 1.0 : 0.0);
 
             telemetry.addData("Controls", "A for intake, B for bottom, Y for top, X for all");
             telemetry.addLine();
             telemetry.addData("Intake", gamepad1.a || gamepad1.x);
             telemetry.addLine();
-            telemetry.addData("Outtake Bottom", gamepad1.b || gamepad1.x);
+            telemetry.addData("Outtake ", gamepad1.b || gamepad1.x);
             telemetry.addLine();
             telemetry.addLine();
             telemetry.addData("Outtake Top", gamepad1.y || gamepad1.x);

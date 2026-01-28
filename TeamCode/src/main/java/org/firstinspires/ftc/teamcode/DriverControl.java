@@ -52,7 +52,7 @@ public class DriverControl extends LinearOpMode {
 
         while (opModeIsActive()) {
 //            atConf.Update();
-            update_telemetry(speedMultiplier, Shooter.outtakeTopPower);
+            update_telemetry(speedMultiplier, Shooter.outtakePower);
 
             GamePad.GameplayInputType inpType1 = gpIn1.WaitForGamepadInput(30);
             switch (inpType1) {

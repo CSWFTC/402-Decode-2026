@@ -32,27 +32,54 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.Servo;
 
+import org.firstinspires.ftc.teamcode.Helper.GamePad;
 import org.firstinspires.ftc.teamcode.Helper.Hardware;
 
 
-@TeleOp(name = "Outtake Motor Test")
-public class OuttakeMotorTest extends LinearOpMode {
+@TeleOp(name = "Turret Test")
+public class TurretTest extends LinearOpMode {
 
     @Override
     public void runOpMode() {
         Hardware.init(hardwareMap);
-        Hardware.outtake.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        Hardware.outtake.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
         waitForStart();
 
+        GamePad gpIn1 = new GamePad(gamepad1);
+
+        double position = 0.5;
+        Hardware.turretServo.setPosition(position);
+        Hardware.turretServo.setDirection(Servo.Direction.FORWARD);
+
         while (opModeIsActive()) {
-
-            Hardware.outtake.setPower(gamepad1.a || gamepad1.x ? 1.0 : 0.0);
-
-            telemetry.addLine().addData("Controls", "A for Outtake, B for OuttakeRight, X for BOTH");
-            telemetry.addLine().addData("Outtake", gamepad1.a || gamepad1.x);
-            telemetry.addLine().addData("OuttakeRight", gamepad1.b || gamepad1.x);
+            GamePad.GameplayInputType inpType1 = gpIn1.WaitForGamepadInput(30);
+            switch (inpType1) {
+                case DPAD_UP:
+                    position += 0.05;
+                    break;
+                case DPAD_RIGHT:
+                    position += 0.01;
+                    break;
+                case DPAD_DOWN:
+                    position -= 0.05;
+                    break;
+                case DPAD_LEFT:
+                    position -= 0.01;
+                    break;
+                case BUTTON_A:
+                    Hardware.turretServo.setPosition(position);
+                    break;
+                case BUTTON_L_BUMPER:
+                    Hardware.turretServo.setDirection(Servo.Direction.REVERSE);
+                    break;
+                case BUTTON_R_BUMPER:
+                    Hardware.turretServo.setDirection(Servo.Direction.REVERSE);
+                    break;
+            }
+            telemetry.addLine().addData("Position", position);
             telemetry.update();
         }
     }
