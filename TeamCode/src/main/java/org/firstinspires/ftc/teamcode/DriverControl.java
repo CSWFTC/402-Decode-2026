@@ -34,7 +34,8 @@ public class DriverControl extends LinearOpMode {
         telemetry.addData(">", "Press Start to Launch");
         telemetry.update();
 
-        gpIn1 = new GamePad(PanelsGamepad.INSTANCE.getFirstManager().asCombinedFTCGamepad(gamepad1));
+        //gpIn1 = new GamePad(PanelsGamepad.INSTANCE.getFirstManager().asCombinedFTCGamepad(gamepad1));
+        gpIn1 = new GamePad(gamepad1);
         gpIn2 = new GamePad(PanelsGamepad.INSTANCE.getSecondManager().asCombinedFTCGamepad(gamepad2));
         Shooter shooter = new Shooter();
         drvTrain = new DriveTrainV2();

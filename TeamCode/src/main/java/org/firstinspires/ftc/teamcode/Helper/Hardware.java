@@ -32,9 +32,9 @@ public class Hardware {
     // just declare a new field
     // the field name should match the name in the robot config
     // that's it!
+    @Reverse
     public static DcMotor frontLeft;
 
-    @Reverse
     public static DcMotor frontRight;
 
     @Reverse
@@ -46,14 +46,13 @@ public class Hardware {
 
     @Reverse
     public static DcMotor intake;
+    @Reverse
     public static DcMotor outtake;
     public static Servo flapServo;
     @Reverse
     public static DcMotor spindex;
 
     public static Servo turretServo;
-
-    public static DcMotor spindexMotor;
 
     // initialization code
     public static void init(HardwareMap map) {

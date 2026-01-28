@@ -15,10 +15,15 @@ public class FlapTest extends LinearOpMode {
         GamePad gpIn1 = new GamePad(gamepad1);
         BallTransfer bt = new BallTransfer();
 
-        double position = 0.50;
-        //final position = 0.40;
-        //starting position = 0.71;
+        double position = 1.0;
+        //final position = 0.83;
+        //starting position = 1.0;
 
+        Hardware.flapServo.setPosition(0.5);
+
+        waitForStart();
+
+        while (opModeIsActive()) {
             GamePad.GameplayInputType inpType1 = gpIn1.WaitForGamepadInput(30);
             switch (inpType1) {
                 case DPAD_UP:
@@ -42,3 +47,4 @@ public class FlapTest extends LinearOpMode {
             telemetry.update();
         }
     }
+}
