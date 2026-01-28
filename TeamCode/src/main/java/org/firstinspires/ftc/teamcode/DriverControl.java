@@ -89,7 +89,7 @@ public class DriverControl extends LinearOpMode {
                 case BUTTON_B:
                     bt.ToggleLaunch();
                     break;
-                case BUTTON_R_BUMPER:
+                /*case BUTTON_R_BUMPER:
                     shooter.increaseTopOuttakePower(0.05);
                     break;
                 case BUTTON_L_BUMPER:
@@ -106,7 +106,7 @@ public class DriverControl extends LinearOpMode {
                     break;
                 case DPAD_LEFT:
                     shooter.setOuttakeTopPowerMultiplier(0.50);
-                    break;
+                    break;*/
             }
         }
     }

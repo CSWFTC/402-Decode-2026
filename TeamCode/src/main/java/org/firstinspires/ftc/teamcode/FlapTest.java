@@ -15,8 +15,8 @@ public class FlapTest extends LinearOpMode {
         GamePad gpIn1 = new GamePad(gamepad1);
         BallTransfer bt = new BallTransfer();
 
-        double position = 1.0;
-        //starting position = <1.0;
+        double position = 0.5;
+        //starting position = 1.0;
         //Final position = 0.73;
         Hardware.flapServo.setPosition(position);
         waitForStart();
