@@ -19,7 +19,7 @@ public class FlapTest extends LinearOpMode {
         //final position = 0.83;
         //starting position = 1.0;
 
-        Hardware.flapServo.setPosition(0.5);
+        Hardware.flapServo.setPosition(1.0);
 
         waitForStart();
 
