@@ -15,7 +15,7 @@ public class Spindexer {
     //start at 0, move to 65
     int position = 0;
 
-    String mode = "pickup";
+    SpindexerMode mode = SpindexerMode.PICKUP;
 
     public Spindexer() {
         Hardware.spindex.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -54,11 +54,11 @@ public class Spindexer {
     public void nextPickupLocation() {
         position = Hardware.spindex.getTargetPosition();
 
-        if (mode.equals("pickup")) {
+        if (mode == SpindexerMode.PICKUP) {
             position += 49;
         } else {
             position += 37;
-            mode = "pickup";
+            mode = SpindexerMode.PICKUP;
         }
         Hardware.spindex.setTargetPosition(position);
         Hardware.spindex.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -68,14 +68,18 @@ public class Spindexer {
     public void nextShootingLocation() {
         position = Hardware.spindex.getTargetPosition();
 
-        if (mode.equals("shooting")) {
+        if (mode == SpindexerMode.SHOOTING) {
             position += 49;
         } else {
             position += 12;
-            mode = "shooting";
+            mode = SpindexerMode.SHOOTING;
         }
         Hardware.spindex.setTargetPosition(position);
         Hardware.spindex.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         Hardware.spindex.setPower(power);
     }
+}
+enum SpindexerMode{
+    SHOOTING,
+    PICKUP
 }
