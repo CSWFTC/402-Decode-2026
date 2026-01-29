@@ -1,7 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
 
-import com.bylazar.gamepad.PanelsGamepad;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
@@ -21,10 +20,10 @@ public class SpindexerTest extends LinearOpMode {
         while (opModeIsActive()) {
             switch (gpIn1.WaitForGamepadInput(30)) {
                 case BUTTON_A:
-                    s.PickupNextBall();
+                    s.nextPickupLocation();
                     break;
                 case BUTTON_Y:
-                    s.LaunchNextBall();
+                    s.nextShootingLocation();
                     break;
                 case BUTTON_B:
                     Hardware.intake.setPower(0.5);

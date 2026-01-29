@@ -1,7 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
 
-import com.bylazar.gamepad.PanelsGamepad;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
@@ -11,6 +10,7 @@ import org.firstinspires.ftc.teamcode.Helper.DriveTrainV2;
 import org.firstinspires.ftc.teamcode.Helper.GamePad;
 import org.firstinspires.ftc.teamcode.Helper.Hardware;
 import org.firstinspires.ftc.teamcode.Helper.Shooter;
+import org.firstinspires.ftc.teamcode.Helper.Spindexer;
 
 import java.util.Locale;
 
@@ -36,16 +36,18 @@ public class DriverControl extends LinearOpMode {
 
         //gpIn1 = new GamePad(PanelsGamepad.INSTANCE.getFirstManager().asCombinedFTCGamepad(gamepad1));
         gpIn1 = new GamePad(gamepad1);
-        gpIn2 = new GamePad(PanelsGamepad.INSTANCE.getSecondManager().asCombinedFTCGamepad(gamepad2));
+        gpIn2 = new GamePad(gamepad2);
         Shooter shooter = new Shooter();
         drvTrain = new DriveTrainV2();
         BallTransfer bt = new BallTransfer();
+        Spindexer spin = new Spindexer();
 //        atConf = new AprilTagConfig();
 
         waitForStart();
         if (isStopRequested()) {
             return;
         }
+        shooter.SetOuttake(true);
 
         telemetry.clear();
 
@@ -85,17 +87,24 @@ public class DriverControl extends LinearOpMode {
                     shooter.ToggleIntake();
                     break;
                 case BUTTON_Y:
-                    shooter.ToggleOuttake();
-                    break;
-                case BUTTON_B:
                     bt.ToggleLaunch();
                     break;
+                case BUTTON_X:
+                    spin.nextShootingLocation();
+                    break;
+                case BUTTON_B:
+                    spin.nextPickupLocation();
                 case BUTTON_R_BUMPER:
                     shooter.increaseTopOuttakePower(0.05);
                     break;
                 case BUTTON_L_BUMPER:
                     shooter.decreaseTopOuttakePower(0.05);
                     break;
+                case RIGHT_TRIGGER:
+                    spin.ManualForward();
+                    break;
+                case LEFT_TRIGGER:
+                    spin.ManualReverse();
                 case DPAD_UP:
                     shooter.setOuttakeTopPowerMultiplier(1.00);
                     break;
