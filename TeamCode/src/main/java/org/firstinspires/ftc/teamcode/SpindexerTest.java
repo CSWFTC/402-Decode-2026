@@ -15,7 +15,7 @@ public class SpindexerTest extends LinearOpMode {
     public void runOpMode() {
         Hardware.init(hardwareMap);
         Spindexer s = new Spindexer();
-        GamePad gpIn1 = new GamePad(PanelsGamepad.INSTANCE.getFirstManager().asCombinedFTCGamepad(gamepad1));
+        GamePad gpIn1 = new GamePad(gamepad1);
         waitForStart();
         while (opModeIsActive()) {
             switch (gpIn1.WaitForGamepadInput(30)) {

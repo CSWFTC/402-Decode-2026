@@ -5,9 +5,12 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 
 @Configurable
 public class Spindexer {
-    public static int nextBallOffset = 300;
-    public static int pickupOffset = 100;
-    public static double power = 0.20;
+    public static int nextBallOffset = 49;
+    public static int pickupOffset = 15;
+    public static double power = 0.35;
+
+    public static int recoilComp = 14;
+
     int position = 0;
 
     public Spindexer() {
@@ -19,12 +22,28 @@ public class Spindexer {
     }
 
     public void LaunchNextBall() {
-        position += 2 * nextBallOffset - (position % nextBallOffset);
-        Hardware.spindex.setTargetPosition(position);
+        position = Hardware.spindex.getCurrentPosition();
+
+        int mod = position % nextBallOffset;
+        if (mod < 0) mod += nextBallOffset;
+
+        position += 2 * nextBallOffset - mod;
+
+        Hardware.spindex.setTargetPosition(position + recoilComp);
+        Hardware.spindex.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        Hardware.spindex.setPower(power);
     }
 
     public void PickupNextBall() {
-        position += pickupOffset + nextBallOffset - (position % nextBallOffset);
-        Hardware.spindex.setTargetPosition(position);
+        position = Hardware.spindex.getCurrentPosition();
+
+        int mod = position % nextBallOffset;
+        if (mod < 0) mod += nextBallOffset;
+
+        position += pickupOffset + nextBallOffset - mod;
+
+        Hardware.spindex.setTargetPosition(position + recoilComp);
+        Hardware.spindex.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        Hardware.spindex.setPower(power);
     }
 }
