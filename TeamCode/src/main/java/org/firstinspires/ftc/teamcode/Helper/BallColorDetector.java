@@ -4,8 +4,6 @@ import org.firstinspires.ftc.vision.VisionPortal;
 import org.firstinspires.ftc.vision.opencv.ImageRegion;
 import org.firstinspires.ftc.vision.opencv.PredominantColorProcessor;
 
-import java.util.Optional;
-
 public class BallColorDetector {
     public static float left = -1;
     public static float right = 1;
@@ -21,14 +19,14 @@ public class BallColorDetector {
         portal = new VisionPortal.Builder().addProcessor(colorSensor).setCamera(Hardware.camera).build();
     }
 
-    public Optional<Ball> GetBallStatus() {
+    public Ball GetBallStatus() {
         switch (colorSensor.getAnalysis().closestSwatch) {
             case ARTIFACT_GREEN:
-                return Optional.of(Ball.GREEN);
+                return Ball.GREEN;
             case ARTIFACT_PURPLE:
-                return Optional.of(Ball.PURPLE);
+                return Ball.PURPLE;
             default:
-                return Optional.empty();
+                return Ball.EMPTY;
         }
     }
 
@@ -38,6 +36,7 @@ public class BallColorDetector {
 
     public enum Ball {
         GREEN,
-        PURPLE
+        PURPLE,
+        EMPTY
     }
 }

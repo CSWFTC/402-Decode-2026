@@ -41,7 +41,7 @@ public class DriverControl extends LinearOpMode {
         Shooter shooter = new Shooter();
         drvTrain = new DriveTrainV2();
         BallTransfer bt = new BallTransfer();
-        Spindexer spin = new Spindexer(shooter, new BallColorDetector());
+        Spindexer spin = new Spindexer(shooter, new BallColorDetector(), bt);
 //        atConf = new AprilTagConfig();
 
         waitForStart();
@@ -85,16 +85,16 @@ public class DriverControl extends LinearOpMode {
             GamePad.GameplayInputType inpType2 = gpIn2.WaitForGamepadInput(30);
             switch (inpType2) {
                 case BUTTON_A:
-                    shooter.ToggleIntake();
+                    spin.Pickup();
                     break;
                 case BUTTON_Y:
                     bt.ToggleLaunch();
                     break;
                 case BUTTON_X:
-                    spin.nextShootingLocation();
+                    spin.Launch(BallColorDetector.Ball.GREEN);
                     break;
                 case BUTTON_B:
-                    spin.nextPickupLocation();
+                    spin.Launch(BallColorDetector.Ball.PURPLE);
                 case BUTTON_R_BUMPER:
                     shooter.increaseTopOuttakePower(0.05);
                     break;
