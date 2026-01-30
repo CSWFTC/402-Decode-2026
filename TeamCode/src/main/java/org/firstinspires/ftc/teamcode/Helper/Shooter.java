@@ -21,7 +21,8 @@ public class Shooter {
 
     public void SetOuttake(boolean status) {
         outtakeOn = status;
-        Hardware.outtake.setPower(status ? outtakePower : 0.0);
+        Hardware.outtake1.setPower(status ? outtakePower : 0.0);
+        Hardware.outtake2.setPower(status ? outtakePower : 0.0);
     }
 
     public void increaseIntakePower(double power) {
