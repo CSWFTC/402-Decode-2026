@@ -17,8 +17,12 @@ public class Spindexer {
     int position = 0;
 
     SpindexerMode mode = SpindexerMode.PICKUP;
+    Shooter shooter;
+    BallColorDetector color;
 
-    public Spindexer() {
+    public Spindexer(Shooter shooter, BallColorDetector color) {
+        this.shooter = shooter;
+        this.color = color;
         Hardware.spindex.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         Hardware.spindex.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         Hardware.spindex.setTargetPosition(0);
@@ -27,6 +31,7 @@ public class Spindexer {
     }
 
     public void nextPickupLocation() {
+        shooter.SetIntake(true);
         position = Hardware.spindex.getTargetPosition();
 
         if (mode == SpindexerMode.PICKUP) {
@@ -38,6 +43,13 @@ public class Spindexer {
         Hardware.spindex.setTargetPosition(position);
         Hardware.spindex.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         Hardware.spindex.setPower(power);
+    }
+
+    public void Update() {
+        if (mode == SpindexerMode.PICKUP && color.GetBallStatus().isPresent()) {
+            shooter.SetIntake(false);
+            nextShootingLocation();
+        }
     }
 
     public void nextShootingLocation() {

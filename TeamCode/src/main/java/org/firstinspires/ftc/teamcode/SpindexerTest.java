@@ -5,8 +5,10 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.teamcode.Helper.BallColorDetector;
 import org.firstinspires.ftc.teamcode.Helper.GamePad;
 import org.firstinspires.ftc.teamcode.Helper.Hardware;
+import org.firstinspires.ftc.teamcode.Helper.Shooter;
 import org.firstinspires.ftc.teamcode.Helper.Spindexer;
 
 @TeleOp(name = "Spindexer Test")
@@ -14,16 +16,17 @@ public class SpindexerTest extends LinearOpMode {
     @Override
     public void runOpMode() {
         Hardware.init(hardwareMap);
-        Spindexer s = new Spindexer();
+        Shooter shooter = new Shooter();
+        Spindexer spin = new Spindexer(shooter, new BallColorDetector());
         GamePad gpIn1 = new GamePad(gamepad1);
         waitForStart();
         while (opModeIsActive()) {
             switch (gpIn1.WaitForGamepadInput(30)) {
                 case BUTTON_A:
-                    s.nextPickupLocation();
+                    spin.nextPickupLocation();
                     break;
                 case BUTTON_Y:
-                    s.nextShootingLocation();
+                    spin.nextShootingLocation();
                     break;
                 case BUTTON_B:
                     Hardware.intake.setPower(0.5);
@@ -38,16 +41,16 @@ public class SpindexerTest extends LinearOpMode {
                     Hardware.flapServo.setPosition(0.83);
                     break;
                 case LEFT_TRIGGER:
-                    Hardware.outtake.setPower(0);
+                    shooter.SetOuttake(false);
                     break;
                 case RIGHT_TRIGGER:
-                    Hardware.outtake.setPower(1);
+                    shooter.SetOuttake(true);
                     break;
                 case DPAD_UP:
-                    s.nextPickupLocation();
+                    spin.nextPickupLocation();
                     break;
                 case DPAD_DOWN:
-                    s.nextShootingLocation();
+                    spin.nextShootingLocation();
                     break;
             }
 

@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.teamcode.Helper.BallColorDetector;
 import org.firstinspires.ftc.teamcode.Helper.BallTransfer;
 import org.firstinspires.ftc.teamcode.Helper.DriveTrainV2;
 import org.firstinspires.ftc.teamcode.Helper.GamePad;
@@ -40,7 +41,7 @@ public class DriverControl extends LinearOpMode {
         Shooter shooter = new Shooter();
         drvTrain = new DriveTrainV2();
         BallTransfer bt = new BallTransfer();
-        Spindexer spin = new Spindexer();
+        Spindexer spin = new Spindexer(shooter, new BallColorDetector());
 //        atConf = new AprilTagConfig();
 
         waitForStart();
