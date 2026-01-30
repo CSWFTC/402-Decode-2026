@@ -119,6 +119,7 @@ public class DriverControl extends LinearOpMode {
                     shooter.setOuttakeTopPowerMultiplier(0.50);
                     break;
             }
+            spin.Update();
         }
     }
 
