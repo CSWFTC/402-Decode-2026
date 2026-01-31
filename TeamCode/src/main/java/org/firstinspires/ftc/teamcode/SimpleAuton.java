@@ -4,38 +4,53 @@ import com.bylazar.configurables.annotations.Configurable;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
+import org.firstinspires.ftc.teamcode.Helper.BallTransfer;
 import org.firstinspires.ftc.teamcode.Helper.Hardware;
 import org.firstinspires.ftc.teamcode.Helper.Shooter;
+import org.firstinspires.ftc.teamcode.Helper.Spindexer;
 
 @Autonomous(name = "AUTON (very bad)")
 @Configurable
 public class SimpleAuton extends LinearOpMode {
-    public static double outtakeTopMultiplier = 1;
     public static long motorRunTime = 20000;
+    public static long flapTime = 1000;
 
     @Override
     public void runOpMode() {
-        double old = Shooter.outtakePower;
         Hardware.init(hardwareMap);
-        Shooter s = new Shooter();
+        Shooter shooter = new Shooter();
+        shooter.SetOuttake(true);
+        BallTransfer flap = new BallTransfer();
+        Spindexer spindexer = new Spindexer();
         waitForStart();
-        s.setOuttakeTopPowerMultiplier(outtakeTopMultiplier);
-        s.SetOuttake(true);
-        s.SetIntake(true);
+        for (int i = 0; i < 3; i++) {
+            spindexer.nextShootingLocation();
+            while (Hardware.spindex.getTargetPosition() != Hardware.spindex.getCurrentPosition())
+                sleep(10);
+            if (!opModeIsActive())
+                return;
+            flap.SetLaunching(true);
+            if (!opModeIsActive())
+                return;
+            sleep(flapTime);
+            flap.SetLaunching(false);
+            if (!opModeIsActive())
+                return;
+            sleep(flapTime);
+        }
+        if (!opModeIsActive())
+            return;
+        spindexer.nextPickupLocation();
+        Hardware.frontLeft.setPower(1);
+        Hardware.frontRight.setPower(1);
+        Hardware.rearLeft.setPower(1);
+        Hardware.rearRight.setPower(1);
+        if (!opModeIsActive())
+            return;
         sleep(motorRunTime);
-        s.setOuttakeTopPowerMultiplier(old);
-        s.SetOuttake(false);
-        s.SetIntake(false);
-        Hardware.frontRight.setPower(-1);
-        Hardware.frontLeft.setPower(-1);
-        Hardware.rearRight.setPower(-1);
-        Hardware.rearLeft.setPower(-1);
-        sleep(250);
-        Hardware.frontRight.setPower(0);
         Hardware.frontLeft.setPower(0);
-        Hardware.rearRight.setPower(0);
+        Hardware.frontRight.setPower(0);
         Hardware.rearLeft.setPower(0);
-        while (opModeIsActive())
-            sleep(20);
+        Hardware.rearRight.setPower(0);
     }
 }
