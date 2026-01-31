@@ -5,7 +5,7 @@ import com.bylazar.configurables.annotations.Configurable;
 @Configurable
 public class BallTransfer {
     public static double waiting = 1;
-    public static double launch = 0;
+    public static double launch = 0.73;
     boolean isLaunching = false;
 
     public BallTransfer() {

@@ -4,7 +4,7 @@ import com.bylazar.configurables.annotations.Configurable;
 
 @Configurable
 public class Shooter {
-    public static double intakePower = 0.5;
+    public static double intakePower = 1.0;
     public static double outtakePower = 1;
     public boolean intakeOn;
     public boolean outtakeOn;
@@ -21,8 +21,7 @@ public class Shooter {
 
     public void SetOuttake(boolean status) {
         outtakeOn = status;
-        Hardware.outtake1.setPower(status ? outtakePower : 0.0);
-        Hardware.outtake2.setPower(status ? outtakePower : 0.0);
+        Hardware.outtake.setPower(status ? outtakePower : 0.0);
     }
 
     public void increaseIntakePower(double power) {

@@ -47,8 +47,7 @@ public class Hardware {
     @Reverse
     public static DcMotor intake;
     @Reverse
-    public static DcMotor outtake1;
-    public static DcMotor outtake2;
+    public static DcMotor outtake;
     public static Servo flapServo;
     @Reverse
     public static DcMotor spindex;
