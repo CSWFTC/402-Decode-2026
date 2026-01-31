@@ -10,7 +10,7 @@ public class BallTransfer {
     public boolean isLaunching = false;
     Shooter shooter;
 
-    long flapUpTime = 1000000000;
+    long flapUpTime;
 
     public BallTransfer(Shooter shooter) {
         this.shooter = shooter;
@@ -18,7 +18,7 @@ public class BallTransfer {
     }
 
     public void Update() {
-        Hardware.flapServo.setPosition(System.currentTimeMillis() >= flapUpTime ? launch : waiting);
+        Hardware.flapServo.setPosition(isLaunching && System.currentTimeMillis() >= flapUpTime ? launch : waiting);
     }
 
     public void SetLaunching(boolean toLaunch) {
@@ -27,9 +27,8 @@ public class BallTransfer {
         if (toLaunch) {
             shooter.SetIntake(false);
             flapUpTime = System.currentTimeMillis() + outtakeDelay;
-        } else {
+        } else if (System.currentTimeMillis() >= flapUpTime) {
             shooter.SetOuttake(false);
-            flapUpTime = 1000000000;
         }
     }
 
