@@ -15,6 +15,7 @@ public class AutonBlue extends LinearOpMode {
     public static long forwardTime = 2000;
     public static long spinTime = 250;
     public static long flapTime = 1000;
+    public static long spindexTime = 2000;
 
     @Override
     public void runOpMode() {
@@ -24,8 +25,9 @@ public class AutonBlue extends LinearOpMode {
         Spindexer spindexer = new Spindexer();
         waitForStart();
         spindexer.nextShootingLocation();
-        while (Hardware.spindex.getTargetPosition() != Hardware.spindex.getCurrentPosition() && opModeIsActive())
-            sleep(10);
+        sleep(spindexTime);
+        if (!opModeIsActive())
+            return;
         Hardware.frontLeft.setPower(1);
         Hardware.frontRight.setPower(1);
         Hardware.rearLeft.setPower(1);
@@ -43,8 +45,9 @@ public class AutonBlue extends LinearOpMode {
         Hardware.rearRight.setPower(0);
         for (int i = 0; i < 3; i++) {
             spindexer.nextShootingLocation();
-            while (Hardware.spindex.getTargetPosition() != Hardware.spindex.getCurrentPosition())
-                sleep(10);
+            sleep(spindexTime);
+            if (!opModeIsActive())
+                return;
             flap.SetLaunching(true);
             if (!opModeIsActive())
                 return;
@@ -55,7 +58,6 @@ public class AutonBlue extends LinearOpMode {
             sleep(flapTime);
         }
         spindexer.nextPickupLocation();
-        while (Hardware.spindex.getTargetPosition() != Hardware.spindex.getCurrentPosition() && opModeIsActive())
-            sleep(10);
+        sleep(spindexTime);
     }
 }
