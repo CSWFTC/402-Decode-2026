@@ -9,9 +9,9 @@ import org.firstinspires.ftc.teamcode.Helper.Hardware;
 import org.firstinspires.ftc.teamcode.Helper.Shooter;
 import org.firstinspires.ftc.teamcode.Helper.Spindexer;
 
-@Autonomous(name = "AUTON (very bad)")
+@Autonomous(name = "RED auton (very bad)")
 @Configurable
-public class SimpleAuton extends LinearOpMode {
+public class AutonRed extends LinearOpMode {
     public static long forwardTime = 2000;
     public static long spinTime = 250;
     public static long flapTime = 1000;
@@ -20,7 +20,6 @@ public class SimpleAuton extends LinearOpMode {
     public void runOpMode() {
         Hardware.init(hardwareMap);
         Shooter shooter = new Shooter();
-        shooter.SetOuttake(true);
         BallTransfer flap = new BallTransfer();
         Spindexer spindexer = new Spindexer();
         waitForStart();
@@ -34,6 +33,7 @@ public class SimpleAuton extends LinearOpMode {
         if (!opModeIsActive())
             return;
         sleep(forwardTime);
+        shooter.SetOuttake(true);
         Hardware.frontRight.setPower(0);
         Hardware.rearRight.setPower(0);
         if (!opModeIsActive())
