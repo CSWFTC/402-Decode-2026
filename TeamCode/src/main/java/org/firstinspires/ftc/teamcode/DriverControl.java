@@ -40,7 +40,7 @@ public class DriverControl extends LinearOpMode {
         gpIn2 = new GamePad(gamepad2);
         Shooter shooter = new Shooter();
         drvTrain = new DriveTrainV2();
-        BallTransfer bt = new BallTransfer();
+        BallTransfer bt = new BallTransfer(shooter);
         Spindexer spin = new Spindexer();
 //        atConf = new AprilTagConfig();
 
@@ -48,8 +48,6 @@ public class DriverControl extends LinearOpMode {
         if (isStopRequested()) {
             return;
         }
-        shooter.SetOuttake(true);
-
         telemetry.clear();
 
         double speedMultiplier = 0.5;
@@ -83,8 +81,10 @@ public class DriverControl extends LinearOpMode {
             }
 
             GamePad.GameplayInputType inpType2 = gpIn2.WaitForGamepadInput(30);
-            shooter.SetIntake(gamepad2.a);
             switch (inpType2) {
+                case BUTTON_A:
+                    shooter.ToggleIntake();
+                    break;
                 case BUTTON_Y:
                     bt.ToggleLaunch();
                     break;
@@ -117,6 +117,7 @@ public class DriverControl extends LinearOpMode {
                     shooter.setOuttakeTopPowerMultiplier(0.50);
                     break;
             }
+            bt.Update();
         }
     }
 

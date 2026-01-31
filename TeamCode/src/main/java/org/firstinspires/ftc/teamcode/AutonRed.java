@@ -21,7 +21,7 @@ public class AutonRed extends LinearOpMode {
     public void runOpMode() {
         Hardware.init(hardwareMap);
         Shooter shooter = new Shooter();
-        BallTransfer flap = new BallTransfer();
+        BallTransfer flap = new BallTransfer(shooter);
         Spindexer spindexer = new Spindexer();
         waitForStart();
         spindexer.nextShootingLocation();
