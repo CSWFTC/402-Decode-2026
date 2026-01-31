@@ -12,7 +12,8 @@ import org.firstinspires.ftc.teamcode.Helper.Spindexer;
 @Autonomous(name = "AUTON (very bad)")
 @Configurable
 public class SimpleAuton extends LinearOpMode {
-    public static long motorRunTime = 5000;
+    public static long forwardTime = 5000;
+    public static long spinTime = 500;
     public static long flapTime = 1000;
 
     @Override
@@ -32,11 +33,14 @@ public class SimpleAuton extends LinearOpMode {
         Hardware.rearRight.setPower(1);
         if (!opModeIsActive())
             return;
-        sleep(motorRunTime);
-        Hardware.frontLeft.setPower(0);
+        sleep(forwardTime);
         Hardware.frontRight.setPower(0);
-        Hardware.rearLeft.setPower(0);
         Hardware.rearRight.setPower(0);
+        if (!opModeIsActive())
+            return;
+        sleep(spinTime);
+        Hardware.frontLeft.setPower(0);
+        Hardware.rearLeft.setPower(0);
         for (int i = 0; i < 3; i++) {
             spindexer.nextShootingLocation();
             while (Hardware.spindex.getTargetPosition() != Hardware.spindex.getCurrentPosition())
