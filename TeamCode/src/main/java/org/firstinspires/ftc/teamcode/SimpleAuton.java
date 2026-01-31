@@ -12,8 +12,8 @@ import org.firstinspires.ftc.teamcode.Helper.Spindexer;
 @Autonomous(name = "AUTON (very bad)")
 @Configurable
 public class SimpleAuton extends LinearOpMode {
-    public static long forwardTime = 5000;
-    public static long spinTime = 500;
+    public static long forwardTime = 2000;
+    public static long spinTime = 250;
     public static long flapTime = 1000;
 
     @Override
