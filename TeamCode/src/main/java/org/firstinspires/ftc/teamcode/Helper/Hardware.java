@@ -39,7 +39,6 @@ public class Hardware {
 
     @Reverse
     public static DcMotor rearLeft;
-
     public static DcMotor rearRight;
 
     @DoNotInitialize
@@ -47,27 +46,14 @@ public class Hardware {
 
     @Reverse
     public static DcMotor intake;
-    @DoNotInitialize
-    public static DcMotor outtakeTop;
-    @DoNotInitialize
-    public static DcMotor outtakeBottom;
-    @DoNotInitialize
-    public static DcMotor outtakeMiddle;
-
-    @DoNotInitialize
-    public static DcMotor outtakeLeft;
-
-    @Reverse
-    @DoNotInitialize
-    public static DcMotor outtakeRight;
-
     @Reverse
     public static DcMotor outtake;
+    public static Servo flapServo;
+    @Reverse
+    public static DcMotor spindex;
 
     @DoNotInitialize
-    public static Servo flapServo;
-
-    public static DcMotor spindexMotor;
+    public static Servo turretServo;
 
     // initialization code
     public static void init(HardwareMap map) {

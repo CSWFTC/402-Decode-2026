@@ -32,7 +32,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
+
 import org.firstinspires.ftc.teamcode.Helper.Hardware;
 
 
@@ -42,21 +42,16 @@ public class OuttakeMotorTest extends LinearOpMode {
     @Override
     public void runOpMode() {
         Hardware.init(hardwareMap);
-        Hardware.outtakeLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        Hardware.outtakeLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-
-        Hardware.outtakeRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        Hardware.outtakeRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-
+        Hardware.outtake.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        Hardware.outtake.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         waitForStart();
 
         while (opModeIsActive()) {
 
-            Hardware.outtakeLeft.setPower(gamepad1.a || gamepad1.x  ? 1.0 : 0.0);
-            Hardware.outtakeRight.setPower(gamepad1.b || gamepad1.x  ? 1.0 : 0.0);
+            Hardware.outtake.setPower(gamepad1.a || gamepad1.x ? 1.0 : 0.0);
 
-            telemetry.addLine().addData("Controls", "A for OuttakeLeft, B for OuttakeRight, X for BOTH");
-            telemetry.addLine().addData("OuttakeLeft", gamepad1.a || gamepad1.x);
+            telemetry.addLine().addData("Controls", "A for Outtake, B for OuttakeRight, X for BOTH");
+            telemetry.addLine().addData("Outtake", gamepad1.a || gamepad1.x);
             telemetry.addLine().addData("OuttakeRight", gamepad1.b || gamepad1.x);
             telemetry.update();
         }

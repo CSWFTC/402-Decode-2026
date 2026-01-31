@@ -4,10 +4,8 @@ import com.bylazar.configurables.annotations.Configurable;
 
 @Configurable
 public class Shooter {
-    public static double intakePower = 1;
-    public static double outtakeTopPower = 0.75;
-    public static double outtakeMiddlePower = 1;
-    public static double outtakeBottomPower = 1;
+    public static double intakePower = 1.0;
+    public static double outtakePower = 1;
     public boolean intakeOn;
     public boolean outtakeOn;
 
@@ -23,9 +21,7 @@ public class Shooter {
 
     public void SetOuttake(boolean status) {
         outtakeOn = status;
-        Hardware.outtakeBottom.setPower(status ? outtakeBottomPower : 0.0);
-        Hardware.outtakeMiddle.setPower(status ? outtakeMiddlePower : 0.0);
-        Hardware.outtakeTop.setPower(status ? outtakeTopPower : 0.0);
+        Hardware.outtake.setPower(status ? outtakePower : 0.0);
     }
 
     public void increaseIntakePower(double power) {
@@ -45,27 +41,27 @@ public class Shooter {
     }
 
     public void setOuttakeTopPowerMultiplier(double power) {
-        outtakeTopPower = power;
-        if (outtakeTopPower > 1) {
-            outtakeTopPower = 1;
-        } else if (outtakeTopPower < 0.05) {
-            outtakeTopPower = 0.05;
+        outtakePower = power;
+        if (outtakePower > 1) {
+            outtakePower = 1;
+        } else if (outtakePower < 0.05) {
+            outtakePower = 0.05;
         }
         SetOuttake(outtakeOn);
     }
 
     public void increaseTopOuttakePower(double power) {
-        outtakeTopPower = outtakeTopPower + power;
-        if (outtakeTopPower > 1) {
-            outtakeTopPower = 1;
+        outtakePower = outtakePower + power;
+        if (outtakePower > 1) {
+            outtakePower = 1;
         }
         SetOuttake(outtakeOn);
     }
 
     public void decreaseTopOuttakePower(double power) {
-        outtakeTopPower = outtakeTopPower - power;
-        if (outtakeTopPower < 0.05) {
-            outtakeTopPower = 0.05;
+        outtakePower = outtakePower - power;
+        if (outtakePower < 0.05) {
+            outtakePower = 0.05;
         }
         SetOuttake(outtakeOn);
     }

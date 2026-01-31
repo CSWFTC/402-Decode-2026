@@ -33,57 +33,55 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.Helper.GamePad;
 import org.firstinspires.ftc.teamcode.Helper.Hardware;
 
 
-@TeleOp(name = "Intake Test")
-public class IntakeTest extends LinearOpMode {
+@TeleOp(name = "Turret Test")
+public class TurretTest extends LinearOpMode {
 
     @Override
     public void runOpMode() {
         Hardware.init(hardwareMap);
-        Hardware.intake.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        Hardware.intake.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         waitForStart();
-        GamePad gpIn1 = new GamePad(gamepad1);
-        double power = 0.0;
 
-        Hardware.intake.setPower(power);
+        GamePad gpIn1 = new GamePad(gamepad1);
+
+        double position = 0.5;
+        Hardware.turretServo.setPosition(position);
+        Hardware.turretServo.setDirection(Servo.Direction.FORWARD);
 
         while (opModeIsActive()) {
-
             GamePad.GameplayInputType inpType1 = gpIn1.WaitForGamepadInput(30);
             switch (inpType1) {
-                case BUTTON_A:
-                    power = 1.0;
+                case DPAD_UP:
+                    position += 0.05;
                     break;
-                case BUTTON_B:
-                    power = 0.75;
-                    break;
-                case BUTTON_X:
-                    power = 0.5;
-                    break;
-                case BUTTON_Y:
-                    power = 0.25;
-                    break;
-                case BUTTON_L_BUMPER:
-                    Hardware.intake.setDirection(DcMotorSimple.Direction.REVERSE);
-                    break;
-                case BUTTON_R_BUMPER:
-                    Hardware.intake.setDirection(DcMotorSimple.Direction.FORWARD);
+                case DPAD_RIGHT:
+                    position += 0.01;
                     break;
                 case DPAD_DOWN:
-                    power = 0.0;
+                    position -= 0.05;
+                    break;
+                case DPAD_LEFT:
+                    position -= 0.01;
+                    break;
+                case BUTTON_A:
+                    Hardware.turretServo.setPosition(position);
+                    break;
+                case BUTTON_L_BUMPER:
+                    Hardware.turretServo.setDirection(Servo.Direction.REVERSE);
+                    break;
+                case BUTTON_R_BUMPER:
+                    Hardware.turretServo.setDirection(Servo.Direction.REVERSE);
+                    break;
             }
-
-            Hardware.intake.setPower(power);
-            telemetry.addLine().addData("Controls","A 100%, B 75%, X 50%, Y 25%");
-            telemetry.addLine().addData("Current Power", Hardware.intake.getPower());
-            telemetry.addLine().addData("Direction", Hardware.intake.getDirection());
+            telemetry.addLine().addData("Position", position);
             telemetry.update();
         }
     }
+
 }

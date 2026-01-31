@@ -10,26 +10,24 @@ import org.firstinspires.ftc.teamcode.Helper.Hardware;
 @TeleOp(name = "Drivetrain Motor Test")
 public class DrivetrainMotorTest extends LinearOpMode {
     @Override
-    public void runOpMode(){
+    public void runOpMode() {
         Hardware.init(hardwareMap);
         Hardware.frontLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         Hardware.frontRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         Hardware.rearLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         Hardware.rearRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        /*Hardware.outtakeBottom.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        Hardware.outtakeMiddle.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        Hardware.outtakeTop.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);*/
+        Hardware.outtake.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         waitForStart();
         Gamepad old = new Gamepad();
         boolean fl = false, fr = false, rl = false, rr = false;
-        while(opModeIsActive()){
-            if(gamepad1.a && !old.a)
+        while (opModeIsActive()) {
+            if (gamepad1.a && !old.a)
                 rl = !rl;
-            if(gamepad1.b && !old.b)
+            if (gamepad1.b && !old.b)
                 rr = !rr;
-            if(gamepad1.x && !old.x)
+            if (gamepad1.x && !old.x)
                 fl = !fl;
-            if(gamepad1.y && !old.y)
+            if (gamepad1.y && !old.y)
                 fr = !fr;
             gamepad1.copy(old);
             Hardware.frontLeft.setPower(fl ? 1 : 0);
