@@ -82,10 +82,8 @@ public class DriverControl extends LinearOpMode {
             }
 
             GamePad.GameplayInputType inpType2 = gpIn2.WaitForGamepadInput(30);
+            shooter.SetIntake(gamepad2.a);
             switch (inpType2) {
-                case BUTTON_A:
-                    shooter.ToggleIntake();
-                    break;
                 case BUTTON_Y:
                     bt.ToggleLaunch();
                     break;
