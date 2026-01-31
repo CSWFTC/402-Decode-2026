@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.Helper.BallTransfer;
@@ -93,10 +94,10 @@ public class DriverControl extends LinearOpMode {
                 case BUTTON_B:
                     spin.nextPickupLocation();
                 case BUTTON_R_BUMPER:
-                    shooter.increaseTopOuttakePower(0.05);
+                    Hardware.intake.setDirection(DcMotorSimple.Direction.FORWARD);
                     break;
                 case BUTTON_L_BUMPER:
-                    shooter.decreaseTopOuttakePower(0.05);
+                    Hardware.intake.setDirection(DcMotorSimple.Direction.REVERSE);
                     break;
                 case RIGHT_TRIGGER:
                     spin.ManualForward();
