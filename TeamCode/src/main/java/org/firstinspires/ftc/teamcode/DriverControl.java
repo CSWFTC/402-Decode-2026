@@ -48,6 +48,7 @@ public class DriverControl extends LinearOpMode {
         if (isStopRequested()) {
             return;
         }
+        shooter.SetOuttake(true);
 
         telemetry.clear();
 
@@ -86,7 +87,6 @@ public class DriverControl extends LinearOpMode {
             switch (inpType2) {
                 case BUTTON_Y:
                     bt.ToggleLaunch();
-                    shooter.ToggleOuttake();
                     break;
                 case BUTTON_X:
                     spin.nextShootingLocation();
