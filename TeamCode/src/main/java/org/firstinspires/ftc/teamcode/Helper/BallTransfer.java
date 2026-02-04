@@ -6,15 +6,30 @@ import com.bylazar.configurables.annotations.Configurable;
 public class BallTransfer {
     public static double waiting = 1;
     public static double launch = 0.73;
-    boolean isLaunching = false;
+    public static long outtakeDelay = 2000;
+    public boolean isLaunching = false;
+    Shooter shooter;
 
-    public BallTransfer() {
+    long flapUpTime;
+
+    public BallTransfer(Shooter shooter) {
+        this.shooter = shooter;
         SetLaunching(false);
     }
 
+    public void Update() {
+        Hardware.flapServo.setPosition(isLaunching && System.currentTimeMillis() >= flapUpTime ? launch : waiting);
+    }
+
     public void SetLaunching(boolean toLaunch) {
+        shooter.SetOuttake(toLaunch);
         isLaunching = toLaunch;
-        Hardware.flapServo.setPosition(toLaunch ? launch : waiting);
+        if (toLaunch) {
+            shooter.SetIntake(false);
+            flapUpTime = System.currentTimeMillis() + outtakeDelay;
+        } else if (System.currentTimeMillis() >= flapUpTime) {
+            shooter.SetOuttake(false);
+        }
     }
 
     public void ToggleLaunch() {

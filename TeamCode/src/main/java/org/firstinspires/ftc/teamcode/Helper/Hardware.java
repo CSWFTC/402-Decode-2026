@@ -37,7 +37,6 @@ public class Hardware {
 
     public static DcMotor frontRight;
 
-    @Reverse
     public static DcMotor rearLeft;
     public static DcMotor rearRight;
 

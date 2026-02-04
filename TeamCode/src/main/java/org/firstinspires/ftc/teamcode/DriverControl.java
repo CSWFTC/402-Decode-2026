@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.Helper.BallTransfer;
@@ -39,7 +40,7 @@ public class DriverControl extends LinearOpMode {
         gpIn2 = new GamePad(gamepad2);
         Shooter shooter = new Shooter();
         drvTrain = new DriveTrainV2();
-        BallTransfer bt = new BallTransfer();
+        BallTransfer bt = new BallTransfer(shooter);
         Spindexer spin = new Spindexer();
 //        atConf = new AprilTagConfig();
 
@@ -47,8 +48,6 @@ public class DriverControl extends LinearOpMode {
         if (isStopRequested()) {
             return;
         }
-        shooter.SetOuttake(true);
-
         telemetry.clear();
 
         double speedMultiplier = 0.5;
@@ -95,10 +94,10 @@ public class DriverControl extends LinearOpMode {
                 case BUTTON_B:
                     spin.nextPickupLocation();
                 case BUTTON_R_BUMPER:
-                    shooter.increaseTopOuttakePower(0.05);
+                    Hardware.intake.setDirection(DcMotorSimple.Direction.FORWARD);
                     break;
                 case BUTTON_L_BUMPER:
-                    shooter.decreaseTopOuttakePower(0.05);
+                    Hardware.intake.setDirection(DcMotorSimple.Direction.REVERSE);
                     break;
                 case RIGHT_TRIGGER:
                     spin.ManualForward();
@@ -118,6 +117,7 @@ public class DriverControl extends LinearOpMode {
                     shooter.setOuttakeTopPowerMultiplier(0.50);
                     break;
             }
+            bt.Update();
         }
     }
 
