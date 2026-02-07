@@ -33,24 +33,36 @@ public class Hardware {
     // the field name should match the name in the robot config
     // that's it!
     @Reverse
+    @DoNotInitialize
     public static DcMotor frontLeft;
 
+    @DoNotInitialize
     public static DcMotor frontRight;
 
     @Reverse
+    @DoNotInitialize
     public static DcMotor rearLeft;
+    @DoNotInitialize
     public static DcMotor rearRight;
 
     @DoNotInitialize
+    public static DcMotor outtake;
+
     public static WebcamName camera;
 
     @Reverse
+    @DoNotInitialize
     public static DcMotor intake;
     @Reverse
+    @DoNotInitialize
     public static DcMotor outtake1;
+    @DoNotInitialize
     public static DcMotor outtake2;
+
+    @DoNotInitialize
     public static Servo flapServo;
     @Reverse
+    @DoNotInitialize
     public static DcMotor spindex;
 
     @DoNotInitialize

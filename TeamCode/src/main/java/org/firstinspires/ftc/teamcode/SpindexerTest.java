@@ -6,6 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.Helper.BallColorDetector;
+import org.firstinspires.ftc.teamcode.Helper.BallTransfer;
 import org.firstinspires.ftc.teamcode.Helper.GamePad;
 import org.firstinspires.ftc.teamcode.Helper.Hardware;
 import org.firstinspires.ftc.teamcode.Helper.Shooter;
@@ -17,7 +18,7 @@ public class SpindexerTest extends LinearOpMode {
     public void runOpMode() {
         Hardware.init(hardwareMap);
         Shooter shooter = new Shooter();
-        Spindexer spin = new Spindexer(shooter, new BallColorDetector());
+        Spindexer spin = new Spindexer(shooter, new BallColorDetector(), new BallTransfer());
         GamePad gpIn1 = new GamePad(gamepad1);
         waitForStart();
         while (opModeIsActive()) {
