@@ -51,8 +51,8 @@ public class Hardware {
     @Reverse
     public static DcMotor spindex;
 
-    @DoNotInitialize
-    public static Servo turretServo;
+    public static Servo hood1;
+    public static Servo hood2;
 
     // initialization code
     public static void init(HardwareMap map) {
@@ -62,12 +62,16 @@ public class Hardware {
                 field.setAccessible(true);
                 try {
                     field.set(null, map.get(field.getType(), field.getName()));
-                    if (field.getType() == DcMotor.class) {
-                        Reverse r = field.getAnnotation(Reverse.class);
-                        if (r != null) {
+                    Reverse r = field.getAnnotation(Reverse.class);
+                    if (r != null) {
+                        if (field.getType() == DcMotor.class) {
                             DcMotor m = (DcMotor) field.get(null);
                             assert m != null;
                             m.setDirection(DcMotorSimple.Direction.REVERSE);
+                        } else if (field.getType() == Servo.class) {
+                            Servo s = (Servo) field.get(null);
+                            assert s != null;
+                            s.setDirection(Servo.Direction.REVERSE);
                         }
                     }
                 } catch (IllegalAccessException ignored) {
