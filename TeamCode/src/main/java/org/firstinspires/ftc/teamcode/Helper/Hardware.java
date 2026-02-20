@@ -53,6 +53,8 @@ public class Hardware {
 
     public static Servo hood1;
     public static Servo hood2;
+    public static Servo turret1;
+    public static Servo turret2;
 
     // initialization code
     public static void init(HardwareMap map) {
