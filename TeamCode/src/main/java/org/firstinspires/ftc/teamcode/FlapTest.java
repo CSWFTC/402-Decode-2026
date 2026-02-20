@@ -6,6 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import org.firstinspires.ftc.teamcode.Helper.BallTransfer;
 import org.firstinspires.ftc.teamcode.Helper.GamePad;
 import org.firstinspires.ftc.teamcode.Helper.Hardware;
+import org.firstinspires.ftc.teamcode.Helper.Shooter;
 
 @TeleOp(name = "Flap Test")
 public class FlapTest extends LinearOpMode {
@@ -13,7 +14,7 @@ public class FlapTest extends LinearOpMode {
     public void runOpMode() {
         Hardware.init(hardwareMap);
         GamePad gpIn1 = new GamePad(gamepad1);
-        BallTransfer bt = new BallTransfer();
+        BallTransfer bt = new BallTransfer(new Shooter());
 
         double position = 1.0;
         //final position = 0.83;

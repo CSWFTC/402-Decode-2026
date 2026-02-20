@@ -37,7 +37,6 @@ public class Hardware {
 
     public static DcMotor frontRight;
 
-    @Reverse
     public static DcMotor rearLeft;
     public static DcMotor rearRight;
 
@@ -52,6 +51,7 @@ public class Hardware {
     @Reverse
     public static DcMotor spindex;
 
+    @DoNotInitialize
     public static Servo turretServo;
 
     // initialization code
