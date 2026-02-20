@@ -15,15 +15,15 @@ public class TurretTest extends LinearOpMode {
         waitForStart();
         long prev = System.currentTimeMillis();
         while (opModeIsActive()) {
-            double hoodPos = t.getHoodPosition();
-            double turretPos = t.getTurretPosition();
+            double hoodAngle = t.getHoodAngle();
+            double turretAngle = t.getTurretAngle();
             long now = System.currentTimeMillis();
             double delta = (double) (now - prev) / 1e3;
-            telemetry.addData("Current hood position", hoodPos);
-            telemetry.addData("Current turret position", turretPos);
+            telemetry.addData("Current hood angle", hoodAngle);
+            telemetry.addData("Current turret angle", turretAngle);
             telemetry.update();
-            t.setHoodPosition(hoodPos + gamepad1.right_stick_y * delta / (Turret.hoodMax - Turret.hoodMin));
-            t.setTurretPosition(turretPos + gamepad1.left_stick_x * delta / (Turret.turretMax - Turret.turretMin));
+            t.setHoodAngle(hoodAngle + gamepad1.right_stick_y * delta / (Turret.hoodMaxAngle - Turret.hoodMinAngle));
+            t.setTurretAngle(turretAngle + gamepad1.left_stick_x * delta / (Turret.turretMaxAngle - Turret.turretMinAngle));
             prev = now;
         }
     }
