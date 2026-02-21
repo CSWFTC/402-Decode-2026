@@ -49,7 +49,7 @@ public class IntakeTest extends LinearOpMode {
 
         waitForStart();
         GamePad gpIn1 = new GamePad(gamepad1);
-        double power = 0.0;
+        double power = 1.0;
 
         Hardware.intake.setPower(power);
 
@@ -80,7 +80,7 @@ public class IntakeTest extends LinearOpMode {
             }
 
             Hardware.intake.setPower(power);
-            telemetry.addLine().addData("Controls","A 100%, B 75%, X 50%, Y 25%");
+            telemetry.addLine().addData("Controls", "A 100%, B 75%, X 50%, Y 25%");
             telemetry.addLine().addData("Current Power", Hardware.intake.getPower());
             telemetry.addLine().addData("Direction", Hardware.intake.getDirection());
             telemetry.update();

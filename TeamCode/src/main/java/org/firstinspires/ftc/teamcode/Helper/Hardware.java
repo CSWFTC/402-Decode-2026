@@ -46,8 +46,6 @@ public class Hardware {
     @DoNotInitialize
     public static WebcamName camera;
 
-    @DoNotInitialize
-    @Reverse
     public static DcMotor intake;
     @Reverse
     public static DcMotor shooter1;
