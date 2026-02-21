@@ -13,7 +13,8 @@ public class BallTest extends LinearOpMode {
     public void runOpMode() {
         Hardware.init(hardwareMap);
 
-        Hardware.outtake.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        Hardware.shooter1.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        Hardware.shooter2.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         Hardware.intake.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         waitForStart();
         Gamepad old = new Gamepad();
@@ -32,7 +33,8 @@ public class BallTest extends LinearOpMode {
             //Hardware.frontRight.setPower(fr ? 1 : 0);
             //Hardware.rearLeft.setPower(rl ? 1 : 0);
             // Hardware.rearRight.setPower(rr ? 1 : 0);
-            Hardware.outtake.setPower(fl ? 1 : 0);
+            Hardware.shooter1.setPower(fl ? 1 : 0);
+            Hardware.shooter2.setPower(fl ? 1 : 0);
             Hardware.intake.setPower(rr ? 1 : 0);
             telemetry.addData("Outtake Bottom (A)", rl);
             telemetry.addLine();

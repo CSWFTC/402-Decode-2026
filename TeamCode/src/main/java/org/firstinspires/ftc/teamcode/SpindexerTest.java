@@ -38,10 +38,12 @@ public class SpindexerTest extends LinearOpMode {
                     Hardware.flapServo.setPosition(0.83);
                     break;
                 case LEFT_TRIGGER:
-                    Hardware.outtake.setPower(0);
+                    Hardware.shooter1.setPower(0);
+                    Hardware.shooter2.setPower(0);
                     break;
                 case RIGHT_TRIGGER:
-                    Hardware.outtake.setPower(1);
+                    Hardware.shooter1.setPower(1);
+                    Hardware.shooter2.setPower(1);
                     break;
                 case DPAD_UP:
                     s.nextPickupLocation();
