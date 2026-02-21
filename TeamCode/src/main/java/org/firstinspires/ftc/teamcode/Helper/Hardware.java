@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.Helper;
 
+import com.qualcomm.hardware.gobilda.GoBildaPinpointDriver;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -55,6 +56,7 @@ public class Hardware {
     public static Servo hood2;
     public static Servo turret1;
     public static Servo turret2;
+    public static GoBildaPinpointDriver pinpoint;
 
     // initialization code
     public static void init(HardwareMap map) {
