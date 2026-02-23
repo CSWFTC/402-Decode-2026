@@ -48,7 +48,8 @@ public class FullPowerTest extends LinearOpMode {
         Hardware.shooter1.setPower(1);
         Hardware.shooter2.setPower(1);
         while (opModeIsActive()) {
-            sleep(100);
+            telemetry.addLine().addData("Shooter 1 Power", Hardware.shooter1.getPower());
+            telemetry.addLine().addData("Shooter 2 Power", Hardware.shooter2.getPower());
         }
     }
 }
