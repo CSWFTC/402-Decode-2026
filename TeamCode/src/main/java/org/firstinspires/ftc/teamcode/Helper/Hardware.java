@@ -40,19 +40,15 @@ public class Hardware {
     public static DcMotor rearRight;
 
     @DoNotInitialize
-    public static WebcamName camera;
-    @DoNotInitialize
     public static DcMotor intake;
+    @DoNotInitialize
+
+    public static DcMotor ramp;
     @DoNotInitialize
     @Reverse
     public static DcMotor shooter1;
     @DoNotInitialize
     public static DcMotor shooter2;
-    @DoNotInitialize
-    public static Servo flapServo;
-    @Reverse
-    @DoNotInitialize
-    public static DcMotor spindex;
 
     @DoNotInitialize
     public static Servo hood1;
