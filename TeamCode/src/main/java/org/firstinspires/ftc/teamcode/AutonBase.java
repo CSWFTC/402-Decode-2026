@@ -19,21 +19,16 @@ enum State {
     LEAVE
 }
 
-public class AutonBase extends LinearOpMode {
-    public static Pose launchRear;
-    public static Pose launchForward;
-    public static Pose pickup1;
-    public static Pose pickup2;
-    public static Pose pickup3;
-    public static Pose pickupEndOffset;
-    public static Pose endPosition;
+public abstract class AutonBase extends LinearOpMode {
+    abstract Config getConfig();
 
     PathChain pathBetween(Follower f, Pose start, Pose end) {
         return f.pathBuilder().addPath(new BezierLine(start, end)).setLinearHeadingInterpolation(start.getHeading(), end.getHeading()).build();
     }
 
     Pose offset(Pose original) {
-        return new Pose(original.getX() + pickupEndOffset.getX(), original.getY() + pickupEndOffset.getY(), original.getHeading());
+        Config c = getConfig();
+        return new Pose(original.getX() + c.pickupEndOffset.getX(), original.getY() + c.pickupEndOffset.getY(), original.getHeading());
     }
 
     @Override
@@ -42,12 +37,13 @@ public class AutonBase extends LinearOpMode {
         Shooter shooter = new Shooter();
         State s = State.LAUNCHING_PRELOAD;
         Follower f = Constants.createFollower(hardwareMap);
-        f.setStartingPose(launchRear);
+        Config c = getConfig();
+        f.setStartingPose(c.launchRear);
         waitForStart();
-        PathChain[] goTo = {pathBetween(f, launchRear, pickup1), pathBetween(f, launchRear, pickup2), pathBetween(f, launchForward, pickup3)};
-        PathChain[] collect = {pathBetween(f, pickup1, offset(pickup1)), pathBetween(f, pickup2, offset(pickup2)), pathBetween(f, pickup3, offset(pickup3))};
-        PathChain[] launch = {pathBetween(f, offset(pickup1), launchRear), pathBetween(f, offset(pickup2), launchForward), pathBetween(f, offset(pickup3), launchForward)};
-        PathChain leave = pathBetween(f, launchForward, endPosition);
+        PathChain[] goTo = {pathBetween(f, c.launchRear, c.pickup1), pathBetween(f, c.launchRear, c.pickup2), pathBetween(f, c.launchForward, c.pickup3)};
+        PathChain[] collect = {pathBetween(f, c.pickup1, offset(c.pickup1)), pathBetween(f, c.pickup2, offset(c.pickup2)), pathBetween(f, c.pickup3, offset(c.pickup3))};
+        PathChain[] launch = {pathBetween(f, offset(c.pickup1), c.launchRear), pathBetween(f, offset(c.pickup2), c.launchForward), pathBetween(f, offset(c.pickup3), c.launchForward)};
+        PathChain leave = pathBetween(f, c.launchForward, c.endPosition);
         int set = 0;
         shooter.SetOuttake(true); // TODO: may want to replace with continuously running outtake and instead toggling transfer
         while (opModeIsActive()) {
@@ -95,5 +91,15 @@ public class AutonBase extends LinearOpMode {
                     break;
             }
         }
+    }
+
+    public class Config {
+        public Pose launchRear;
+        public Pose launchForward;
+        public Pose pickup1;
+        public Pose pickup2;
+        public Pose pickup3;
+        public Pose pickupEndOffset;
+        public Pose endPosition;
     }
 }
