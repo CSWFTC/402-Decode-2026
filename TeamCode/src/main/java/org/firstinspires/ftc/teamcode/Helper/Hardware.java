@@ -47,6 +47,8 @@ public class Hardware {
     public static WebcamName camera;
 
     public static DcMotor intake;
+
+    public static DcMotor ramp;
     @Reverse
     public static DcMotor shooter1;
     public static DcMotor shooter2;

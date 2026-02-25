@@ -9,6 +9,9 @@ public class Shooter {
     public boolean intakeOn;
     public boolean outtakeOn;
 
+    public static double rampPower = 1.0;
+    public boolean rampOn;
+
     public Shooter() {
         SetIntake(false);
         SetOuttake(false);
@@ -17,6 +20,10 @@ public class Shooter {
     public void SetIntake(boolean status) {
         intakeOn = status;
         Hardware.intake.setPower(status ? intakePower : 0.0);
+    }
+    public void SetRamp(boolean status) {
+        rampOn = status;
+        Hardware.ramp.setPower(status ? rampPower : 0.0);
     }
 
     public void SetOuttake(boolean status) {
@@ -71,7 +78,8 @@ public class Shooter {
         SetIntake(!intakeOn);
     }
 
-    public void ToggleOuttake() {
-        SetOuttake(!outtakeOn);
+    public void ToggleRamp() { SetRamp(!rampOn);}
+
+    public void ToggleOuttake() {SetOuttake(!outtakeOn);
     }
 }
