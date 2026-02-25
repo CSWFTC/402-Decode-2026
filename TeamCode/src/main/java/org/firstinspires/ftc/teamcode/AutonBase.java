@@ -1,10 +1,12 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.bylazar.configurables.annotations.Configurable;
 import com.pedropathing.follower.Follower;
 import com.pedropathing.geometry.BezierLine;
 import com.pedropathing.geometry.Pose;
 import com.pedropathing.paths.PathChain;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.Helper.Hardware;
 import org.firstinspires.ftc.teamcode.Helper.Shooter;
@@ -19,7 +21,10 @@ enum State {
     LEAVE
 }
 
+@Configurable
 public abstract class AutonBase extends LinearOpMode {
+    public static double launchDelay = 3;
+
     abstract Config getConfig();
 
     PathChain pathBetween(Follower f, Pose start, Pose end) {
@@ -45,15 +50,18 @@ public abstract class AutonBase extends LinearOpMode {
         PathChain[] launch = {pathBetween(f, offset(c.pickup1), c.launchRear), pathBetween(f, offset(c.pickup2), c.launchForward), pathBetween(f, offset(c.pickup3), c.launchForward)};
         PathChain leave = pathBetween(f, c.launchForward, c.endPosition);
         int set = 0;
+        ElapsedTime timer = new ElapsedTime();
         shooter.SetOuttake(true); // TODO: may want to replace with continuously running outtake and instead toggling transfer
         while (opModeIsActive()) {
             f.update();
             switch (s) {
                 case LAUNCHING_PRELOAD:
-                    // TODO: Wait to be done launching
-                    shooter.SetOuttake(false);
-                    s = State.GOING_TO_PICKUP;
-                    f.followPath(goTo[0]);
+                    // TODO: May want to replace with monitoring outtake and/or transfer velocity
+                    if (timer.seconds() > launchDelay) {
+                        shooter.SetOuttake(false);
+                        s = State.GOING_TO_PICKUP;
+                        f.followPath(goTo[0]);
+                    }
                     break;
                 case GOING_TO_PICKUP:
                     if (!f.isBusy()) {
@@ -73,17 +81,19 @@ public abstract class AutonBase extends LinearOpMode {
                     if (!f.isBusy()) {
                         shooter.SetOuttake(true);
                         s = State.LAUNCHING;
+                        timer.reset();
                     }
                     break;
                 case LAUNCHING:
-                    // TODO: Wait to be done launching
-                    shooter.SetOuttake(false);
-                    if (++set < 3) {
-                        s = State.GOING_TO_PICKUP;
-                        f.followPath(goTo[set]);
-                    } else {
-                        s = State.LEAVE;
-                        f.followPath(leave, true);
+                    if (timer.seconds() > launchDelay) {
+                        shooter.SetOuttake(false);
+                        if (++set < 3) {
+                            s = State.GOING_TO_PICKUP;
+                            f.followPath(goTo[set]);
+                        } else {
+                            s = State.LEAVE;
+                            f.followPath(leave, true);
+                        }
                     }
                     break;
                 case LEAVE:
