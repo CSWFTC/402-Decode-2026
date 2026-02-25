@@ -42,13 +42,14 @@ public class OuttakeMotorTest extends LinearOpMode {
     @Override
     public void runOpMode() {
         Hardware.init(hardwareMap);
-        Hardware.outtake.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        Hardware.outtake.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        Hardware.shooter1.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        Hardware.shooter2.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         waitForStart();
 
         while (opModeIsActive()) {
 
-            Hardware.outtake.setPower(gamepad1.a || gamepad1.x ? 1.0 : 0.0);
+            Hardware.shooter1.setPower(gamepad1.a || gamepad1.x ? 1.0 : 0.0);
+            Hardware.shooter2.setPower(gamepad1.a || gamepad1.x ? 1.0 : 0.0);
 
             telemetry.addLine().addData("Controls", "A for Outtake, B for OuttakeRight, X for BOTH");
             telemetry.addLine().addData("Outtake", gamepad1.a || gamepad1.x);

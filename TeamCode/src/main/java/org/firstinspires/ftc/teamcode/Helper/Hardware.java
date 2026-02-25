@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.Helper;
 
+import com.qualcomm.hardware.gobilda.GoBildaPinpointDriver;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -33,26 +34,38 @@ public class Hardware {
     // the field name should match the name in the robot config
     // that's it!
     @Reverse
+    @DoNotInitialize
     public static DcMotor frontLeft;
-
+    @DoNotInitialize
     public static DcMotor frontRight;
-
+    @DoNotInitialize
     public static DcMotor rearLeft;
+    @DoNotInitialize
     public static DcMotor rearRight;
 
     @DoNotInitialize
     public static WebcamName camera;
 
-    @Reverse
     public static DcMotor intake;
     @Reverse
-    public static DcMotor outtake;
+    public static DcMotor shooter1;
+    public static DcMotor shooter2;
+    @DoNotInitialize
     public static Servo flapServo;
     @Reverse
+    @DoNotInitialize
     public static DcMotor spindex;
 
     @DoNotInitialize
-    public static Servo turretServo;
+    public static Servo hood1;
+    @DoNotInitialize
+    public static Servo hood2;
+    @DoNotInitialize
+    public static Servo turret1;
+    @DoNotInitialize
+    public static Servo turret2;
+    @DoNotInitialize
+    public static GoBildaPinpointDriver pinpoint;
 
     // initialization code
     public static void init(HardwareMap map) {
@@ -62,12 +75,16 @@ public class Hardware {
                 field.setAccessible(true);
                 try {
                     field.set(null, map.get(field.getType(), field.getName()));
-                    if (field.getType() == DcMotor.class) {
-                        Reverse r = field.getAnnotation(Reverse.class);
-                        if (r != null) {
+                    Reverse r = field.getAnnotation(Reverse.class);
+                    if (r != null) {
+                        if (field.getType() == DcMotor.class) {
                             DcMotor m = (DcMotor) field.get(null);
                             assert m != null;
                             m.setDirection(DcMotorSimple.Direction.REVERSE);
+                        } else if (field.getType() == Servo.class) {
+                            Servo s = (Servo) field.get(null);
+                            assert s != null;
+                            s.setDirection(Servo.Direction.REVERSE);
                         }
                     }
                 } catch (IllegalAccessException ignored) {
