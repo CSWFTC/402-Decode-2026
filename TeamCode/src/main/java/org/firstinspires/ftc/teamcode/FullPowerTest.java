@@ -33,6 +33,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.Helper.Hardware;
 
 
@@ -44,11 +45,14 @@ public class FullPowerTest extends LinearOpMode {
         Hardware.init(hardwareMap);
         Hardware.shooter1.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         Hardware.shooter2.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        telemetry.setDisplayFormat(Telemetry.DisplayFormat.MONOSPACE);
         waitForStart();
         Hardware.shooter1.setPower(1);
         Hardware.shooter2.setPower(1);
         while (opModeIsActive()) {
-            sleep(100);
+            telemetry.addLine().addData("Shooter 1 Power", Hardware.shooter1.getPower());
+            telemetry.addLine().addData("Shooter 2 Power", Hardware.shooter2.getPower());
+            telemetry.update();
         }
     }
 }

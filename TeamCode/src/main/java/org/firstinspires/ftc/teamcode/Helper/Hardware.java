@@ -6,8 +6,6 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
-import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
-
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -34,37 +32,20 @@ public class Hardware {
     // the field name should match the name in the robot config
     // that's it!
     @Reverse
-    @DoNotInitialize
     public static DcMotor frontLeft;
-    @DoNotInitialize
     public static DcMotor frontRight;
-    @DoNotInitialize
+    @Reverse
     public static DcMotor rearLeft;
-    @DoNotInitialize
     public static DcMotor rearRight;
-
-    @DoNotInitialize
-    public static WebcamName camera;
-
     public static DcMotor intake;
+    public static DcMotor ramp;
     @Reverse
     public static DcMotor shooter1;
     public static DcMotor shooter2;
-    @DoNotInitialize
-    public static Servo flapServo;
-    @Reverse
-    @DoNotInitialize
-    public static DcMotor spindex;
-
-    @DoNotInitialize
     public static Servo hood1;
-    @DoNotInitialize
     public static Servo hood2;
-    @DoNotInitialize
     public static Servo turret1;
-    @DoNotInitialize
     public static Servo turret2;
-    @DoNotInitialize
     public static GoBildaPinpointDriver pinpoint;
 
     // initialization code

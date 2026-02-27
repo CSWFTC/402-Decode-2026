@@ -3,15 +3,13 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.teamcode.Helper.BallTransfer;
 import org.firstinspires.ftc.teamcode.Helper.DriveTrainV2;
 import org.firstinspires.ftc.teamcode.Helper.GamePad;
 import org.firstinspires.ftc.teamcode.Helper.Hardware;
 import org.firstinspires.ftc.teamcode.Helper.Shooter;
-import org.firstinspires.ftc.teamcode.Helper.Spindexer;
+import org.firstinspires.ftc.teamcode.Helper.Turret;
 
 import java.util.Locale;
 
@@ -22,7 +20,6 @@ public class DriverControl extends LinearOpMode {
     private GamePad gpIn1;
     private GamePad gpIn2;
     private DriveTrainV2 drvTrain;
-//    private AprilTagConfig atConf;
 
     @Override
     public void runOpMode() {
@@ -39,19 +36,18 @@ public class DriverControl extends LinearOpMode {
         gpIn1 = new GamePad(gamepad1);
         gpIn2 = new GamePad(gamepad2);
         Shooter shooter = new Shooter();
+        Turret turret = new Turret();
         drvTrain = new DriveTrainV2();
-        BallTransfer bt = new BallTransfer(shooter);
-        Spindexer spin = new Spindexer();
-//        atConf = new AprilTagConfig();
 
         waitForStart();
+        shooter.SetOuttake(true);
         if (isStopRequested()) {
             return;
         }
         telemetry.clear();
 
         double speedMultiplier = 0.5;
-
+        long prevTime = System.currentTimeMillis();
         while (opModeIsActive()) {
 //            atConf.Update();
             update_telemetry(speedMultiplier, Shooter.outtakePower);
@@ -79,45 +75,23 @@ public class DriverControl extends LinearOpMode {
                             gamepad1.left_stick_y * (float) speedMultiplier, setReversed);
                     break;
             }
-
+            long now = System.currentTimeMillis();
+            float delta = (now - prevTime) / 1e3f;
+            prevTime = now;
             GamePad.GameplayInputType inpType2 = gpIn2.WaitForGamepadInput(30);
             switch (inpType2) {
                 case BUTTON_A:
                     shooter.ToggleIntake();
                     break;
                 case BUTTON_Y:
-                    bt.ToggleLaunch();
+                    shooter.ToggleRamp();
                     break;
                 case BUTTON_X:
-                    spin.nextShootingLocation();
-                    break;
-                case BUTTON_B:
-                    spin.nextPickupLocation();
-                case BUTTON_R_BUMPER:
-                    Hardware.intake.setDirection(DcMotorSimple.Direction.FORWARD);
-                    break;
-                case BUTTON_L_BUMPER:
-                    Hardware.intake.setDirection(DcMotorSimple.Direction.REVERSE);
-                    break;
-                case RIGHT_TRIGGER:
-                    spin.ManualForward();
-                    break;
-                case LEFT_TRIGGER:
-                    spin.ManualReverse();
-                case DPAD_UP:
-                    shooter.setOuttakeTopPowerMultiplier(1.00);
-                    break;
-                case DPAD_DOWN:
-                    shooter.setOuttakeTopPowerMultiplier(0.25);
-                    break;
-                case DPAD_RIGHT:
-                    shooter.setOuttakeTopPowerMultiplier(0.75);
-                    break;
-                case DPAD_LEFT:
-                    shooter.setOuttakeTopPowerMultiplier(0.50);
+                    shooter.ToggleOuttake();
                     break;
             }
-            bt.Update();
+            turret.setTurretAngle(turret.getTurretAngle() + gamepad2.left_stick_x * delta);
+            turret.setHoodAngle(turret.getHoodAngle() + gamepad2.left_stick_y * delta);
         }
     }
 
