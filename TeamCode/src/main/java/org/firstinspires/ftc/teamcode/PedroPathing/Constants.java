@@ -7,11 +7,10 @@ import com.pedropathing.ftc.FollowerBuilder;
 import com.pedropathing.ftc.drivetrains.MecanumConstants;
 import com.pedropathing.ftc.localization.constants.PinpointConstants;
 import com.pedropathing.paths.PathConstraints;
-import com.qualcomm.hardware.gobilda.GoBildaPinpointDriver;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
-import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+import org.firstinspires.ftc.teamcode.Helper.AutoAim;
 
 @Configurable
 // TODO: Add the actual values for everything
@@ -28,7 +27,7 @@ public class Constants {
             .leftRearMotorName("rearLeft")
             .leftRearMotorDirection(DcMotorSimple.Direction.REVERSE);
 
-    public static PinpointConstants localizerConstants = new PinpointConstants().forwardPodY(2).strafePodX(2).distanceUnit(DistanceUnit.INCH).hardwareMapName("pinpoint").encoderResolution(GoBildaPinpointDriver.GoBildaOdometryPods.goBILDA_4_BAR_POD).forwardEncoderDirection(GoBildaPinpointDriver.EncoderDirection.FORWARD).strafeEncoderDirection(GoBildaPinpointDriver.EncoderDirection.FORWARD);
+    public static PinpointConstants localizerConstants = new PinpointConstants().forwardPodY(AutoAim.yOffset).strafePodX(AutoAim.xOffset).distanceUnit(AutoAim.unit).hardwareMapName("pinpoint").encoderResolution(AutoAim.resolution).forwardEncoderDirection(AutoAim.forwardDirection).strafeEncoderDirection(AutoAim.strafeDirection);
 
     public static Follower createFollower(HardwareMap hardwareMap) {
         return new FollowerBuilder(followerConstants, hardwareMap).pathConstraints(pathConstraints).mecanumDrivetrain(driveConstants).pinpointLocalizer(localizerConstants).build();
