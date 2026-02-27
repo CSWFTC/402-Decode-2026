@@ -8,8 +8,11 @@ import com.pedropathing.paths.PathChain;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.firstinspires.ftc.robotcore.external.navigation.Pose2D;
+import org.firstinspires.ftc.teamcode.Helper.AutoAim;
 import org.firstinspires.ftc.teamcode.Helper.Hardware;
 import org.firstinspires.ftc.teamcode.Helper.Shooter;
+import org.firstinspires.ftc.teamcode.Helper.Turret;
 import org.firstinspires.ftc.teamcode.PedroPathing.Constants;
 
 enum State {
@@ -43,6 +46,7 @@ public abstract class AutonBase extends LinearOpMode {
         State s = State.LAUNCHING_PRELOAD;
         Follower f = Constants.createFollower(hardwareMap);
         Config c = getConfig();
+        AutoAim aa = new AutoAim(AutoAim.convertPedroPose(c.launchRear), c.aimTarget, new Turret(), false);
         f.setStartingPose(c.launchRear);
         waitForStart();
         PathChain[] goTo = {pathBetween(f, c.launchRear, c.pickup1), pathBetween(f, c.launchRear, c.pickup2), pathBetween(f, c.launchForward, c.pickup3)};
@@ -54,6 +58,7 @@ public abstract class AutonBase extends LinearOpMode {
         shooter.SetOuttake(true); // TODO: may want to replace with continuously running outtake and instead toggling transfer
         while (opModeIsActive()) {
             f.update();
+            aa.Update();
             switch (s) {
                 case LAUNCHING_PRELOAD:
                     // TODO: May want to replace with monitoring outtake and/or transfer velocity
@@ -111,5 +116,6 @@ public abstract class AutonBase extends LinearOpMode {
         public Pose pickup3;
         public Pose pickupEndOffset;
         public Pose endPosition;
+        public Pose2D aimTarget;
     }
 }

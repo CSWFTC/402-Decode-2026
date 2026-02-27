@@ -1,6 +1,9 @@
 package org.firstinspires.ftc.teamcode.Helper;
 
 import com.bylazar.configurables.annotations.Configurable;
+import com.pedropathing.ftc.FTCCoordinates;
+import com.pedropathing.ftc.PoseConverter;
+import com.pedropathing.geometry.Pose;
 import com.qualcomm.hardware.gobilda.GoBildaPinpointDriver;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
@@ -20,21 +23,30 @@ public class AutoAim {
     public Pose2D pos;
     Turret t;
     Pose2D target;
+    boolean autoUpdatePinpoint;
 
-    public AutoAim(Pose2D startingPos, Pose2D target, Turret turret) {
-        Hardware.pinpoint.setEncoderDirections(xDir, yDir);
-        Hardware.pinpoint.setEncoderResolution(resolution);
-        Hardware.pinpoint.setEncoderDirections(forwardDirection, strafeDirection);
-        Hardware.pinpoint.setOffsets(xOffset, yOffset, DistanceUnit.INCH);
-        Hardware.pinpoint.resetPosAndIMU();
-        Hardware.pinpoint.setPosition(startingPos);
-        t = turret;
+    public AutoAim(Pose2D startingPos, Pose2D target, Turret turret, boolean autoUpdatePinpoint) {
+        if (autoUpdatePinpoint) {
+            Hardware.pinpoint.setEncoderDirections(xDir, yDir);
+            Hardware.pinpoint.setEncoderResolution(resolution);
+            Hardware.pinpoint.setEncoderDirections(forwardDirection, strafeDirection);
+            Hardware.pinpoint.setOffsets(xOffset, yOffset, DistanceUnit.INCH);
+            Hardware.pinpoint.resetPosAndIMU();
+            Hardware.pinpoint.setPosition(startingPos);
+        }
         pos = startingPos;
+        t = turret;
         this.target = target;
+        this.autoUpdatePinpoint = autoUpdatePinpoint;
+    }
+
+    public static Pose2D convertPedroPose(Pose p) {
+        return PoseConverter.poseToPose2D(p, FTCCoordinates.INSTANCE);
     }
 
     public void Update() {
-        Hardware.pinpoint.update();
+        if (this.autoUpdatePinpoint)
+            Hardware.pinpoint.update();
         pos = Hardware.pinpoint.getPosition();
         double angle = Math.atan2(target.getY(DistanceUnit.INCH) - pos.getY(DistanceUnit.INCH), target.getX(DistanceUnit.INCH) - pos.getX(DistanceUnit.INCH));
         double botHeading = 90 - pos.getHeading(AngleUnit.DEGREES);

@@ -16,7 +16,7 @@ public class AutoAimTest extends LinearOpMode {
     public void runOpMode() {
         Hardware.init(hardwareMap);
         Turret t = new Turret();
-        AutoAim aim = new AutoAim(new Pose2D(DistanceUnit.INCH, 0, 0, AngleUnit.DEGREES, 0), new Pose2D(DistanceUnit.INCH, 12, 12, AngleUnit.DEGREES, 0), t);
+        AutoAim aim = new AutoAim(new Pose2D(DistanceUnit.INCH, 0, 0, AngleUnit.DEGREES, 0), new Pose2D(DistanceUnit.INCH, 12, 12, AngleUnit.DEGREES, 0), t, true);
         waitForStart();
         while (opModeIsActive()) {
             telemetry.addData("Turret Angle", t.getTurretAngle());

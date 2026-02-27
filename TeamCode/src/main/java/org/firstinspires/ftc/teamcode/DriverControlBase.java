@@ -2,9 +2,9 @@ package org.firstinspires.ftc.teamcode;
 
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.teamcode.Helper.AutoAim;
 import org.firstinspires.ftc.teamcode.Helper.DriveTrainV2;
 import org.firstinspires.ftc.teamcode.Helper.GamePad;
 import org.firstinspires.ftc.teamcode.Helper.Hardware;
@@ -13,13 +13,14 @@ import org.firstinspires.ftc.teamcode.Helper.Turret;
 
 import java.util.Locale;
 
-@TeleOp(name = "Driver Control", group = "Competition!!")
-public class DriverControl extends LinearOpMode {
+public abstract class DriverControlBase extends LinearOpMode {
     private static final String version = "1.1";
     private boolean setReversed = false;
     private GamePad gpIn1;
     private GamePad gpIn2;
     private DriveTrainV2 drvTrain;
+
+    abstract AutonBase.Config getMatchingAuton();
 
     @Override
     public void runOpMode() {
@@ -38,7 +39,9 @@ public class DriverControl extends LinearOpMode {
         Shooter shooter = new Shooter();
         Turret turret = new Turret();
         drvTrain = new DriveTrainV2();
-
+        AutonBase.Config c = getMatchingAuton();
+        AutoAim aa = new AutoAim(AutoAim.convertPedroPose(c.endPosition), c.aimTarget, turret, true);
+        boolean aaEnabled = true;
         waitForStart();
         shooter.SetOuttake(true);
         if (isStopRequested()) {
@@ -89,9 +92,16 @@ public class DriverControl extends LinearOpMode {
                 case BUTTON_X:
                     shooter.ToggleOuttake();
                     break;
+                case BUTTON_B:
+                    aaEnabled = !aaEnabled;
+                    break;
             }
-            turret.setTurretAngle(turret.getTurretAngle() + gamepad2.left_stick_x * delta);
-            turret.setHoodAngle(turret.getHoodAngle() + gamepad2.left_stick_y * delta);
+            if (aaEnabled)
+                aa.Update();
+            else {
+                turret.setTurretAngle(turret.getTurretAngle() + gamepad2.left_stick_x * delta);
+                turret.setHoodAngle(turret.getHoodAngle() + gamepad2.left_stick_y * delta);
+            }
         }
     }
 
