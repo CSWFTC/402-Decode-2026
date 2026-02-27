@@ -20,7 +20,6 @@ public class DriverControl extends LinearOpMode {
     private GamePad gpIn1;
     private GamePad gpIn2;
     private DriveTrainV2 drvTrain;
-//    private AprilTagConfig atConf;
 
     @Override
     public void runOpMode() {

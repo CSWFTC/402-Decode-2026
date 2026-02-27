@@ -37,27 +37,15 @@ public class Hardware {
     @Reverse
     public static DcMotor rearLeft;
     public static DcMotor rearRight;
-
-    @DoNotInitialize
     public static DcMotor intake;
-    @DoNotInitialize
-
     public static DcMotor ramp;
-    @DoNotInitialize
     @Reverse
     public static DcMotor shooter1;
-    @DoNotInitialize
     public static DcMotor shooter2;
-
-    @DoNotInitialize
     public static Servo hood1;
-    @DoNotInitialize
     public static Servo hood2;
-    @DoNotInitialize
     public static Servo turret1;
-    @DoNotInitialize
     public static Servo turret2;
-    @DoNotInitialize
     public static GoBildaPinpointDriver pinpoint;
 
     // initialization code
