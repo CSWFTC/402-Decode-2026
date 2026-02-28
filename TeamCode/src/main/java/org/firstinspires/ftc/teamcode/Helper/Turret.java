@@ -16,9 +16,9 @@ public class Turret {
     }
 
     public void setHoodAngle(double angle) {
-        double position = hoodTicksPerDeg * Math.max(hoodMinAngle, Math.min(angle, hoodMaxAngle));
-        Hardware.hood1.setPosition(position);
-        Hardware.hood2.setPosition(position);
+//        double position = hoodTicksPerDeg * Math.max(hoodMinAngle, Math.min(angle, hoodMaxAngle));
+//        Hardware.hood1.setPosition(position);
+//        Hardware.hood2.setPosition(position);
     }
 
     public double getTurretAngle() {
