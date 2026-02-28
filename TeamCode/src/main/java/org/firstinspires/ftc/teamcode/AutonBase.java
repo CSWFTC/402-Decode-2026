@@ -108,7 +108,7 @@ public abstract class AutonBase extends LinearOpMode {
         }
     }
 
-    public class Config {
+    public static class Config {
         public Pose launchRear;
         public Pose launchForward;
         public Pose pickup1;
@@ -117,5 +117,15 @@ public abstract class AutonBase extends LinearOpMode {
         public Pose pickupEndOffset;
         public Pose endPosition;
         public Pose2D aimTarget;
+        public Config(Pose launchRear, Pose launchForward, Pose pickup1, Pose pickup2, Pose pickup3, Pose pickupEndOffset, Pose endPosition, Pose2D aimTarget){
+            this.launchRear = launchRear;
+            this.launchForward = launchForward;
+            this.pickup1 = pickup1;
+            this.pickup2 = pickup2;
+            this.pickup3 = pickup3;
+            this.pickupEndOffset = pickupEndOffset;
+            this.endPosition = endPosition;
+            this.aimTarget = aimTarget;
+        }
     }
 }
