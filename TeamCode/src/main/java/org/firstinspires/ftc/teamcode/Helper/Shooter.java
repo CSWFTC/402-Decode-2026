@@ -1,17 +1,23 @@
 package org.firstinspires.ftc.teamcode.Helper;
 
 import com.bylazar.configurables.annotations.Configurable;
+import com.qualcomm.robotcore.hardware.DcMotor;
 
 @Configurable
 public class Shooter {
     public static double intakePower = 1.0;
     public static double outtakePower = 1;
+    public static double rampPower = 1.0;
     public boolean intakeOn;
     public boolean outtakeOn;
+    public boolean rampOn;
 
     public Shooter() {
+        Hardware.shooter1.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        Hardware.shooter2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         SetIntake(false);
         SetOuttake(false);
+        SetRamp(false);
     }
 
     public void SetIntake(boolean status) {
@@ -19,9 +25,15 @@ public class Shooter {
         Hardware.intake.setPower(status ? intakePower : 0.0);
     }
 
+    public void SetRamp(boolean status) {
+        rampOn = status;
+        Hardware.ramp.setPower(status ? rampPower : 0.0);
+    }
+
     public void SetOuttake(boolean status) {
         outtakeOn = status;
-        Hardware.outtake.setPower(status ? outtakePower : 0.0);
+        Hardware.shooter1.setPower(status ? outtakePower : 0.0);
+        Hardware.shooter2.setPower(status ? outtakePower : 0.0);
     }
 
     public void increaseIntakePower(double power) {
@@ -68,6 +80,10 @@ public class Shooter {
 
     public void ToggleIntake() {
         SetIntake(!intakeOn);
+    }
+
+    public void ToggleRamp() {
+        SetRamp(!rampOn);
     }
 
     public void ToggleOuttake() {

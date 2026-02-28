@@ -51,14 +51,18 @@ public class MotorTest extends LinearOpMode {
         Hardware.outtakeTop.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         Hardware.outtakeTop.setDirection(DcMotorSimple.Direction.FORWARD);
          */
-        Hardware.outtake.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        Hardware.outtake.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        Hardware.outtake.setDirection(DcMotorSimple.Direction.FORWARD);
+        Hardware.shooter1.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        Hardware.shooter1.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        Hardware.shooter1.setDirection(DcMotorSimple.Direction.FORWARD);
+        Hardware.shooter2.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        Hardware.shooter2.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        Hardware.shooter2.setDirection(DcMotorSimple.Direction.FORWARD);
         waitForStart();
         while (opModeIsActive()) {
 
             Hardware.intake.setPower(gamepad1.a || gamepad1.x ? 1.0 : 0.0);
-            Hardware.outtake.setPower(gamepad1.b || gamepad1.x ? 1.0 : 0.0);
+            Hardware.shooter1.setPower(gamepad1.b || gamepad1.x ? 1.0 : 0.0);
+            Hardware.shooter2.setPower(gamepad1.b || gamepad1.x ? 1.0 : 0.0);
             //Hardware.outtakeTop.setPower(gamepad1.y || gamepad1.x  ? 1.0 : 0.0);
 
             telemetry.addData("Controls", "A for intake, B for bottom, Y for top, X for all");
