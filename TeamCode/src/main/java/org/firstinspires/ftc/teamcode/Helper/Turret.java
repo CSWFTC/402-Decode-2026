@@ -11,11 +11,6 @@ public class Turret {
     public static double turretMinAngle = 0;
     public static double turretMaxAngle = 180;
 
-    public Turret() {
-        setHoodAngle(hoodMinAngle);
-        setTurretAngle(turretMinAngle);
-    }
-
     public double getHoodAngle() {
         return Hardware.hood1.getPosition() / hoodTicksPerDeg;
     }
