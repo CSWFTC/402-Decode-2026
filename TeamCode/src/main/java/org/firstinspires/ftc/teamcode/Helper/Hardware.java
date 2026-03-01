@@ -31,20 +31,24 @@ public class Hardware {
     // just declare a new field
     // the field name should match the name in the robot config
     // that's it!
-    @Reverse
     public static DcMotor frontLeft;
-    public static DcMotor frontRight;
     @Reverse
+    public static DcMotor frontRight;
     public static DcMotor rearLeft;
+    @Reverse
     public static DcMotor rearRight;
     public static DcMotor intake;
     public static DcMotor ramp;
     @Reverse
     public static DcMotor shooter1;
     public static DcMotor shooter2;
+    @DoNotInitialize
     public static Servo hood1;
+    @DoNotInitialize
     public static Servo hood2;
+    @DoNotInitialize
     public static Servo turret1;
+    @DoNotInitialize
     public static Servo turret2;
     public static GoBildaPinpointDriver pinpoint;
 

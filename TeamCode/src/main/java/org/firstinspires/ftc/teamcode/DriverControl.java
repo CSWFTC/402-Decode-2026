@@ -9,7 +9,6 @@ import org.firstinspires.ftc.teamcode.Helper.DriveTrainV2;
 import org.firstinspires.ftc.teamcode.Helper.GamePad;
 import org.firstinspires.ftc.teamcode.Helper.Hardware;
 import org.firstinspires.ftc.teamcode.Helper.Shooter;
-import org.firstinspires.ftc.teamcode.Helper.Turret;
 
 import java.util.Locale;
 
@@ -36,11 +35,10 @@ public class DriverControl extends LinearOpMode {
         gpIn1 = new GamePad(gamepad1);
         gpIn2 = new GamePad(gamepad2);
         Shooter shooter = new Shooter();
-        Turret turret = new Turret();
+//        Turret turret = new Turret();
         drvTrain = new DriveTrainV2();
 
         waitForStart();
-        shooter.SetOuttake(true);
         if (isStopRequested()) {
             return;
         }
@@ -89,9 +87,12 @@ public class DriverControl extends LinearOpMode {
                 case BUTTON_X:
                     shooter.ToggleOuttake();
                     break;
+                case BUTTON_B:
+                    shooter.ToggleIntakeDirection();
+                    break;
             }
-            turret.setTurretAngle(turret.getTurretAngle() + gamepad2.left_stick_x * delta);
-            turret.setHoodAngle(turret.getHoodAngle() + gamepad2.left_stick_y * delta);
+//            turret.setTurretAngle(turret.getTurretAngle() + gamepad2.left_stick_x * delta);
+//            turret.setHoodAngle(turret.getHoodAngle() + gamepad2.left_stick_y * delta);
         }
     }
 

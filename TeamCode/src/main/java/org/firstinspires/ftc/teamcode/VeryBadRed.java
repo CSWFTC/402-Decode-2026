@@ -12,6 +12,7 @@ public class VeryBadRed extends LinearOpMode {
 
     @Override
     public void runOpMode() {
+        Hardware.init(hardwareMap);
         Shooter s = new Shooter();
         Hardware.frontLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         Hardware.frontRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);

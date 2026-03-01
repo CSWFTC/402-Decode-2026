@@ -89,4 +89,11 @@ public class Shooter {
     public void ToggleOuttake() {
         SetOuttake(!outtakeOn);
     }
+
+    public void ToggleIntakeDirection() {
+        intakePower = -intakePower;
+        rampPower = -rampPower;
+        SetIntake(intakeOn);
+        SetRamp(rampOn);
+    }
 }
